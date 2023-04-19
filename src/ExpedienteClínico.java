@@ -1,13 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author Tzihual
- */
 public class ExpedienteClínico {
     private int folio;
     private String tratamiento, aparatologia, duracion, pronostico, observaciones;
@@ -80,6 +70,5 @@ public class ExpedienteClínico {
 
     public void setId_paciente(int id_paciente) {
         this.id_paciente = id_paciente;
-    }
-    
+    }    
 }
