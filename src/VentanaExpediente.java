@@ -55,13 +55,13 @@ private void agregar(){
                 Statement st = con.createStatement();
                 String sql = "insert into expediente_clinico (fecha_inicio,fecha_actualizacion,motivo, enfermedad, observaciones,id_paciente, estado) values (?,?,?,?,?,?,?)";
                 PreparedStatement pst = con.prepareStatement(sql);
-                String A[]=cmbPaciente.getSelectedItem().toString().split("-");
+                //String A[]=cmbPaciente.getSelectedItem().toString().split("-");
                 pst.setString(1, di.format(dtFecha1.getDate()));
                 pst.setString(2, di.format(dtFecha1.getDate()));
                 pst.setString(3, txtMotivo.getText());
                 pst.setString(4, txtEnfermedad.getText());
                 pst.setString(5, txtObservaciones.getText());
-                pst.setString(6, A[0]);
+                //pst.setString(6, A[0]);
                
                 if (btnVigente.isSelected()) {
                 pst.setString(7,btnVigente.getText());
