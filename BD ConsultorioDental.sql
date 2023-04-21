@@ -1,7 +1,5 @@
 CREATE DATABASE IF NOT EXISTS consultorio_dental;
-
 USE consultorio_dental;
-
 CREATE TABLE IF NOT EXISTS pacientes(
   id INT(11) NOT NULL AUTO_INCREMENT,
   nombre VARCHAR(50) NOT NULL,
@@ -25,12 +23,14 @@ estado varchar(50) not null,
 primary key (folio));
 ALTER TABLE expediente_clinico ADD COLUMN id_paciente int not null;
 ALTER TABLE expediente_clinico ADD FOREIGN KEY(id_paciente) REFERENCES pacientes(id);
-drop table expediente_clinico;
+
 CREATE TABLE IF NOT EXISTS Usuarios(
 id_usuario int(2) not null primary key auto_increment,
 usuario varchar(20) not null,
-contraseña varchar(10) not null,
+contraseña varchar(32) not null,
 rol varchar(20) not null);
+Alter table Usuarios Add constraint UQ_Usuario Unique (usuario);
+
 SELECT*FROM PACIENTES;
 SELECT *FROM EXPEDIENTE_CLINICO;
 insert into Usuarios values (2,'Secretaria','Secre012','Secretaria');
@@ -38,4 +38,3 @@ insert into Usuarios values (1,'Dentista','Dentis123','Dentista');
 select usuario, contraseña from usuarios;
 select*from usuarios;
 delete from usuarios where id_usuario=2;
-drop table Usuarios;
