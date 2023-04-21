@@ -38,7 +38,9 @@ public class MenuDentista extends javax.swing.JFrame {
         lblExpediente = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         lblMenu = new javax.swing.JLabel();
+        lblPass = new javax.swing.JLabel();
         lbLogo = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,7 +53,7 @@ public class MenuDentista extends javax.swing.JFrame {
         lblBack.setBackground(new java.awt.Color(0, 0, 0));
         lblBack.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblBack.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/flecha-izquierda.png"))); // NOI18N
+        lblBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/flecha-izquierda80.png"))); // NOI18N
         lblBack.setText("Regresar          ");
         lblBack.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         lblBack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -69,13 +71,13 @@ public class MenuDentista extends javax.swing.JFrame {
             }
         });
         MenuPleglable.add(lblBack);
-        lblBack.setBounds(20, 450, 290, 70);
+        lblBack.setBounds(20, 510, 290, 70);
 
         lblPaciente.setBackground(new java.awt.Color(0, 0, 0));
         lblPaciente.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblPaciente.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblPaciente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPaciente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/anadir.png"))); // NOI18N
-        lblPaciente.setText("Registro de Paciente             ");
+        lblPaciente.setText("  Registro de Paciente   ");
         lblPaciente.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         lblPaciente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblPaciente.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
@@ -92,13 +94,13 @@ public class MenuDentista extends javax.swing.JFrame {
             }
         });
         MenuPleglable.add(lblPaciente);
-        lblPaciente.setBounds(0, 140, 310, 60);
+        lblPaciente.setBounds(0, 140, 320, 66);
 
         lblCitas.setBackground(new java.awt.Color(0, 0, 0));
         lblCitas.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblCitas.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblCitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/calendario.png"))); // NOI18N
-        lblCitas.setText("Gestion de Citas                         ");
+        lblCitas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/calendario90.png"))); // NOI18N
+        lblCitas.setText("Gestion de Citas      ");
         lblCitas.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         lblCitas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblCitas.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
@@ -112,13 +114,13 @@ public class MenuDentista extends javax.swing.JFrame {
             }
         });
         MenuPleglable.add(lblCitas);
-        lblCitas.setBounds(0, 230, 310, 70);
+        lblCitas.setBounds(10, 220, 310, 66);
 
         lblExpediente.setBackground(new java.awt.Color(0, 0, 0));
         lblExpediente.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblExpediente.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblExpediente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reportar.png"))); // NOI18N
-        lblExpediente.setText("Expediente Clínico              ");
+        lblExpediente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblExpediente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reportar90.png"))); // NOI18N
+        lblExpediente.setText("Expediente Clínico    ");
         lblExpediente.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         lblExpediente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblExpediente.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
@@ -135,12 +137,12 @@ public class MenuDentista extends javax.swing.JFrame {
             }
         });
         MenuPleglable.add(lblExpediente);
-        lblExpediente.setBounds(0, 330, 310, 80);
+        lblExpediente.setBounds(10, 310, 310, 66);
 
         jLabel7.setBackground(new java.awt.Color(0, 0, 0));
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("        OPCIONES");
+        jLabel7.setText("      OPCIONES   ");
         jLabel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
@@ -169,36 +171,74 @@ public class MenuDentista extends javax.swing.JFrame {
         MenuPleglable.add(lblMenu);
         lblMenu.setBounds(0, 10, 270, 50);
 
+        lblPass.setBackground(new java.awt.Color(0, 0, 0));
+        lblPass.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblPass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/seguro.png"))); // NOI18N
+        lblPass.setText("Gestion Contraseñas  ");
+        lblPass.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
+        lblPass.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblPass.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        lblPass.setIconTextGap(10);
+        lblPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblPassMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblPassMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblPassMouseExited(evt);
+            }
+        });
+        MenuPleglable.add(lblPass);
+        lblPass.setBounds(10, 400, 310, 66);
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel2.setIconTextGap(0);
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(MenuPleglable, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81)
+                .addGap(30, 30, 30)
                 .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addGap(157, 157, 157)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(MenuPleglable, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(108, 108, 108)
+                        .addGap(120, 120, 120)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(86, 86, 86)
                         .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(57, 57, 57))
+                .addContainerGap(175, Short.MAX_VALUE))
+            .addComponent(MenuPleglable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -220,7 +260,7 @@ public class MenuDentista extends javax.swing.JFrame {
     }//GEN-LAST:event_lblBackMouseExited
 
     private void lblPacienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPacienteMouseEntered
-        lblPaciente.setForeground(Color.GRAY);
+        lblPaciente.setForeground(Color.WHITE);
     }//GEN-LAST:event_lblPacienteMouseEntered
 
     private void lblPacienteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPacienteMouseExited
@@ -228,7 +268,7 @@ public class MenuDentista extends javax.swing.JFrame {
     }//GEN-LAST:event_lblPacienteMouseExited
 
     private void lblCitasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCitasMouseEntered
-        lblCitas.setForeground(Color.GRAY);
+        lblCitas.setForeground(Color.WHITE);
     }//GEN-LAST:event_lblCitasMouseEntered
 
     private void lblCitasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCitasMouseExited
@@ -236,7 +276,7 @@ public class MenuDentista extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCitasMouseExited
 
     private void lblExpedienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpedienteMouseEntered
-        lblExpediente.setForeground(Color.BLUE);
+        lblExpediente.setForeground(Color.WHITE);
     }//GEN-LAST:event_lblExpedienteMouseEntered
 
     private void lblExpedienteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpedienteMouseExited
@@ -266,11 +306,33 @@ public class MenuDentista extends javax.swing.JFrame {
     }//GEN-LAST:event_lblPacienteMouseClicked
 
     private void lblExpedienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpedienteMouseClicked
-        VentanaExpediente next=new VentanaExpediente();
-        next.setVisible(true);
-        next.setLocationRelativeTo(null);
+        VentanaExpediente exp=new VentanaExpediente();
+        exp.setVisible(true);
+        exp.setLocationRelativeTo(null);
         this.dispose();                  
     }//GEN-LAST:event_lblExpedienteMouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        if(MenuPleglable.getX()==0)
+        desplace.desplazarIzquierda(this.MenuPleglable,MenuPleglable.getX(),-180, 10,10 );
+        else if(MenuPleglable.getX()== -180)
+        desplace.desplazarDerecha(this.MenuPleglable,MenuPleglable.getX(),0, 10,10);
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void lblPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseClicked
+        Gestionar_Contraseñas pass=new Gestionar_Contraseñas();
+        pass.setVisible(true);
+        pass.setLocationRelativeTo(null);
+        this.dispose(); 
+    }//GEN-LAST:event_lblPassMouseClicked
+
+    private void lblPassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseEntered
+       lblPass.setForeground(Color.WHITE);
+    }//GEN-LAST:event_lblPassMouseEntered
+
+    private void lblPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseExited
+       lblPass.setForeground(Color.BLACK);
+    }//GEN-LAST:event_lblPassMouseExited
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -304,6 +366,7 @@ public class MenuDentista extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MenuPleglable;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbLogo;
@@ -312,5 +375,6 @@ public class MenuDentista extends javax.swing.JFrame {
     private javax.swing.JLabel lblExpediente;
     private javax.swing.JLabel lblMenu;
     private javax.swing.JLabel lblPaciente;
+    private javax.swing.JLabel lblPass;
     // End of variables declaration//GEN-END:variables
 }

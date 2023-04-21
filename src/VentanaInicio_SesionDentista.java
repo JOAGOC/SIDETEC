@@ -1,4 +1,5 @@
 
+import Conexión.Conexión;
 import java.awt.Image;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -162,7 +163,7 @@ public void consultarUsuario(String user, String pass)
     {
         // TODO add your handling code here:
          Connection con = null;
-                Conexión conect = new Conexión();
+         Conexión conect = null;
         // Se inicializa a null
         String usuarioCorrecto = null;
         String passCorrecto = null;

@@ -1,4 +1,5 @@
 
+import Conexión.Conexión;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -144,6 +145,7 @@ public void limpiar(){
         tblPaciente = new javax.swing.JTable();
         btnExpediente = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -254,6 +256,14 @@ public void limpiar(){
             }
         });
 
+        btnRegresar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -278,7 +288,10 @@ public void limpiar(){
                         .addComponent(cbxBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnBuscar)
-                        .addGap(161, 161, 161))))
+                        .addGap(161, 161, 161))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnRegresar)
+                        .addGap(188, 188, 188))))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(0, 74, Short.MAX_VALUE)
@@ -337,7 +350,9 @@ public void limpiar(){
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLimpiar)
                     .addComponent(btnEliminar))
-                .addGap(72, 72, 72)
+                .addGap(18, 18, 18)
+                .addComponent(btnRegresar)
+                .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbxBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
@@ -428,7 +443,7 @@ public void limpiar(){
         try
         {
             Connection con = null;
-            Conexión conect = new Conexión();
+            Conexión conect = null;
             con = conect.getConnection();
             Statement st = con.createStatement();
             String sql = "update pacientes set nombre = ?, apellido = ?, edad=?, genero=?, telefono = ?, direccion = ? where id = ?";
@@ -595,6 +610,13 @@ void Buscar(String valor){
          limpiar();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        MenuDentista next=new MenuDentista();
+        next.setVisible(true);
+        next.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
     
     public static void main(String args[]) {
         
@@ -634,6 +656,7 @@ private DefaultTableModel m;
     private javax.swing.JButton btnExpediente;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cbxBuscar;
     private javax.swing.JComboBox<String> cmbGenero;
     private javax.swing.JLabel jLabel1;
