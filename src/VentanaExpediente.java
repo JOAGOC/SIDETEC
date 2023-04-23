@@ -475,7 +475,6 @@ void Buscar(String valor){
     private void btnPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacienteActionPerformed
         VentanaPaciente next=new VentanaPaciente();
         next.setVisible(true);
-
         next.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btnPacienteActionPerformed

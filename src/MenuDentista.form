@@ -55,20 +55,20 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="MenuPleglable" max="32767" attributes="0"/>
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" pref="50" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
                           <Component id="lbLogo" min="-2" pref="320" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="175" max="32767" attributes="0"/>
+                  <EmptySpace pref="164" max="32767" attributes="0"/>
               </Group>
-              <Component id="MenuPleglable" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -97,9 +97,9 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="4"/>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/flecha-izquierda80.png"/>
+                  <Image iconType="3" name="/img/flecha-izquierda90.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Regresar          "/>
+                <Property name="text" type="java.lang.String" value="Regresar           "/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                     <EmptyBorder bottom="1" left="1" right="50" top="1"/>
@@ -118,7 +118,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="20" y="510" width="290" height="70"/>
+                  <AbsoluteConstraints x="0" y="510" width="310" height="70"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -134,7 +134,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/anadir.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="  Registro de Paciente   "/>
+                <Property name="text" type="java.lang.String" value="Registro de Paciente "/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                     <EmptyBorder bottom="1" left="1" right="50" top="1"/>
@@ -153,7 +153,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="0" y="140" width="320" height="-1"/>
+                  <AbsoluteConstraints x="20" y="130" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -187,7 +187,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="220" width="310" height="-1"/>
+                  <AbsoluteConstraints x="0" y="220" width="330" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -222,7 +222,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="310" width="310" height="-1"/>
+                  <AbsoluteConstraints x="0" y="320" width="330" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -253,7 +253,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="0" y="70" width="270" height="50"/>
+                  <AbsoluteConstraints x="0" y="60" width="270" height="50"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -278,7 +278,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="0" y="10" width="270" height="50"/>
+                  <AbsoluteConstraints x="0" y="0" width="270" height="50"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -294,7 +294,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/seguro.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Gestion Contrase&#xf1;as  "/>
+                <Property name="text" type="java.lang.String" value="Gestion Contrase&#xf1;as "/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                     <EmptyBorder bottom="1" left="1" right="50" top="1"/>
@@ -313,7 +313,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="400" width="310" height="-1"/>
+                  <AbsoluteConstraints x="10" y="420" width="310" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
