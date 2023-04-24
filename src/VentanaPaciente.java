@@ -31,14 +31,14 @@ public class VentanaPaciente extends javax.swing.JFrame {
         cargarDatos();
         txtID.setEditable(false);
         txtID.setEnabled(false);
-        this.Imagen(this.lblAgregar,"Imagenes\\ag.png");
+        /*this.Imagen(this.lblAgregar,"Imagenes\\ag.png");
         this.Imagen(this.lblEliminar,"Imagenes\\eli.png");
         this.Imagen(this.lblBuscar,"Imagenes\\bu.png");
         this.Imagen(this.lblLimpiar,"Imagenes\\li.png");
-        this.Imagen(this.lblModificar,"Imagenes\\modi.png");
+        this.Imagen(this.lblModificar,"Imagenes\\modi.png");*/
         
     }
-     private void Imagen(JLabel lbl,String ruta){
+     /*private void Imagen(JLabel lbl,String ruta){
         this.imagen=new ImageIcon(ruta);
         this.icono=new ImageIcon(
                 this.imagen.getImage().getScaledInstance
@@ -47,7 +47,7 @@ public class VentanaPaciente extends javax.swing.JFrame {
                         Image.SCALE_SMOOTH));
         lbl.setIcon(this.icono);
         repaint();
-      }
+      }*/
 private boolean validaCampo(JTextField t){
         try{   estaVacio(t);
         }catch(Exception e){
@@ -114,8 +114,10 @@ public void limpiar(){
     
     public void cargarDatos() {
          try {
+            
             Connection con1 = null;
             DefaultTableModel m = (DefaultTableModel) tblPaciente.getModel();
+            m.setRowCount(0);
             Conexión conect1 = new Conexión();
             con1 = conect1.getConnection();
             String dts[] = new String[7];
@@ -156,7 +158,6 @@ public void limpiar(){
         jLabel12 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPaciente = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
@@ -181,8 +182,17 @@ public void limpiar(){
         jLabel7 = new javax.swing.JLabel();
         lblMenu1 = new javax.swing.JLabel();
         lblPass1 = new javax.swing.JLabel();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator5 = new javax.swing.JSeparator();
+        jSeparator6 = new javax.swing.JSeparator();
+        jSeparator7 = new javax.swing.JSeparator();
+        jSeparator8 = new javax.swing.JSeparator();
+        jImageBox2 = new JImageBox();
+        jPanel4 = new javax.swing.JPanel();
         panel1 = new java.awt.Panel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         MenuPleglable.setBackground(new java.awt.Color(69, 204, 209));
         MenuPleglable.setMinimumSize(new java.awt.Dimension(0, 577));
@@ -194,7 +204,7 @@ public void limpiar(){
         lblBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/flecha-izquierda90.png"))); // NOI18N
         lblBack.setText("Regresar           ");
         lblBack.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        lblBack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblBack.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblBack.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         lblBack.setIconTextGap(10);
         lblBack.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -217,7 +227,7 @@ public void limpiar(){
         lblPaciente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/anadir.png"))); // NOI18N
         lblPaciente.setText("Registro de Paciente ");
         lblPaciente.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        lblPaciente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblPaciente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblPaciente.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         lblPaciente.setIconTextGap(10);
         lblPaciente.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -240,7 +250,7 @@ public void limpiar(){
         lblCitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/calendario90.png"))); // NOI18N
         lblCitas.setText("Gestion de Citas      ");
         lblCitas.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        lblCitas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblCitas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblCitas.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         lblCitas.setIconTextGap(10);
         lblCitas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -260,7 +270,7 @@ public void limpiar(){
         lblExpediente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reportar90.png"))); // NOI18N
         lblExpediente.setText("Expediente Clínico    ");
         lblExpediente.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        lblExpediente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblExpediente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblExpediente.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         lblExpediente.setIconTextGap(10);
         lblExpediente.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -282,7 +292,7 @@ public void limpiar(){
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("      OPCIONES   ");
         jLabel9.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel9.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         jLabel9.setIconTextGap(10);
         jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -299,7 +309,7 @@ public void limpiar(){
         lblMenu.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/menu (4).png"))); // NOI18N
         lblMenu.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
-        lblMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblMenu.setIconTextGap(0);
         lblMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -315,7 +325,7 @@ public void limpiar(){
         lblPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/seguro.png"))); // NOI18N
         lblPass.setText("Gestion Contraseñas ");
         lblPass.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        lblPass.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblPass.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblPass.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         lblPass.setIconTextGap(10);
         lblPass.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -336,28 +346,33 @@ public void limpiar(){
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 110, 360, -1));
-        jPanel1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 140, 360, -1));
 
+        txtNombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 150, 240, -1));
+
+        txtApellido.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 240, -1));
+
+        lblAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-añadir-usuario-masculino-90.png"))); // NOI18N
+        lblAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblAgregarMouseClicked(evt);
             }
         });
-        jPanel1.add(lblAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 640, 70, 70));
+        jPanel1.add(lblAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 600, 110, 90));
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(153, 153, 153));
         jLabel12.setText("ID:");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 80, -1, -1));
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 100, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel11.setText("Dirección:");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 260, -1, -1));
-        jPanel1.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, 360, -1));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 250, -1, -1));
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel6.setText("Teléfono:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, -1, -1));
+        txtID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel1.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, 120, -1));
 
         tblPaciente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tblPaciente.setModel(new javax.swing.table.DefaultTableModel(
@@ -368,6 +383,7 @@ public void limpiar(){
                 "ID", "Nombre", "Apellidos", "Edad", "Genéro", "Teléfono", "Dirección"
             }
         ));
+        tblPaciente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tblPaciente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblPacienteMouseClicked(evt);
@@ -375,31 +391,37 @@ public void limpiar(){
         });
         jScrollPane1.setViewportView(tblPaciente);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 350, 720, 270));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 370, 720, 230));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel8.setText("Nombre:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 110, -1, -1));
-        jPanel1.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 260, 360, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 150, -1, -1));
+
+        txtDireccion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel1.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 250, 240, -1));
 
         cbxBuscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        cbxBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Nombre", "Apellido", " " }));
-        jPanel1.add(cbxBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 300, -1, -1));
+        cbxBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Nombre", "Apellido" }));
+        cbxBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.add(cbxBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 230, -1));
 
-        lblEliminar.setText("jLabel10");
+        lblEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-eliminar-90.png"))); // NOI18N
+        lblEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblEliminarMouseClicked(evt);
             }
         });
-        jPanel1.add(lblEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 640, 70, 70));
+        jPanel1.add(lblEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 610, 90, 80));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Apellido:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 140, -1, -1));
-        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 220, 360, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 200, -1, -1));
 
-        txtBuscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtTelefono.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 250, 240, -1));
+
+        txtBuscar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBuscarActionPerformed(evt);
@@ -410,44 +432,50 @@ public void limpiar(){
                 txtBuscarKeyReleased(evt);
             }
         });
-        jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 300, 475, -1));
-        jPanel1.add(txtEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 180, 120, -1));
+        jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 310, 350, 30));
+
+        txtEdad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel1.add(txtEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 200, 240, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setText("Edad:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 180, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 200, 60, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setText("Género:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 180, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 140, -1, -1));
 
-        cmbGenero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cmbGenero.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         cmbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Masculino", "Femenino" }));
-        jPanel1.add(cmbGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, 119, -1));
+        cmbGenero.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.add(cmbGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 140, 240, 30));
 
-        lblModificar.setText("jLabel10");
+        lblModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png"))); // NOI18N
+        lblModificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblModificar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblModificarMouseClicked(evt);
             }
         });
-        jPanel1.add(lblModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 640, 70, 70));
+        jPanel1.add(lblModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 610, 110, 80));
 
-        lblLimpiar.setText("jLabel10");
+        lblLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-clear-90.png"))); // NOI18N
+        lblLimpiar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblLimpiar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblLimpiarMouseClicked(evt);
             }
         });
-        jPanel1.add(lblLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 640, 70, 70));
+        jPanel1.add(lblLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 610, 90, 80));
 
-        lblBuscar.setText("jLabel10");
+        lblBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lupa.png"))); // NOI18N
+        lblBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblBuscarMouseClicked(evt);
             }
         });
-        jPanel1.add(lblBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 280, 60, 60));
+        jPanel1.add(lblBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 300, 50, 50));
 
         MenuPleglable1.setBackground(new java.awt.Color(69, 204, 209));
         MenuPleglable1.setMinimumSize(new java.awt.Dimension(0, 577));
@@ -497,7 +525,7 @@ public void limpiar(){
             }
         });
         MenuPleglable1.add(lblPaciente1);
-        lblPaciente1.setBounds(20, 170, 291, 66);
+        lblPaciente1.setBounds(20, 180, 291, 66);
 
         lblCitas1.setBackground(new java.awt.Color(0, 0, 0));
         lblCitas1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -517,7 +545,7 @@ public void limpiar(){
             }
         });
         MenuPleglable1.add(lblCitas1);
-        lblCitas1.setBounds(0, 270, 330, 66);
+        lblCitas1.setBounds(0, 310, 330, 66);
 
         lblExpediente1.setBackground(new java.awt.Color(0, 0, 0));
         lblExpediente1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -540,14 +568,14 @@ public void limpiar(){
             }
         });
         MenuPleglable1.add(lblExpediente1);
-        lblExpediente1.setBounds(0, 390, 330, 66);
+        lblExpediente1.setBounds(0, 430, 330, 66);
 
         jLabel7.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("      OPCIONES   ");
         jLabel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         jLabel7.setIconTextGap(10);
         jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -559,7 +587,7 @@ public void limpiar(){
             }
         });
         MenuPleglable1.add(jLabel7);
-        jLabel7.setBounds(10, 100, 270, 50);
+        jLabel7.setBounds(0, 10, 270, 50);
 
         lblMenu1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/menu (4).png"))); // NOI18N
@@ -572,7 +600,7 @@ public void limpiar(){
             }
         });
         MenuPleglable1.add(lblMenu1);
-        lblMenu1.setBounds(0, 10, 270, 50);
+        lblMenu1.setBounds(190, 10, 80, 50);
 
         lblPass1.setBackground(new java.awt.Color(0, 0, 0));
         lblPass1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -595,11 +623,40 @@ public void limpiar(){
             }
         });
         MenuPleglable1.add(lblPass1);
-        lblPass1.setBounds(10, 510, 310, 66);
+        lblPass1.setBounds(10, 540, 310, 66);
+        MenuPleglable1.add(jSeparator4);
+        jSeparator4.setBounds(0, 640, 270, 30);
+        MenuPleglable1.add(jSeparator5);
+        jSeparator5.setBounds(0, 160, 270, 30);
+        MenuPleglable1.add(jSeparator6);
+        jSeparator6.setBounds(0, 280, 270, 10);
+        MenuPleglable1.add(jSeparator7);
+        jSeparator7.setBounds(0, 400, 270, 30);
+        MenuPleglable1.add(jSeparator8);
+        jSeparator8.setBounds(0, 520, 270, 30);
 
-        jPanel1.add(MenuPleglable1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -1, 269, 740));
+        jImageBox2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/L1.png"))); // NOI18N
+        MenuPleglable1.add(jImageBox2);
+        jImageBox2.setBounds(40, 60, 170, 90);
 
-        panel1.setBackground(new java.awt.Color(92, 225, 230));
+        jPanel1.add(MenuPleglable1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -1, 269, 750));
+
+        jPanel4.setBackground(new java.awt.Color(0, 108, 183));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 920, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 710, 920, 40));
+
+        panel1.setBackground(new java.awt.Color(0, 108, 183));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("Registro de Pacientes");
@@ -609,29 +666,39 @@ public void limpiar(){
         panel1Layout.setHorizontalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
-                .addContainerGap(569, Short.MAX_VALUE)
+                .addContainerGap(322, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(363, 363, 363))
+                .addGap(340, 340, 340))
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(21, 21, 21)
                 .addComponent(jLabel1)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jPanel1.add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1190, 70));
+        jPanel1.add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, 920, 70));
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel10.setText("Teléfono:");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 250, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 290, 720, 70));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 743, Short.MAX_VALUE)
         );
 
         pack();
@@ -646,59 +713,58 @@ void llenarCamposTexto(String[] datos) {
     txtDireccion.setText(datos[6]);
 }
 
-void Buscar(String valor){
-    Connection con = null;
-    Conexión conect = new Conexión();
-    con = conect.getConnection();
-    DefaultTableModel modelo = new DefaultTableModel();
-    modelo.addColumn("ID");
-    modelo.addColumn("Nombre");
-    modelo.addColumn("Apellido");
-    modelo.addColumn("Edad");
-    modelo.addColumn("Genéro");
-    modelo.addColumn("Teléfono");
-    modelo.addColumn("Dirección");
 
-    String sql="";
-    if (valor.equals("")) {
-        sql = "SELECT * FROM pacientes";
-    } else {
-        if (cbxBuscar.getSelectedItem().toString().equals("Nombre")) {
-            sql = "SELECT * FROM pacientes WHERE nombre='"+valor+"'";
-        } else if(cbxBuscar.getSelectedItem().toString().equals("Apellido")) {
-            sql="SELECT * FROM pacientes WHERE apellido='"+valor+"'";
-        }
-    }
-    String []Datos = new String [7];
-    try {
-        Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery(sql);
-        boolean encontrado = false;
-        while(rs.next()){
-            Datos[0] = rs.getString(1);
-            Datos[1] = rs.getString(2);
-            Datos[2] = rs.getString(3);
-            Datos[3] = rs.getString(4);
-            Datos[4] = rs.getString(5);
-            Datos[5] = rs.getString(6);
-            Datos[6] = rs.getString(7);
-
-            modelo.addRow(Datos);
-            encontrado = true;
-        }
-
-        if (encontrado) {
-            llenarCamposTexto(Datos);
-        } else {
-            // Limpia los campos de texto si no se encuentra el registro
-            String[] vacio = {"", "", "", "", "", "", ""};
-            llenarCamposTexto(vacio);
-        }
+    void Buscar(String valor){
+        Connection con = null;
+        Conexión conect = new Conexión();
+        con = conect.getConnection();
+        DefaultTableModel modelo = new DefaultTableModel();
         
-    } catch(SQLException ex) {
-        Logger.getLogger("ERROR AL BUSCAR"+ex);
+        modelo.addColumn("ID");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Apellido");
+        modelo.addColumn("Edad");
+        modelo.addColumn("Genéro");
+        modelo.addColumn("Teléfono");
+        modelo.addColumn("Dirección");
+        
+        tblPaciente.setModel(modelo);
+        String sql="";
+        if (valor.equals("")) {
+            sql = "SELECT * FROM pacientes";
+        }else{
+            sql = "SELECT * FROM pacientes";
+            if (cbxBuscar.getSelectedItem().toString().equals("Nombre")) {
+                sql = "SELECT * FROM pacientes WHERE nombre='"+valor+"'";
+            }else if (cbxBuscar.getSelectedItem().toString().equals("Apellido")) {
+                sql = "SELECT * FROM pacientes WHERE apellido='"+valor+"'";
+            }
+        }
+        String []Datos = new String [7];
+        try{
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            boolean llenar= true;
+            while(rs.next()){
+                Datos[0] = rs.getString(1);
+                Datos[1] = rs.getString(2);
+                Datos[2] = rs.getString(3);
+                Datos[3] = rs.getString(4);
+                Datos[4] = rs.getString(5);
+                Datos[5] = rs.getString(6);
+                Datos[6] = rs.getString(7);                
+                modelo.addRow(Datos);
+                llenar =true;
+            }
+            tblPaciente.setModel(modelo);
+            
+        }catch(SQLException ex){
+            showMessageDialog(null, "Paciente no encontrado");
+        }
     }
-}
+        
+   
+
    
     private void lblPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseExited
         lblPass.setForeground(Color.BLACK);
@@ -871,7 +937,9 @@ void Buscar(String valor){
     }//GEN-LAST:event_lblAgregarMouseClicked
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-
+        if(txtBuscar.getText().equals("")){
+            cargarDatos();
+        }
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
@@ -989,7 +1057,7 @@ void Buscar(String valor){
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -1017,18 +1085,26 @@ private DefaultTableModel m;
     private javax.swing.JPanel MenuPleglable1;
     private javax.swing.JComboBox<String> cbxBuscar;
     private javax.swing.JComboBox<String> cmbGenero;
+    private JImageBox jImageBox2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator8;
     private javax.swing.JLabel lblAgregar;
     private javax.swing.JLabel lblBack;
     private javax.swing.JLabel lblBack1;
