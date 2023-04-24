@@ -9,6 +9,8 @@ public class Usuario {
     private String usuario;
     private String contraseña;
     private String rol;
+
+    public Usuario(){}
     
     public Usuario(int idUsuario, String usuario, String contraseña, String rol) {
         this.idUsuario = idUsuario;
@@ -96,7 +98,7 @@ public class Usuario {
     }
 
     public static DefaultTableModel Consultar(){
-        String query = "Select*from usuarios";
+        String query = "Select*from usuarios where rol like 'Secretaria'";
         DefaultTableModel tabla = null;
         try {
             ResultSet data = getConnection().prepareStatement(query).executeQuery();

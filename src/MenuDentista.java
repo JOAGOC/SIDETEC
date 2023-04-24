@@ -14,7 +14,6 @@ public class MenuDentista extends javax.swing.JFrame {
         desplace = new Desface();
         this.setLocationRelativeTo(null);
         this.Imagen(this.lbLogo,"Imagenes\\logoD.png");
-       
     }
 
     private void Imagen(JLabel lbl,String ruta){
