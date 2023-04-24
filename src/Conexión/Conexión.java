@@ -13,7 +13,7 @@ public class Conexión {
             return con;
         try {
             String db = "jdbc:mysql://localhost:3306/consultorio_dental";
-            con = DriverManager.getConnection(db, "root", "admi1");
+            con = DriverManager.getConnection(db, "root", "root");
             System.out.println("CONECTADO");
             return con;
         } catch (SQLException e) {
