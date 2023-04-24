@@ -20,15 +20,16 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
      * Creates new form VentanaInicio_SesionDentista
      */
     public VentanaInicio_SesionDentista() {
-        initComponents();
-        this.Imagen(this.lbLogo,"Imagenes\\logoD.png");
+        initComponents(); 
+        setLocationRelativeTo(null);
+    /*  this.Imagen(this.lbLogo,"Imagenes\\logoD.png");
         this.Imagen(this.lblUsuario,"Imagenes\\usuario.png");
         this.Imagen(this.lblContraseña,"Imagenes\\candado.png");
-        setLocationRelativeTo(null);
-        this.setSize(650, 780);
+       
+        this.setSize(650, 780);*/
         
     }
-    private ImageIcon imagen;
+   /* private ImageIcon imagen;
     private Icon icono;
     private void Imagen(JLabel lbl,String ruta){
         this.imagen=new ImageIcon(ruta);
@@ -39,110 +40,84 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
                         Image.SCALE_SMOOTH));
         lbl.setIcon(this.icono);
         repaint();
-      }
+      }*/
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        lbLogo = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
-        lblUsuario = new javax.swing.JLabel();
-        lblContraseña = new javax.swing.JLabel();
         btnInicio = new javax.swing.JButton();
-        cmbRol = new javax.swing.JComboBox<>();
         jCheckBox1 = new javax.swing.JCheckBox();
+        cmbRol = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jImageBox1 = new JImageBox();
+        jImageBox2 = new JImageBox();
+        jImageBox3 = new JImageBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(69, 204, 209));
+        jPanel1.setBackground(new java.awt.Color(0, 108, 183));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtPassword.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jPanel2.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 260, 40));
 
         btnInicio.setBackground(new java.awt.Color(69, 204, 209));
         btnInicio.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnInicio.setText("Iniciar sesión");
+        btnInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInicioActionPerformed(evt);
             }
         });
+        jPanel2.add(btnInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 450, 310, 40));
 
-        cmbRol.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        cmbRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona", "Dentista", "Secretaria" }));
-
+        jCheckBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jCheckBox1.setText("Mostrar");
+        jCheckBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jCheckBox1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jCheckBox1MouseClicked(evt);
             }
         });
+        jPanel2.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 390, -1, -1));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(171, 171, 171))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(104, 104, 104)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtPassword)
-                    .addComponent(cmbRol, 0, 255, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(56, Short.MAX_VALUE)
-                .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbRol, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(54, 54, 54)
-                                .addComponent(jCheckBox1))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(44, 44, 44)
-                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(82, 82, 82)
-                .addComponent(btnInicio)
-                .addGap(103, 103, 103))
-        );
+        cmbRol.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        cmbRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona", "Dentista", "Secretaria" }));
+        cmbRol.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        cmbRol.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel2.add(cmbRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, 260, 40));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(53, 45, -1, -1));
+        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 260, 40));
+
+        jImageBox1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logoD.png"))); // NOI18N
+        jPanel2.add(jImageBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 370, 230));
+
+        jImageBox2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-dentist-60.png"))); // NOI18N
+        jPanel2.add(jImageBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 270, 50, -1));
+
+        jImageBox3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-contraseña-60.png"))); // NOI18N
+        jPanel2.add(jImageBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, 50, -1));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(53, 45, 460, 560));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 742, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -203,7 +178,7 @@ public void consultarUsuario(String user, String pass)
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -230,11 +205,12 @@ public void consultarUsuario(String user, String pass)
     private javax.swing.JButton btnInicio;
     private javax.swing.JComboBox<String> cmbRol;
     private javax.swing.JCheckBox jCheckBox1;
+    private JImageBox jImageBox1;
+    private JImageBox jImageBox2;
+    private JImageBox jImageBox3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel lbLogo;
-    private javax.swing.JLabel lblContraseña;
-    private javax.swing.JLabel lblUsuario;
     private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }
