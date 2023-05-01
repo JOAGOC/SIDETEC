@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
@@ -19,9 +21,12 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
     /**
      * Creates new form VentanaInicio_SesionDentista
      */
+    
     public VentanaInicio_SesionDentista() {
         initComponents(); 
         setLocationRelativeTo(null);
+        lblHora.setText("Fecha: "+fechacomp);
+        
     /*  this.Imagen(this.lbLogo,"Imagenes\\logoD.png");
         this.Imagen(this.lblUsuario,"Imagenes\\usuario.png");
         this.Imagen(this.lblContraseña,"Imagenes\\candado.png");
@@ -55,6 +60,9 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
         jImageBox1 = new JImageBox();
         jImageBox2 = new JImageBox();
         jImageBox3 = new JImageBox();
+        jLabel2 = new javax.swing.JLabel();
+        txtUsuario = new javax.swing.JTextField();
+        lblHora = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,7 +78,7 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
         btnInicio.setBackground(new java.awt.Color(69, 204, 209));
         btnInicio.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnInicio.setText("Iniciar sesión");
-        btnInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnInicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInicioActionPerformed(evt);
@@ -80,7 +88,7 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
 
         jCheckBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jCheckBox1.setText("Mostrar");
-        jCheckBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jCheckBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jCheckBox1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jCheckBox1MouseClicked(evt);
@@ -91,8 +99,8 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
         cmbRol.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         cmbRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona", "Dentista", "Secretaria" }));
         cmbRol.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        cmbRol.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel2.add(cmbRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, 260, 40));
+        cmbRol.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel2.add(cmbRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, 260, 40));
 
         jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 260, 40));
@@ -105,6 +113,16 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
 
         jImageBox3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-contraseña-60.png"))); // NOI18N
         jPanel2.add(jImageBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, 50, -1));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setText("Rol:");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, -1, -1));
+
+        txtUsuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jPanel2.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, 260, 40));
+
+        lblHora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jPanel2.add(lblHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 520, 160, 30));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(53, 45, 460, 560));
 
@@ -125,7 +143,7 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
-   consultarUsuario(cmbRol.getSelectedItem().toString(),txtPassword.getText());
+   consultarUsuario(txtUsuario.getText(),txtPassword.getText());
    
     }//GEN-LAST:event_btnInicioActionPerformed
 
@@ -151,17 +169,18 @@ public void consultarUsuario(String user, String pass)
             passCorrecto = rs.getString(2);
         }
         if (user.equals(usuarioCorrecto) && pass.equals(passCorrecto)) {
-            if(user.equals("Dentista")){
+            if(cmbRol.getSelectedItem().toString().equals("Dentista")){
                MenuDentista next=new MenuDentista();
             next.setVisible(true);
             next.setLocationRelativeTo(null);
             this.dispose();
             }else {
+                if(cmbRol.getSelectedItem().toString().equals("Secretaria")){
                 MenuSecretaria next=new MenuSecretaria();
             next.setVisible(true);
             next.setLocationRelativeTo(null);
             this.dispose();
-            }//if user
+                }}//if user
         } else if (!user.equals(usuarioCorrecto) || !pass.equals(passCorrecto)) {
             JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
         }
@@ -200,6 +219,15 @@ public void consultarUsuario(String user, String pass)
             }
         });
     }
+Calendar fecha=new GregorianCalendar();
+String año=Integer.toString(fecha.get(Calendar.YEAR));
+String mes=Integer.toString(fecha.get(Calendar.MONTH));
+String dia=Integer.toString(fecha.get(Calendar.DATE));
+String fechacomp=dia+"/"+mes+"/"+año;
+
+String hora=Integer.toString(fecha.get(Calendar.HOUR_OF_DAY));
+String min=Integer.toString(fecha.get(Calendar.MINUTE));
+String horacomp=hora+":"+min;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInicio;
@@ -209,8 +237,11 @@ public void consultarUsuario(String user, String pass)
     private JImageBox jImageBox2;
     private JImageBox jImageBox3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblHora;
     private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

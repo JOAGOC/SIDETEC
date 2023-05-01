@@ -4,6 +4,7 @@ import desplazable.Desface;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -48,6 +50,8 @@ public class VentanaPaciente extends javax.swing.JFrame {
         lbl.setIcon(this.icono);
         repaint();
       }*/
+    
+    
 private boolean validaCampo(JTextField t){
         try{   estaVacio(t);
         }catch(Exception e){
@@ -59,6 +63,18 @@ private boolean validaCampo(JTextField t){
     private void estaVacio(JTextField t)throws Exception{
         String cad=t.getText().trim();
         if(cad.equals("")) throw new Exception("Campo vacio");
+    }
+    private void comboVacio(JComboBox c ) throws Exception{
+        if(c.getSelectedIndex()<1)throw new Exception("Combo Vacio");
+    }
+    
+     private boolean validaCombo(JComboBox c){
+          try{
+           comboVacio(c);
+       }catch(Exception e){
+           showMessageDialog(this,e.getMessage()); c.requestFocus();return true;
+       }
+        return false;
     }
     private void agregar(){
         try
@@ -156,20 +172,20 @@ public void limpiar(){
         txtApellido = new javax.swing.JTextField();
         lblAgregar = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        lblDireccion = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPaciente = new javax.swing.JTable();
-        jLabel8 = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
         cbxBuscar = new javax.swing.JComboBox<>();
         lblEliminar = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lblApellido = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
         txtBuscar = new javax.swing.JTextField();
         txtEdad = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        lblEdad = new javax.swing.JLabel();
+        lblGenero = new javax.swing.JLabel();
         cmbGenero = new javax.swing.JComboBox<>();
         lblModificar = new javax.swing.JLabel();
         lblLimpiar = new javax.swing.JLabel();
@@ -191,7 +207,7 @@ public void limpiar(){
         jPanel4 = new javax.swing.JPanel();
         panel1 = new java.awt.Panel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        lblTelefono = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         MenuPleglable.setBackground(new java.awt.Color(69, 204, 209));
@@ -348,31 +364,42 @@ public void limpiar(){
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtNombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 150, 240, -1));
 
         txtApellido.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 240, -1));
 
         lblAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-añadir-usuario-masculino-90.png"))); // NOI18N
-        lblAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblAgregar.setToolTipText("Agregar");
+        lblAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblAgregarMouseClicked(evt);
             }
         });
-        jPanel1.add(lblAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 600, 110, 90));
+        jPanel1.add(lblAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 600, 100, 90));
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(153, 153, 153));
         jLabel12.setText("ID:");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 100, -1, -1));
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 100, -1, -1));
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel11.setText("Dirección:");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 250, -1, -1));
+        lblDireccion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblDireccion.setText("Dirección:");
+        jPanel1.add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 250, -1, -1));
 
         txtID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jPanel1.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, 120, -1));
+        jPanel1.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 100, 120, -1));
 
         tblPaciente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tblPaciente.setModel(new javax.swing.table.DefaultTableModel(
@@ -383,7 +410,7 @@ public void limpiar(){
                 "ID", "Nombre", "Apellidos", "Edad", "Genéro", "Teléfono", "Dirección"
             }
         ));
-        tblPaciente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tblPaciente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tblPaciente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblPacienteMouseClicked(evt);
@@ -393,20 +420,21 @@ public void limpiar(){
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 370, 720, 230));
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel8.setText("Nombre:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 150, -1, -1));
+        lblNombre.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblNombre.setText("Nombre:");
+        jPanel1.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 150, -1, -1));
 
         txtDireccion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel1.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 250, 240, -1));
 
         cbxBuscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         cbxBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Nombre", "Apellido" }));
-        cbxBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbxBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.add(cbxBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 230, -1));
 
         lblEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-eliminar-90.png"))); // NOI18N
-        lblEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblEliminar.setToolTipText("Eliminar");
+        lblEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblEliminarMouseClicked(evt);
@@ -414,11 +442,16 @@ public void limpiar(){
         });
         jPanel1.add(lblEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 610, 90, 80));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel3.setText("Apellido:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 200, -1, -1));
+        lblApellido.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblApellido.setText("Apellido:");
+        jPanel1.add(lblApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 200, -1, -1));
 
         txtTelefono.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 250, 240, -1));
 
         txtBuscar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -435,32 +468,39 @@ public void limpiar(){
         jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 310, 350, 30));
 
         txtEdad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtEdad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEdadKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 200, 240, -1));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel4.setText("Edad:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 200, 60, -1));
+        lblEdad.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblEdad.setText("Edad:");
+        jPanel1.add(lblEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 200, 60, -1));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel5.setText("Género:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 140, -1, -1));
+        lblGenero.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblGenero.setText("Género:");
+        jPanel1.add(lblGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 140, -1, -1));
 
         cmbGenero.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         cmbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Masculino", "Femenino" }));
-        cmbGenero.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cmbGenero.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.add(cmbGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 140, 240, 30));
 
         lblModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png"))); // NOI18N
-        lblModificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblModificar.setToolTipText("Modificar");
+        lblModificar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblModificar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblModificarMouseClicked(evt);
             }
         });
-        jPanel1.add(lblModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 610, 110, 80));
+        jPanel1.add(lblModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 610, 110, 80));
 
         lblLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-clear-90.png"))); // NOI18N
-        lblLimpiar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblLimpiar.setToolTipText("Limpiar");
+        lblLimpiar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblLimpiar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblLimpiarMouseClicked(evt);
@@ -469,7 +509,7 @@ public void limpiar(){
         jPanel1.add(lblLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 610, 90, 80));
 
         lblBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lupa.png"))); // NOI18N
-        lblBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblBuscarMouseClicked(evt);
@@ -487,7 +527,7 @@ public void limpiar(){
         lblBack1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/flecha-izquierda90.png"))); // NOI18N
         lblBack1.setText("Regresar           ");
         lblBack1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        lblBack1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblBack1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblBack1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         lblBack1.setIconTextGap(10);
         lblBack1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -510,7 +550,7 @@ public void limpiar(){
         lblPaciente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/anadir.png"))); // NOI18N
         lblPaciente1.setText("Registro de Paciente ");
         lblPaciente1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        lblPaciente1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblPaciente1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblPaciente1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         lblPaciente1.setIconTextGap(10);
         lblPaciente1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -533,10 +573,13 @@ public void limpiar(){
         lblCitas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/calendario90.png"))); // NOI18N
         lblCitas1.setText("Gestion de Citas      ");
         lblCitas1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        lblCitas1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblCitas1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblCitas1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         lblCitas1.setIconTextGap(10);
         lblCitas1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblCitas1MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblCitas1MouseEntered(evt);
             }
@@ -553,7 +596,7 @@ public void limpiar(){
         lblExpediente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reportar90.png"))); // NOI18N
         lblExpediente1.setText("Expediente Clínico    ");
         lblExpediente1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        lblExpediente1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblExpediente1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblExpediente1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         lblExpediente1.setIconTextGap(10);
         lblExpediente1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -579,6 +622,9 @@ public void limpiar(){
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         jLabel7.setIconTextGap(10);
         jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel7MouseEntered(evt);
             }
@@ -592,7 +638,7 @@ public void limpiar(){
         lblMenu1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/menu (4).png"))); // NOI18N
         lblMenu1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
-        lblMenu1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblMenu1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblMenu1.setIconTextGap(0);
         lblMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -608,7 +654,7 @@ public void limpiar(){
         lblPass1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/seguro.png"))); // NOI18N
         lblPass1.setText("Gestion Contraseñas ");
         lblPass1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        lblPass1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblPass1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblPass1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         lblPass1.setIconTextGap(10);
         lblPass1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -634,10 +680,8 @@ public void limpiar(){
         jSeparator7.setBounds(0, 400, 270, 30);
         MenuPleglable1.add(jSeparator8);
         jSeparator8.setBounds(0, 520, 270, 30);
-
-        jImageBox2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/L1.png"))); // NOI18N
         MenuPleglable1.add(jImageBox2);
-        jImageBox2.setBounds(40, 60, 170, 90);
+        jImageBox2.setBounds(60, 60, 140, 140);
 
         jPanel1.add(MenuPleglable1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -1, 269, 750));
 
@@ -659,6 +703,7 @@ public void limpiar(){
         panel1.setBackground(new java.awt.Color(0, 108, 183));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Registro de Pacientes");
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
@@ -666,7 +711,7 @@ public void limpiar(){
         panel1Layout.setHorizontalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
-                .addContainerGap(322, Short.MAX_VALUE)
+                .addContainerGap(312, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(340, 340, 340))
         );
@@ -678,11 +723,11 @@ public void limpiar(){
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jPanel1.add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, 920, 70));
+        jPanel1.add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 910, 70));
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel10.setText("Teléfono:");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 250, -1, -1));
+        lblTelefono.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblTelefono.setText("Teléfono:");
+        jPanel1.add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 250, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
@@ -712,7 +757,6 @@ void llenarCamposTexto(String[] datos) {
     txtTelefono.setText(datos[5]);
     txtDireccion.setText(datos[6]);
 }
-
 
     void Buscar(String valor){
         Connection con = null;
@@ -763,7 +807,7 @@ void llenarCamposTexto(String[] datos) {
         }
     }
         
-   
+ 
 
    
     private void lblPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseExited
@@ -854,6 +898,40 @@ void llenarCamposTexto(String[] datos) {
     }//GEN-LAST:event_lblBuscarMouseClicked
 
     private void lblModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblModificarMouseClicked
+       if(validaCampo(txtNombre)){
+            lblNombre.setForeground(Color.RED);
+            return;
+        }else lblNombre.setForeground(Color.BLACK);
+
+        if(validaCampo(txtApellido)){
+            lblApellido.setForeground(Color.RED);
+            return;
+        }
+        else lblApellido.setForeground(Color.BLACK);
+        
+        if(validaCampo(txtTelefono)){
+            lblTelefono.setForeground(Color.RED);
+            return;
+        }
+        else lblTelefono.setForeground(Color.BLACK);
+        
+        if(validaCombo(cmbGenero)){
+            lblGenero.setForeground(Color.RED);
+            return;
+        }else lblGenero.setForeground(Color.BLACK);
+        
+        if(validaCampo(txtEdad)){
+            lblEdad.setForeground(Color.RED);
+            return;
+        }
+        else lblDireccion.setForeground(Color.BLACK);
+        
+        if(validaCampo(txtDireccion)){
+            lblDireccion.setForeground(Color.RED);
+            return;
+        }
+        else lblDireccion.setForeground(Color.BLACK);
+        
         int fila = tblPaciente.getSelectedRow();
         if (fila == -1)
         {
@@ -933,6 +1011,39 @@ void llenarCamposTexto(String[] datos) {
     }//GEN-LAST:event_lblEliminarMouseClicked
 
     private void lblAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAgregarMouseClicked
+          if(validaCampo(txtNombre)){
+            lblNombre.setForeground(Color.RED);
+            return;
+        }else lblNombre.setForeground(Color.BLACK);
+
+        if(validaCampo(txtApellido)){
+            lblApellido.setForeground(Color.RED);
+            return;
+        }
+        else lblApellido.setForeground(Color.BLACK);
+        
+        if(validaCampo(txtTelefono)){
+            lblTelefono.setForeground(Color.RED);
+            return;
+        }
+        else lblTelefono.setForeground(Color.BLACK);
+        
+        if(validaCombo(cmbGenero)){
+            lblGenero.setForeground(Color.RED);
+            return;
+        }else lblGenero.setForeground(Color.BLACK);
+        
+        if(validaCampo(txtEdad)){
+            lblEdad.setForeground(Color.RED);
+            return;
+        }
+        else lblDireccion.setForeground(Color.BLACK);
+        
+        if(validaCampo(txtDireccion)){
+            lblDireccion.setForeground(Color.RED);
+            return;
+        }
+        else lblDireccion.setForeground(Color.BLACK);
         agregar();
     }//GEN-LAST:event_lblAgregarMouseClicked
 
@@ -970,7 +1081,7 @@ void llenarCamposTexto(String[] datos) {
     }//GEN-LAST:event_lblPass1MouseExited
 
     private void lblPass1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPass1MouseEntered
-        lblPass1.setForeground(Color.WHITE);
+        lblPass1.setForeground(Color.GRAY);
     }//GEN-LAST:event_lblPass1MouseEntered
 
     private void lblPass1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPass1MouseClicked
@@ -1000,7 +1111,7 @@ void llenarCamposTexto(String[] datos) {
     }//GEN-LAST:event_lblExpediente1MouseExited
 
     private void lblExpediente1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpediente1MouseEntered
-        lblExpediente1.setForeground(Color.WHITE);
+        lblExpediente1.setForeground(Color.GRAY);
     }//GEN-LAST:event_lblExpediente1MouseEntered
 
     private void lblExpediente1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpediente1MouseClicked
@@ -1015,11 +1126,11 @@ void llenarCamposTexto(String[] datos) {
     }//GEN-LAST:event_lblCitas1MouseExited
 
     private void lblCitas1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCitas1MouseEntered
-        lblCitas1.setForeground(Color.WHITE);
+        lblCitas1.setForeground(Color.GRAY);
     }//GEN-LAST:event_lblCitas1MouseEntered
 
     private void lblPaciente1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPaciente1MouseExited
-        lblPaciente1.setForeground(Color.WHITE);
+        lblPaciente1.setForeground(Color.GRAY);
     }//GEN-LAST:event_lblPaciente1MouseExited
 
     private void lblPaciente1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPaciente1MouseEntered
@@ -1038,7 +1149,7 @@ void llenarCamposTexto(String[] datos) {
     }//GEN-LAST:event_lblBack1MouseExited
 
     private void lblBack1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBack1MouseEntered
-        lblBack1.setForeground(Color.WHITE);
+        lblBack1.setForeground(Color.GRAY);
     }//GEN-LAST:event_lblBack1MouseEntered
 
     private void lblBack1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBack1MouseClicked
@@ -1047,6 +1158,66 @@ void llenarCamposTexto(String[] datos) {
         login.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lblBack1MouseClicked
+
+    private void lblCitas1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCitas1MouseClicked
+       VentanaCitas exp=new VentanaCitas();
+        exp.setVisible(true);
+        exp.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_lblCitas1MouseClicked
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+       char c=evt.getKeyChar();
+        String valida = Character.toString(c);
+        if (!valida.matches("[a-zA-Z_]+") && !valida.matches("\b") && !valida.matches(" ")) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(rootPane, "Ingrese solo letras");
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEdadKeyTyped
+        char car = evt.getKeyChar();
+    if(((car < '0') ||(car > '9')) &&(car != '\b')){
+        evt.consume();
+        JOptionPane.showMessageDialog(this, "Solo numeros");
+    }
+    if(txtEdad.getText().length()>=3){
+        evt.consume();
+        Toolkit.getDefaultToolkit().beep();
+        JOptionPane.showMessageDialog(this, "Edad No Valida");
+    }
+    }//GEN-LAST:event_txtEdadKeyTyped
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        char car = evt.getKeyChar();
+    if(((car < '0') ||(car > '9')) &&(car != '\b')){
+        evt.consume();
+        JOptionPane.showMessageDialog(this, "Solo numeros");
+    }
+    if(txtTelefono.getText().length()>=10){
+        evt.consume();
+        Toolkit.getDefaultToolkit().beep();
+        JOptionPane.showMessageDialog(this, "Solo Ingresa 10 Digitos");
+    }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
+
+    private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
+       char c=evt.getKeyChar();
+        String valida = Character.toString(c);
+        if (!valida.matches("[a-zA-Z_]+") && !valida.matches("\b") && !valida.matches(" ")) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(rootPane, "Ingrese solo letras");
+        }
+    }//GEN-LAST:event_txtApellidoKeyTyped
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        if(MenuPleglable.getX()==0)
+        desplace.desplazarIzquierda(this.MenuPleglable,MenuPleglable.getX(),-180, 10,10 );
+        else if(MenuPleglable.getX()== -180)
+        desplace.desplazarDerecha(this.MenuPleglable,MenuPleglable.getX(),0, 10,10);
+    }//GEN-LAST:event_jLabel7MouseClicked
 
     
     public static void main(String args[]) {
@@ -1087,15 +1258,9 @@ private DefaultTableModel m;
     private javax.swing.JComboBox<String> cmbGenero;
     private JImageBox jImageBox2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
@@ -1106,22 +1271,28 @@ private DefaultTableModel m;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JLabel lblAgregar;
+    private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblBack;
     private javax.swing.JLabel lblBack1;
     private javax.swing.JLabel lblBuscar;
     private javax.swing.JLabel lblCitas;
     private javax.swing.JLabel lblCitas1;
+    private javax.swing.JLabel lblDireccion;
+    private javax.swing.JLabel lblEdad;
     private javax.swing.JLabel lblEliminar;
     private javax.swing.JLabel lblExpediente;
     private javax.swing.JLabel lblExpediente1;
+    private javax.swing.JLabel lblGenero;
     private javax.swing.JLabel lblLimpiar;
     private javax.swing.JLabel lblMenu;
     private javax.swing.JLabel lblMenu1;
     private javax.swing.JLabel lblModificar;
+    private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblPaciente;
     private javax.swing.JLabel lblPaciente1;
     private javax.swing.JLabel lblPass;
     private javax.swing.JLabel lblPass1;
+    private javax.swing.JLabel lblTelefono;
     private java.awt.Panel panel1;
     private javax.swing.JTable tblPaciente;
     private javax.swing.JTextField txtApellido;

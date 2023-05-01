@@ -98,7 +98,7 @@ public class Usuario {
     }
 
     public static DefaultTableModel Consultar(){
-        String query = "Select*from usuarios where rol like 'Secretaria'";
+        String query = "Select*from Usuarios where rol like 'Secretaria'";
         DefaultTableModel tabla = null;
         try {
             ResultSet data = getConnection().prepareStatement(query).executeQuery();

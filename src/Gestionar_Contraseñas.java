@@ -222,16 +222,13 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
 
         tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tablaUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tablaUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(tablaUsuarios);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, 430, 300));
@@ -264,7 +261,7 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         btnRegresar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/flecha-izquierda80.png"))); // NOI18N
         btnRegresar.setContentAreaFilled(false);
-        btnRegresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRegresar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegresarActionPerformed(evt);
@@ -301,7 +298,7 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         jPanel3.add(txtConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 200, 30));
 
         jImageBox2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/L1.png"))); // NOI18N
-        jPanel3.add(jImageBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 140, -1));
+        jPanel3.add(jImageBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 120, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setText("Confirmar Contraseña");
@@ -313,7 +310,7 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         btnRegistrar.setBackground(new java.awt.Color(0, 108, 183));
         btnRegistrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnRegistrar.setText("Agregar");
-        btnRegistrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRegistrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel3.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 390, 120, 36));
         btnRegistrar.setVisible(false);
 
@@ -322,13 +319,13 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         btnActualizar.setBackground(new java.awt.Color(0, 108, 183));
         btnActualizar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnActualizar.setText("Actualizar");
-        btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 390, 100, 36));
 
         btnEliminar.setBackground(new java.awt.Color(0, 108, 183));
         btnEliminar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnEliminar.setText("Eliminar");
-        btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 390, 100, 36));
         btnEliminar.setVisible(false);
 

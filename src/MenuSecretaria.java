@@ -34,18 +34,15 @@ private void Imagen(JLabel lbl,String ruta){
         lblBack = new javax.swing.JLabel();
         lblPaciente = new javax.swing.JLabel();
         lblCitas = new javax.swing.JLabel();
-        lblExpediente = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         lblMenu = new javax.swing.JLabel();
-        lblPass = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
-        jSeparator6 = new javax.swing.JSeparator();
         lbLogo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -62,7 +59,7 @@ private void Imagen(JLabel lbl,String ruta){
         lblBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/flecha-izquierda90.png"))); // NOI18N
         lblBack.setText("Regresar           ");
         lblBack.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        lblBack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblBack.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblBack.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         lblBack.setIconTextGap(10);
         lblBack.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -77,7 +74,7 @@ private void Imagen(JLabel lbl,String ruta){
             }
         });
         MenuPleglable.add(lblBack);
-        lblBack.setBounds(0, 510, 310, 70);
+        lblBack.setBounds(0, 580, 310, 70);
 
         lblPaciente.setBackground(new java.awt.Color(0, 0, 0));
         lblPaciente.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -85,7 +82,7 @@ private void Imagen(JLabel lbl,String ruta){
         lblPaciente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/anadir.png"))); // NOI18N
         lblPaciente.setText("Registro de Paciente ");
         lblPaciente.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        lblPaciente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblPaciente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblPaciente.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         lblPaciente.setIconTextGap(10);
         lblPaciente.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -106,9 +103,9 @@ private void Imagen(JLabel lbl,String ruta){
         lblCitas.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblCitas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/calendario90.png"))); // NOI18N
-        lblCitas.setText("Gestion de Citas      ");
+        lblCitas.setText("Gestión de Citas      ");
         lblCitas.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        lblCitas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblCitas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblCitas.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         lblCitas.setIconTextGap(10);
         lblCitas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -122,36 +119,12 @@ private void Imagen(JLabel lbl,String ruta){
         MenuPleglable.add(lblCitas);
         lblCitas.setBounds(0, 230, 330, 66);
 
-        lblExpediente.setBackground(new java.awt.Color(0, 0, 0));
-        lblExpediente.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblExpediente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblExpediente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reportar90.png"))); // NOI18N
-        lblExpediente.setText("Expediente Clínico    ");
-        lblExpediente.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        lblExpediente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        lblExpediente.setEnabled(false);
-        lblExpediente.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        lblExpediente.setIconTextGap(10);
-        lblExpediente.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblExpedienteMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblExpedienteMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblExpedienteMouseExited(evt);
-            }
-        });
-        MenuPleglable.add(lblExpediente);
-        lblExpediente.setBounds(0, 330, 330, 66);
-
         jLabel7.setBackground(new java.awt.Color(0, 0, 0));
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("      OPCIONES   ");
         jLabel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         jLabel7.setIconTextGap(10);
         jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -168,7 +141,7 @@ private void Imagen(JLabel lbl,String ruta){
         lblMenu.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/menu (4).png"))); // NOI18N
         lblMenu.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
-        lblMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblMenu.setIconTextGap(0);
         lblMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -177,40 +150,12 @@ private void Imagen(JLabel lbl,String ruta){
         });
         MenuPleglable.add(lblMenu);
         lblMenu.setBounds(0, 0, 270, 50);
-
-        lblPass.setBackground(new java.awt.Color(0, 0, 0));
-        lblPass.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblPass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/seguro.png"))); // NOI18N
-        lblPass.setText("Gestion Contraseñas ");
-        lblPass.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        lblPass.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        lblPass.setEnabled(false);
-        lblPass.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        lblPass.setIconTextGap(10);
-        lblPass.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblPassMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblPassMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblPassMouseExited(evt);
-            }
-        });
-        MenuPleglable.add(lblPass);
-        lblPass.setBounds(10, 420, 310, 66);
-        MenuPleglable.add(jSeparator2);
-        jSeparator2.setBounds(0, 500, 270, 30);
         MenuPleglable.add(jSeparator3);
         jSeparator3.setBounds(0, 120, 270, 30);
         MenuPleglable.add(jSeparator4);
         jSeparator4.setBounds(0, 210, 270, 30);
         MenuPleglable.add(jSeparator5);
         jSeparator5.setBounds(0, 310, 270, 30);
-        MenuPleglable.add(jSeparator6);
-        jSeparator6.setBounds(0, 410, 270, 30);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
@@ -224,15 +169,25 @@ private void Imagen(JLabel lbl,String ruta){
 
         jPanel3.setBackground(new java.awt.Color(0, 108, 183));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Bienvenida");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 738, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(290, 290, 290)
+                .addComponent(jLabel1)
+                .addContainerGap(498, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 43, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(0, 108, 183));
@@ -262,10 +217,10 @@ private void Imagen(JLabel lbl,String ruta){
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -321,7 +276,7 @@ private void Imagen(JLabel lbl,String ruta){
     }//GEN-LAST:event_lblBackMouseClicked
 
     private void lblBackMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseEntered
-        lblBack.setForeground(Color.WHITE);
+        lblBack.setForeground(Color.GRAY);
     }//GEN-LAST:event_lblBackMouseEntered
 
     private void lblBackMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseExited
@@ -336,7 +291,7 @@ private void Imagen(JLabel lbl,String ruta){
     }//GEN-LAST:event_lblPacienteMouseClicked
 
     private void lblPacienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPacienteMouseEntered
-        lblPaciente.setForeground(Color.WHITE);
+        lblPaciente.setForeground(Color.GRAY);
     }//GEN-LAST:event_lblPacienteMouseEntered
 
     private void lblPacienteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPacienteMouseExited
@@ -344,7 +299,7 @@ private void Imagen(JLabel lbl,String ruta){
     }//GEN-LAST:event_lblPacienteMouseExited
 
     private void lblCitasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCitasMouseEntered
-        lblCitas.setForeground(Color.WHITE);
+        lblCitas.setForeground(Color.GRAY);
     }//GEN-LAST:event_lblCitasMouseEntered
 
     private void lblCitasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCitasMouseExited
@@ -372,36 +327,6 @@ private void Imagen(JLabel lbl,String ruta){
         else if(MenuPleglable.getX()== -180)
         desplace.desplazarDerecha(this.MenuPleglable,MenuPleglable.getX(),0, 10,10);
     }//GEN-LAST:event_jLabel2MouseClicked
-
-    private void lblPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseExited
-        lblPass.setForeground(Color.BLACK);
-    }//GEN-LAST:event_lblPassMouseExited
-
-    private void lblPassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseEntered
-        lblPass.setForeground(Color.WHITE);
-    }//GEN-LAST:event_lblPassMouseEntered
-
-    private void lblPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseClicked
-        Gestionar_Contraseñas pass=new Gestionar_Contraseñas();
-        pass.setVisible(true);
-        pass.setLocationRelativeTo(null);
-        this.dispose();
-    }//GEN-LAST:event_lblPassMouseClicked
-
-    private void lblExpedienteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpedienteMouseExited
-        lblExpediente.setForeground(Color.BLACK);
-    }//GEN-LAST:event_lblExpedienteMouseExited
-
-    private void lblExpedienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpedienteMouseEntered
-        lblExpediente.setForeground(Color.WHITE);
-    }//GEN-LAST:event_lblExpedienteMouseEntered
-
-    private void lblExpedienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpedienteMouseClicked
-        VentanaExpediente exp=new VentanaExpediente();
-        exp.setVisible(true);
-        exp.setLocationRelativeTo(null);
-        this.dispose();
-    }//GEN-LAST:event_lblExpedienteMouseClicked
 
     public static void main(String args[]) {
         
@@ -436,23 +361,20 @@ private void Imagen(JLabel lbl,String ruta){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MenuPleglable;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
     private javax.swing.JLabel lbLogo;
     private javax.swing.JLabel lblBack;
     private javax.swing.JLabel lblCitas;
-    private javax.swing.JLabel lblExpediente;
     private javax.swing.JLabel lblMenu;
     private javax.swing.JLabel lblPaciente;
-    private javax.swing.JLabel lblPass;
     // End of variables declaration//GEN-END:variables
 }
