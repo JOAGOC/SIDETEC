@@ -136,6 +136,7 @@ private void Imagen(JLabel lbl,String ruta){
         jImageBox5 = new JImageBox();
         jImageBox6 = new JImageBox();
         jImageBox7 = new JImageBox();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -527,7 +528,7 @@ private void Imagen(JLabel lbl,String ruta){
         MenuPleglable1.add(jSeparator8);
         jSeparator8.setBounds(0, 520, 270, 30);
         MenuPleglable1.add(jImageBox2);
-        jImageBox2.setBounds(50, 70, 170, 170);
+        jImageBox2.setBounds(50, 70, 170, 0);
 
         jPanel1.add(MenuPleglable1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 269, 870));
 
@@ -571,7 +572,7 @@ private void Imagen(JLabel lbl,String ruta){
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 830, 940, 40));
 
-        jImageBox3.setIcon(new javax.swing.ImageIcon("C:\\Users\\memac\\OneDrive\\Escritorio\\Sexto Semestre\\Software\\Consultorio Dental2\\SIDETEC\\src\\img\\terminado.png")); // NOI18N
+        jImageBox3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/terminado.png"))); // NOI18N
         jImageBox3.setToolTipText("Cita Finalizada");
         jImageBox3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -580,7 +581,7 @@ private void Imagen(JLabel lbl,String ruta){
         });
         jPanel1.add(jImageBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 730, 70, -1));
 
-        jImageBox4.setIcon(new javax.swing.ImageIcon("C:\\Users\\memac\\OneDrive\\Escritorio\\Sexto Semestre\\Software\\Consultorio Dental2\\SIDETEC\\src\\img\\cita-medica (1).png")); // NOI18N
+        jImageBox4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cita-medica (1).png"))); // NOI18N
         jImageBox4.setToolTipText("Guardar Cita");
         jImageBox4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -589,7 +590,7 @@ private void Imagen(JLabel lbl,String ruta){
         });
         jPanel1.add(jImageBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 730, 80, -1));
 
-        jImageBox5.setIcon(new javax.swing.ImageIcon("C:\\Users\\memac\\OneDrive\\Escritorio\\Sexto Semestre\\Software\\Consultorio Dental2\\SIDETEC\\src\\img\\borrar.png")); // NOI18N
+        jImageBox5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/borrar.png"))); // NOI18N
         jImageBox5.setToolTipText("Eliminar Cita");
         jImageBox5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -598,7 +599,7 @@ private void Imagen(JLabel lbl,String ruta){
         });
         jPanel1.add(jImageBox5, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 730, 70, -1));
 
-        jImageBox6.setIcon(new javax.swing.ImageIcon("C:\\Users\\memac\\OneDrive\\Escritorio\\Sexto Semestre\\Software\\Consultorio Dental2\\SIDETEC\\src\\img\\fecha-del-calendario.png")); // NOI18N
+        jImageBox6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fecha-del-calendario.png"))); // NOI18N
         jImageBox6.setToolTipText("Confirmar Cita");
         jImageBox6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -607,7 +608,7 @@ private void Imagen(JLabel lbl,String ruta){
         });
         jPanel1.add(jImageBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 730, 70, -1));
 
-        jImageBox7.setIcon(new javax.swing.ImageIcon("C:\\Users\\memac\\OneDrive\\Escritorio\\Sexto Semestre\\Software\\Consultorio Dental2\\SIDETEC\\src\\img\\editar1.png")); // NOI18N
+        jImageBox7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar1.png"))); // NOI18N
         jImageBox7.setToolTipText("Modificar");
         jImageBox7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -615,6 +616,9 @@ private void Imagen(JLabel lbl,String ruta){
             }
         });
         jPanel1.add(jImageBox7, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 730, -1, 60));
+
+        jLabel1.setText("jLabel1");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 730, 80, 70));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1206,6 +1210,7 @@ private DefaultTableModel m;
     private JImageBox jImageBox5;
     private JImageBox jImageBox6;
     private JImageBox jImageBox7;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel14;

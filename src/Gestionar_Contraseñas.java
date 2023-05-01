@@ -298,7 +298,7 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         jPanel3.add(txtConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 200, 30));
 
         jImageBox2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/L1.png"))); // NOI18N
-        jPanel3.add(jImageBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 120, -1));
+        jPanel3.add(jImageBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 110, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setText("Confirmar Contraseña");
