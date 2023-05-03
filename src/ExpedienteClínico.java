@@ -1,74 +1,85 @@
+
+import static Conexión.Conexión.getConnection;
+import java.sql.Date;
+
 public class ExpedienteClínico {
+
     private int folio;
-    private String tratamiento, aparatologia, duracion, pronostico, observaciones;
+    private Date fecha;
+    private String motivo, enfermedad, observaciones, tratamiento, estado;
     private int id_paciente;
 
+    public ExpedienteClínico(int folio, Date fecha, String motivo, String enfermedad, String observaciones, String tratamiento, String estado, int id_paciente) {
+        this.folio = folio;
+        this.fecha = fecha;
+        this.motivo = motivo;
+        this.enfermedad = enfermedad;
+        this.observaciones = observaciones;
+        this.tratamiento = tratamiento;
+        this.estado = estado;
+        this.id_paciente = id_paciente;
+    }
+
+    public ExpedienteClínico(Date fecha, String motivo, String enfermedad, String observaciones, String tratamiento, String estado, int id_paciente) {
+        this.fecha = fecha;
+        this.motivo = motivo;
+        this.enfermedad = enfermedad;
+        this.observaciones = observaciones;
+        this.tratamiento = tratamiento;
+        this.estado = estado;
+        this.id_paciente = id_paciente;
+    }
+
     public ExpedienteClínico() {
+
     }
 
-    public ExpedienteClínico(int folio, String tratamiento, String aparatologia, String duracion, String pronostico, String observaciones, int id_paciente) {
-        this.folio = folio;
-        this.tratamiento = tratamiento;
-        this.aparatologia = aparatologia;
-        this.duracion = duracion;
-        this.pronostico = pronostico;
-        this.observaciones = observaciones;
-        this.id_paciente = id_paciente;
+    public String insertar() {
+        String query = String.format("INSERT INTO expediente_clinico VALUES ('%s','%s','%s','%s','%s','%s',%d);",
+                fecha, motivo, enfermedad, observaciones, tratamiento, estado, id_paciente);
+        try {
+            getConnection().prepareStatement(query).executeUpdate();
+        } catch (Exception e) {
+            return String.format("Error al ejecutar SQL", e.getMessage());
+        }
+        return "Se registró correctamente";
     }
 
-    public int getFolio() {
-        return folio;
+    public static String eliminar() {
+        String query = String.format("Delete from expediente_clinico where folio=%d", folio);
+        try {
+            getConnection().prepareStatement(query).executeUpdate();
+        } catch (Exception e) {
+            return String.format("Error al ejecutar SQL: %s", e.getMessage());
+        }
+        return "Se eliminó correctamente";
     }
 
-    public void setFolio(int folio) {
-        this.folio = folio;
+    public static String eliminar(int folio) {
+        String query = String.format("Delete from expediente_clinico where folio=%d", folio);
+        try {
+            getConnection().prepareStatement(query).executeUpdate();
+        } catch (Exception e) {
+            return String.format("Error al ejecutar SQL: %s", e.getMessage());
+        }
+        return "Se eliminó correctamente";
     }
 
-    public String getTratamiento() {
-        return tratamiento;
+    public String actualizar() {
+        String query = String.format("UPDATE expediente_clinico\n"
+                + "SET fecha = '%s', motivo = '%s', enfermedad = '%s', observaciones = '%s', tratamiento = '%s', estado = '%s' WHERE folio = %d;", fecha, motivo, enfermedad, observaciones, tratamiento, estado, folio);
+        try {
+            getConnection().prepareStatement(query).executeUpdate();
+        } catch (Exception e) {
+            return String.format("Error al ejecutar SQL", e.getMessage());
+        }
+        return "Se actualizó correctamente";
     }
 
-    public void setTratamiento(String tratamiento) {
-        this.tratamiento = tratamiento;
+    public static void main(String[] args) {
+        try {
+            System.out.println(getConnection().prepareStatement("Select * from Expediente_Clinico;").executeQuery().getMetaData());
+        } catch (Exception e) {
+        }
     }
-
-    public String getAparatologia() {
-        return aparatologia;
-    }
-
-    public void setAparatologia(String aparatologia) {
-        this.aparatologia = aparatologia;
-    }
-
-    public String getDuracion() {
-        return duracion;
-    }
-
-    public void setDuracion(String duracion) {
-        this.duracion = duracion;
-    }
-
-    public String getPronostico() {
-        return pronostico;
-    }
-
-    public void setPronostico(String pronostico) {
-        this.pronostico = pronostico;
-    }
-
-    public String getObservaciones() {
-        return observaciones;
-    }
-
-    public void setObservaciones(String observaciones) {
-        this.observaciones = observaciones;
-    }
-
-    public int getId_paciente() {
-        return id_paciente;
-    }
-
-    public void setId_paciente(int id_paciente) {
-        this.id_paciente = id_paciente;
-    }    
 }
