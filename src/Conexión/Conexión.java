@@ -12,8 +12,8 @@ public class Conexión {
         if (con!=null)
             return con;
         try {
-            String db = "jdbc:mysql://sidetec.c4xkc1d1pseq.us-east-1.rds.amazonaws.com:3306/consultorio_dental";
-            con = DriverManager.getConnection(db, "admin", "admin12345");
+            String db = "jdbc:mysql://localhost:3306/consultorio_dental";
+            con = DriverManager.getConnection(db, "root", "root");
             System.out.println("CONECTADO");
             return con;
         } catch (SQLException e) {
