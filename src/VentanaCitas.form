@@ -512,7 +512,7 @@
                   </Border>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Cursor Por defecto"/>
+                  <Color id="Default Cursor"/>
                 </Property>
                 <Property name="horizontalTextPosition" type="int" value="10"/>
                 <Property name="iconTextGap" type="int" value="10"/>
@@ -538,7 +538,7 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/anadir.png"/>
+                  <Image iconType="3" name="/img/icons8-a&#xf1;adir-usuario-masculino-52.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Registro de Paciente "/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -547,7 +547,7 @@
                   </Border>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Cursor Por defecto"/>
+                  <Color id="Default Cursor"/>
                 </Property>
                 <Property name="horizontalTextPosition" type="int" value="10"/>
                 <Property name="iconTextGap" type="int" value="10"/>
@@ -573,7 +573,7 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/calendario90.png"/>
+                  <Image iconType="3" name="/img/icons8-planificaci&#xf3;n-de-tareas-52.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de Citas      "/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -582,7 +582,7 @@
                   </Border>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Cursor Por defecto"/>
+                  <Color id="Default Cursor"/>
                 </Property>
                 <Property name="horizontalTextPosition" type="int" value="10"/>
                 <Property name="iconTextGap" type="int" value="10"/>
@@ -608,7 +608,7 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/reportar90.png"/>
+                  <Image iconType="3" name="/img/icons8-docket-52.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Expediente Cl&#xed;nico    "/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -617,7 +617,7 @@
                   </Border>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Cursor Por defecto"/>
+                  <Color id="Default Cursor"/>
                 </Property>
                 <Property name="horizontalTextPosition" type="int" value="10"/>
                 <Property name="iconTextGap" type="int" value="10"/>
@@ -649,7 +649,7 @@
                   </Border>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Cursor Por defecto"/>
+                  <Color id="Default Cursor"/>
                 </Property>
                 <Property name="horizontalTextPosition" type="int" value="10"/>
                 <Property name="iconTextGap" type="int" value="10"/>
@@ -676,7 +676,7 @@
                   </Border>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Cursor Por defecto"/>
+                  <Color id="Default Cursor"/>
                 </Property>
                 <Property name="iconTextGap" type="int" value="0"/>
               </Properties>
@@ -699,7 +699,7 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/seguro.png"/>
+                  <Image iconType="3" name="/img/icons8-contrase&#xf1;a-52.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Gestion Contrase&#xf1;as "/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -708,7 +708,7 @@
                   </Border>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Cursor Por defecto"/>
+                  <Color id="Default Cursor"/>
                 </Property>
                 <Property name="horizontalTextPosition" type="int" value="10"/>
                 <Property name="iconTextGap" type="int" value="10"/>
@@ -841,9 +841,6 @@
         </Container>
         <Component class="JImageBox" name="jImageBox3">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\memac\OneDrive\Escritorio\Sexto Semestre\Software\Consultorio Dental2\SIDETEC\src\img\terminado.png"/>
-            </Property>
             <Property name="toolTipText" type="java.lang.String" value="Cita Finalizada"/>
           </Properties>
           <Events>
@@ -857,9 +854,6 @@
         </Component>
         <Component class="JImageBox" name="jImageBox4">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\memac\OneDrive\Escritorio\Sexto Semestre\Software\Consultorio Dental2\SIDETEC\src\img\cita-medica (1).png"/>
-            </Property>
             <Property name="toolTipText" type="java.lang.String" value="Guardar Cita"/>
           </Properties>
           <Events>
@@ -873,9 +867,6 @@
         </Component>
         <Component class="JImageBox" name="jImageBox5">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\memac\OneDrive\Escritorio\Sexto Semestre\Software\Consultorio Dental2\SIDETEC\src\img\borrar.png"/>
-            </Property>
             <Property name="toolTipText" type="java.lang.String" value="Eliminar Cita"/>
           </Properties>
           <Events>
@@ -889,9 +880,6 @@
         </Component>
         <Component class="JImageBox" name="jImageBox6">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\memac\OneDrive\Escritorio\Sexto Semestre\Software\Consultorio Dental2\SIDETEC\src\img\fecha-del-calendario.png"/>
-            </Property>
             <Property name="toolTipText" type="java.lang.String" value="Confirmar Cita"/>
           </Properties>
           <Events>
@@ -905,9 +893,6 @@
         </Component>
         <Component class="JImageBox" name="jImageBox7">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\memac\OneDrive\Escritorio\Sexto Semestre\Software\Consultorio Dental2\SIDETEC\src\img\editar1.png"/>
-            </Property>
             <Property name="toolTipText" type="java.lang.String" value="Modificar"/>
           </Properties>
           <Events>

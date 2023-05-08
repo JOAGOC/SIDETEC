@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import static javax.swing.JOptionPane.showMessageDialog;
 
-public class Conexión {
+public class Conexión{
     private static Connection con;
     
     public static Connection getConnection() {

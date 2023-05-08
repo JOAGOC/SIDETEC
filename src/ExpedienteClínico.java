@@ -44,7 +44,7 @@ public class ExpedienteClínico {
         }
         return "Se registró correctamente";
     }
-
+/*
     public static String eliminar() {
         String query = String.format("Delete from expediente_clinico where folio=%d", folio);
         try {
@@ -53,7 +53,7 @@ public class ExpedienteClínico {
             return String.format("Error al ejecutar SQL: %s", e.getMessage());
         }
         return "Se eliminó correctamente";
-    }
+    }*/
 
     public static String eliminar(int folio) {
         String query = String.format("Delete from expediente_clinico where folio=%d", folio);
