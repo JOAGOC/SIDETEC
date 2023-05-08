@@ -1,5 +1,7 @@
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -18,6 +20,7 @@ public class AutoCompleteTextField extends JTextField {
 
     private static List<String> suggestions = new ArrayList<>();
     private static JComboBox<String> comboBox = new JComboBox<>();
+
     public static List<String> getSuggestions() {
         return suggestions;
     }
@@ -34,9 +37,9 @@ public class AutoCompleteTextField extends JTextField {
         AutoCompleteTextField.comboBox = comboBox;
     }
 
-    private String[] items = {"apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "kiwi",
-        "lemon", "mango", "nectarine", "orange", "pear", "quince", "raspberry", "strawberry", "tangerine", "ugli",
-        "vanilla", "watermelon", "xylocarp", "yellow apple", "zucchini"};
+    private String[] items = { "apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "kiwi",
+            "lemon", "mango", "nectarine", "orange", "pear", "quince", "raspberry", "strawberry", "tangerine", "ugli",
+            "vanilla", "watermelon", "xylocarp", "yellow apple", "zucchini" };
 
     public AutoCompleteTextField(Document doc, String text, int columns) {
         super(doc, text, columns);
@@ -68,24 +71,14 @@ public class AutoCompleteTextField extends JTextField {
                 model.addElement(item);
             }
 
-            this.getParent().add(comboBox);
             comboBox.setModel(model);
-            setComboBoxSize();
+            setLayout(new BorderLayout());
+            add(comboBox, BorderLayout.SOUTH);
+            comboBox.setVisible(true);
             comboBox.setMaximumRowCount(5);
             comboBox.hidePopup();
 
             AutoCompleteTextField ac = this;
-            this.addComponentListener(new ComponentListener() {
-                public void componentResized(ComponentEvent e) {
-                    setComboBoxSize();
-                }
-                public void componentMoved(ComponentEvent e) {
-                }
-                public void componentShown(ComponentEvent e) {
-                }
-                public void componentHidden(ComponentEvent e) {
-                }
-            });
             this.addKeyListener(new KeyAdapter() {
                 public void keyPressed(KeyEvent e) {
                     switch (e.getKeyCode()) {
@@ -136,26 +129,21 @@ public class AutoCompleteTextField extends JTextField {
                                     for (String suggestion : suggestions) {
                                         model.addElement(suggestion);
                                     }
-                                    Rectangle rect = ac.getBounds();
                                     comboBox.hidePopup();
                                     comboBox.showPopup();
                                 }
                                 comboBox.setSelectedIndex(-1);
-                                System.out.println(ac.getBounds());
-                                System.out.println(comboBox.getBounds());
                             });
                             break;
                     }
                 }
             });
-            System.out.println(this.getBounds());
-            System.out.println(comboBox.getBounds());            
         });
     }
 
-    private void setComboBoxSize() {
-        Rectangle rect = this.getBounds();
-        comboBox.setBounds(rect.x, rect.y+rect.height,rect.width,0);
-        comboBox.setPreferredSize(new Dimension(rect.width,0));
+    public void paint(Graphics g) {
+        super.paint(g);
+        Rectangle rect = getBounds();
+        comboBox.setBounds(0, rect.height, rect.width, 0);
     }
 }

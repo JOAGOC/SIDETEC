@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -120,7 +121,17 @@ public class TagInputControl extends JPanel implements ActionListener {
     }
 
     public void setTagInputField(JTextField tagInputField) {
+        Container c = this.tagInputField.getParent();
+        System.out.println((c == null) ? "":c.toString());
+        c.remove(this.tagInputField);
+        System.out.println((c.equals(this)) ? "Iguales":"Diferentes");
+        this.remove(tagInputField);
         this.tagInputField = tagInputField;
+        GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        add(tagInputField, gridBagConstraints);
+        tagInputField.addActionListener(this);
     }
 
     public JPanel getTagPanel() {
