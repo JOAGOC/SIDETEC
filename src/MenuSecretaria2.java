@@ -22,12 +22,12 @@ import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-public class MenuDentista extends javax.swing.JFrame {
+public class MenuSecretaria2 extends javax.swing.JFrame {
     ColorRenderer colorRenderer = new ColorRenderer();
     private ImageIcon imagen;
     private ImageIcon icono;
     Desface desplace;
-    public MenuDentista() {
+    public MenuSecretaria2() {
         initComponents();
         desplace = new Desface();
         this.setLocationRelativeTo(null);
@@ -272,14 +272,11 @@ public class MenuDentista extends javax.swing.JFrame {
         lblBack = new javax.swing.JLabel();
         lblPaciente = new javax.swing.JLabel();
         lblCitas = new javax.swing.JLabel();
-        lblExpediente = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         lblMenu = new javax.swing.JLabel();
-        lblPass = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
-        jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -338,7 +335,7 @@ public class MenuDentista extends javax.swing.JFrame {
             }
         });
         MenuPleglable.add(lblBack);
-        lblBack.setBounds(30, 500, 280, 70);
+        lblBack.setBounds(0, 520, 280, 70);
 
         lblPaciente.setBackground(new java.awt.Color(0, 0, 0));
         lblPaciente.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -386,29 +383,6 @@ public class MenuDentista extends javax.swing.JFrame {
         MenuPleglable.add(lblCitas);
         lblCitas.setBounds(0, 220, 330, 66);
 
-        lblExpediente.setBackground(new java.awt.Color(0, 0, 0));
-        lblExpediente.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblExpediente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblExpediente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reportar90.png"))); // NOI18N
-        lblExpediente.setText("Expediente Clínico    ");
-        lblExpediente.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        lblExpediente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        lblExpediente.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        lblExpediente.setIconTextGap(10);
-        lblExpediente.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblExpedienteMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblExpedienteMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblExpedienteMouseExited(evt);
-            }
-        });
-        MenuPleglable.add(lblExpediente);
-        lblExpediente.setBounds(0, 320, 330, 66);
-
         jLabel7.setBackground(new java.awt.Color(0, 0, 0));
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -440,37 +414,12 @@ public class MenuDentista extends javax.swing.JFrame {
         });
         MenuPleglable.add(lblMenu);
         lblMenu.setBounds(0, 0, 270, 50);
-
-        lblPass.setBackground(new java.awt.Color(0, 0, 0));
-        lblPass.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblPass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/seguro.png"))); // NOI18N
-        lblPass.setText("Gestion Contraseñas ");
-        lblPass.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
-        lblPass.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        lblPass.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        lblPass.setIconTextGap(10);
-        lblPass.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblPassMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblPassMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblPassMouseExited(evt);
-            }
-        });
-        MenuPleglable.add(lblPass);
-        lblPass.setBounds(10, 420, 310, 66);
         MenuPleglable.add(jSeparator1);
         jSeparator1.setBounds(0, 500, 270, 30);
         MenuPleglable.add(jSeparator2);
         jSeparator2.setBounds(0, 120, 270, 30);
         MenuPleglable.add(jSeparator3);
         jSeparator3.setBounds(0, 300, 270, 30);
-        MenuPleglable.add(jSeparator4);
-        jSeparator4.setBounds(0, 410, 270, 30);
         MenuPleglable.add(jSeparator5);
         jSeparator5.setBounds(0, 200, 270, 30);
 
@@ -739,21 +688,6 @@ public class MenuDentista extends javax.swing.JFrame {
 
     }//GEN-LAST:event_fechaMouseClicked
 
-    private void lblPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseExited
-        lblPass.setForeground(Color.BLACK);
-    }//GEN-LAST:event_lblPassMouseExited
-
-    private void lblPassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseEntered
-        lblPass.setForeground(Color.GRAY);
-    }//GEN-LAST:event_lblPassMouseEntered
-
-    private void lblPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseClicked
-        Gestionar_Contraseñas pass=new Gestionar_Contraseñas();
-        pass.setVisible(true);
-        pass.setLocationRelativeTo(null);
-        this.dispose();
-    }//GEN-LAST:event_lblPassMouseClicked
-
     private void lblMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenuMouseClicked
         if(MenuPleglable.getX()==0)
         desplace.desplazarIzquierda(this.MenuPleglable,MenuPleglable.getX(),-180, 10,10 );
@@ -769,21 +703,6 @@ public class MenuDentista extends javax.swing.JFrame {
         //lblExpediente.setForeground(Color.BLUE);
     }//GEN-LAST:event_jLabel7MouseEntered
 
-    private void lblExpedienteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpedienteMouseExited
-        lblExpediente.setForeground(Color.BLACK);
-    }//GEN-LAST:event_lblExpedienteMouseExited
-
-    private void lblExpedienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpedienteMouseEntered
-        lblExpediente.setForeground(Color.GRAY);
-    }//GEN-LAST:event_lblExpedienteMouseEntered
-
-    private void lblExpedienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpedienteMouseClicked
-        VentanaExpediente exp=new VentanaExpediente();
-        exp.setVisible(true);
-        exp.setLocationRelativeTo(null);
-        this.dispose();
-    }//GEN-LAST:event_lblExpedienteMouseClicked
-
     private void lblCitasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCitasMouseExited
         lblCitas.setForeground(Color.BLACK);
     }//GEN-LAST:event_lblCitasMouseExited
@@ -793,7 +712,7 @@ public class MenuDentista extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCitasMouseEntered
 
     private void lblCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCitasMouseClicked
-        VentanaCitas ci=new VentanaCitas();
+        VentanaCitasSecre ci=new VentanaCitasSecre();
         ci.setVisible(true);
         ci.setLocationRelativeTo(null);
         this.dispose();
@@ -808,7 +727,7 @@ public class MenuDentista extends javax.swing.JFrame {
     }//GEN-LAST:event_lblPacienteMouseEntered
 
     private void lblPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPacienteMouseClicked
-        VentanaPaciente next=new VentanaPaciente();
+        VentanaPacienteSecre next=new VentanaPacienteSecre();
         next.setVisible(true);
         next.setLocationRelativeTo(null);
         this.dispose();
@@ -909,14 +828,11 @@ private DefaultTableModel m;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JLabel lblBack;
     private javax.swing.JLabel lblCitas;
-    private javax.swing.JLabel lblExpediente;
     private javax.swing.JLabel lblMenu;
     private javax.swing.JLabel lblPaciente;
-    private javax.swing.JLabel lblPass;
     private javax.swing.JTable tblCita;
     private javax.swing.JTable tblNoCitas;
     private javax.swing.JTable tblNoCitas1;

@@ -163,7 +163,9 @@ public void consultarUsuario(String user, String pass)
     try {
         con = conect.getConnection();
         PreparedStatement pst = con.prepareStatement("SELECT usuario, contraseña FROM Usuarios where usuario='"+user+"'");
+       // PreparedStatement pst2 = con.prepareStatement("SET GLOBAL time_zone = '-3:00'");
         ResultSet rs = pst.executeQuery();
+       // ResultSet rs2 = pst2.executeQuery();
         if (rs.next()) {
             usuarioCorrecto = rs.getString(1);
             passCorrecto = rs.getString(2);
@@ -176,7 +178,7 @@ public void consultarUsuario(String user, String pass)
             this.dispose();
             }else {
                 if(cmbRol.getSelectedItem().toString().equals("Secretaria")){
-                MenuSecretaria next=new MenuSecretaria();
+                MenuSecretaria2 next=new MenuSecretaria2();
             next.setVisible(true);
             next.setLocationRelativeTo(null);
             this.dispose();
