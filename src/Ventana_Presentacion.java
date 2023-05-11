@@ -168,7 +168,7 @@ public class Ventana_Presentacion extends javax.swing.JFrame {
         
         try {
             for (int i = 0; i <= 100; i++) {
-                Thread.sleep(100);
+                Thread.sleep(30);
                 vp.jLabel1.setText(i+"%");
                 if (i==10) {
                 vp.jLabel2.setText("Cargando componentes...");

@@ -155,7 +155,6 @@ public class MenuDentista extends javax.swing.JFrame {
     */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
         MenuPleglable = new javax.swing.JPanel();
@@ -215,7 +214,7 @@ public class MenuDentista extends javax.swing.JFrame {
             }
         });
         MenuPleglable.add(lblBack);
-        lblBack.setBounds(10, 500, 280, 70);
+        lblBack.setBounds(10, 510, 280, 70);
 
         lblPaciente.setBackground(new java.awt.Color(0, 0, 0));
         lblPaciente.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -303,7 +302,7 @@ public class MenuDentista extends javax.swing.JFrame {
             }
         });
         MenuPleglable.add(jLabel7);
-        jLabel7.setBounds(0, 60, 270, 50);
+        jLabel7.setBounds(0, 0, 270, 50);
 
         lblMenu.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/menu (4).png"))); // NOI18N
@@ -509,7 +508,7 @@ public class MenuDentista extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -628,7 +627,6 @@ public class MenuDentista extends javax.swing.JFrame {
     }//GEN-LAST:event_lblBackMouseEntered
 
     private void lblBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseClicked
-
         VentanaInicio_SesionDentista login = new VentanaInicio_SesionDentista();
         login.setVisible(true);
         this.setVisible(false);
