@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS pacientes(
   direccion VARCHAR(100) NOT NULL,
   PRIMARY KEY (id)
 );
-SET GLOBAL time_zone = '-3:00';
+SET GLOBAL time_zone = '-7:00';
 
 CREATE TABLE expediente_clinico (
     folio INT NOT NULL AUTO_INCREMENT,
@@ -22,7 +22,7 @@ CREATE TABLE expediente_clinico (
     estado CHAR(1),
     id_paciente INT,
     PRIMARY KEY (folio),
-    FOREIGN KEY (id_paciente) REFERENCES paciente(id_paciente)
+    FOREIGN KEY (id_paciente) REFERENCES pacientes(id)
 );
 
 CREATE TABLE IF NOT EXISTS expediente_clinico(

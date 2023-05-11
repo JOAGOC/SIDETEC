@@ -19,7 +19,7 @@ import javax.swing.text.Document;
 public class AutoCompleteTextField extends JTextField {
 
     private static List<String> suggestions = new ArrayList<>();
-    private static JComboBox<String> comboBox = new JComboBox<>();
+    private JComboBox<String> comboBox = new JComboBox<>();
 
     public static List<String> getSuggestions() {
         return suggestions;
@@ -27,14 +27,6 @@ public class AutoCompleteTextField extends JTextField {
 
     public static void setSuggestions(List<String> suggestions) {
         AutoCompleteTextField.suggestions = suggestions;
-    }
-
-    public static JComboBox<String> getComboBox() {
-        return comboBox;
-    }
-
-    public static void setComboBox(JComboBox<String> comboBox) {
-        AutoCompleteTextField.comboBox = comboBox;
     }
 
     private String[] items = { "apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "kiwi",

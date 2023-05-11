@@ -15,6 +15,7 @@ public class Conexión {
             String db = "jdbc:mysql://localhost:3306/consultorio_dental";
             con = DriverManager.getConnection(db, "root", "root");
             System.out.println("CONECTADO");
+            con.prepareStatement("Set global time_zone = '-7:00'");
             return con;
         } catch (SQLException e) {
             showMessageDialog(null, "Error en la conexion. " + e.getMessage());
