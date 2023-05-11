@@ -62,6 +62,8 @@ Create table gestion_cita (
   FOREIGN KEY (idPaciente) REFERENCES pacientes(id)
 );
 
+Select folio as Folio, fecha as Fecha, motivo as Motivo, enfermedad as Enfermedad, observaciones as Observaciones, tratamiento as Tratamiento, IF(estado like '0','Inactivo','Activo') end CONCAT_WS(' ',nombre, apellido,'-',id) from expediente_clinico inner join pacientes on id_paciente = id;
+
 -- |Motivos:
 -- Limpieza dental
 -- Dolor de muelas

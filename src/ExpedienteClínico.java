@@ -65,8 +65,11 @@ public class ExpedienteClínico implements Cloneable, CRUD {
         }
         return null;
     }
+
     public static DefaultTableModel consultar() {
-        return CRUD.consultar("Select * from expediente_clinico;");
+        return CRUD.consultar("Select folio as Folio, fecha as Fecha, motivo as Motivo, enfermedad as Enfermedad, observaciones as Observaciones,\n"
+                + "tratamiento as Tratamiento, IF(estado like '0','Inactivo','Activo') as Estado, CONCAT_WS(' ',nombre, apellido,'-',id) as Paciente\n"
+                + "from expediente_clinico inner join pacientes on id_paciente = id where Estado like '1';");
     }
     private int folio;
     private Date fecha;
@@ -181,7 +184,7 @@ public class ExpedienteClínico implements Cloneable, CRUD {
         }
         if (!estado.equals(old.estado)) {
             query += "estado = ?, ";
-            values.add(estado.c+"");
+            values.add(estado.c + "");
             parameterIndex++;
         }
         if (QUERY_INITIAL.equals(query)) {

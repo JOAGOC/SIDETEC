@@ -9,27 +9,27 @@ public interface CRUD{
         try {
             ResultSet data = getConnection().prepareStatement(query).executeQuery();
             ResultSetMetaData columnas = (ResultSetMetaData)data.getMetaData();
+            
             java.util.function.Function<ResultSetMetaData,String[]> devlolverColumnas = (rs) -> {
                 String[] nombreCol = null;
                 try {
                     int colcount = rs.getColumnCount();
                     nombreCol = new String[colcount];
                     for(int i = 0;i<colcount;){
-                        nombreCol[i++] = rs.getColumnName(i);
+                        nombreCol[i++] = rs.getColumnLabel(i);
                     };
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
                 return nombreCol;
             };
+            
             tabla = new DefaultTableModel(devlolverColumnas.apply(columnas),0);
             int index = 0;
-            Object[] registro = new Object[4];
+            Object[] registro = new Object[columnas.getColumnCount()];
             while(data.next()){
-                registro[index++] = data.getInt(index); 
-                registro[index++] = data.getString(index); 
-                registro[index++] = data.getString(index); 
-                registro[index++] = data.getString(index); 
+                while (index < columnas.getColumnCount())
+                    registro[index++] = data.getObject(index);
                 tabla.addRow(registro);
                 index = 0;
             }

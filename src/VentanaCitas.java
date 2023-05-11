@@ -415,7 +415,7 @@ private void Imagen(JLabel lbl,String ruta){
             }
         });
         MenuPleglable1.add(lblPaciente1);
-        lblPaciente1.setBounds(20, 180, 279, 54);
+        lblPaciente1.setBounds(20, 180, 284, 54);
 
         lblCitas1.setBackground(new java.awt.Color(0, 0, 0));
         lblCitas1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -464,9 +464,9 @@ private void Imagen(JLabel lbl,String ruta){
         lblExpediente1.setBounds(0, 430, 330, 54);
 
         jLabel9.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 2, 24)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("      OPCIONES   ");
+        jLabel9.setText("Opciones");
         jLabel9.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel9.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
@@ -516,7 +516,7 @@ private void Imagen(JLabel lbl,String ruta){
             }
         });
         MenuPleglable1.add(lblPass1);
-        lblPass1.setBounds(10, 540, 310, 54);
+        lblPass1.setBounds(10, 550, 310, 54);
         MenuPleglable1.add(jSeparator4);
         jSeparator4.setBounds(0, 640, 270, 30);
         MenuPleglable1.add(jSeparator5);

@@ -142,7 +142,7 @@ private void Imagen(JLabel lbl,String ruta){
             }
         });
         MenuPleglable.add(jLabel8);
-        jLabel8.setBounds(0, 80, 270, 50);
+        jLabel8.setBounds(0, 0, 270, 50);
 
         lblMenu.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
