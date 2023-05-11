@@ -120,7 +120,7 @@ public class ExpedienteClínico implements Cloneable, CRUD {
         String query = "INSERT INTO expediente_clinico(fecha, motivo, enfermedad, observaciones, tratamiento, estado, id_paciente) VALUES (?,?,?,?,?,?,?);";
         // (fecha, motivo, enfermedad, observaciones, tratamiento, estado, id_paciente);
         try {
-            var stmn = getConnection().prepareStatement(query);
+            PreparedStatement stmn = getConnection().prepareStatement(query);
             int index = 1;
             stmn.setDate(index++, fecha);
             stmn.setString(index++, motivo);
@@ -141,7 +141,7 @@ public class ExpedienteClínico implements Cloneable, CRUD {
     public String eliminar() {
         String query = "Update expediente_clinico set estado = ? where folio = ?";
         try {
-            var stmnt = getConnection().prepareStatement(query);
+            PreparedStatement stmnt = getConnection().prepareStatement(query);
             int index = 1;
             stmnt.setObject(index++, Estado.Inactivo);
             stmnt.setObject(index++, folio);

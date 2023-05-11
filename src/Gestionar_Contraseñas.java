@@ -251,7 +251,7 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         jPanel3.add(cmbRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 190, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Nombre");
+        jLabel1.setText("Usuario");
         jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 67, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -267,7 +267,7 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
                 btnRegresarActionPerformed(evt);
             }
         });
-        jPanel3.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 380, 50, 50));
+        jPanel3.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 50, 50));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
         jPanel3.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 190, -1));
@@ -298,7 +298,7 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         jPanel3.add(jImageBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 110, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setText("Confirmar Contraseña");
+        jLabel5.setText("ROL");
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, -1, -1));
 
         jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
@@ -319,7 +319,7 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         btnEliminar.setText("Eliminar");
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 390, 100, 36));
-        btnEliminar.setVisible(false);
+        btnEliminar.setVisible(true);
 
         btnRegistrar.setBackground(new java.awt.Color(0, 108, 183));
         btnRegistrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
