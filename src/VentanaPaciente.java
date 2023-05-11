@@ -392,14 +392,14 @@ public void limpiar(){
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(153, 153, 153));
         jLabel12.setText("ID:");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 100, -1, -1));
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 100, -1, -1));
 
         lblDireccion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblDireccion.setText("Dirección:");
         jPanel1.add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 250, -1, -1));
 
         txtID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jPanel1.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 100, 120, -1));
+        jPanel1.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, 120, -1));
 
         tblPaciente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tblPaciente.setModel(new javax.swing.table.DefaultTableModel(
@@ -565,7 +565,7 @@ public void limpiar(){
             }
         });
         MenuPleglable1.add(lblPaciente1);
-        lblPaciente1.setBounds(20, 180, 279, 54);
+        lblPaciente1.setBounds(20, 180, 284, 54);
 
         lblCitas1.setBackground(new java.awt.Color(0, 0, 0));
         lblCitas1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -614,9 +614,9 @@ public void limpiar(){
         lblExpediente1.setBounds(0, 430, 330, 54);
 
         jLabel7.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 2, 24)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("      OPCIONES   ");
+        jLabel7.setText("Opciones   ");
         jLabel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
@@ -743,7 +743,7 @@ public void limpiar(){
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 743, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 743, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

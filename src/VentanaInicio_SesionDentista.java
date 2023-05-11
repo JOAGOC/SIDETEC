@@ -56,6 +56,7 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
         btnInicio = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
         cmbRol = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jImageBox1 = new JImageBox();
         jImageBox2 = new JImageBox();
@@ -63,6 +64,7 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         lblHora = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,11 +104,15 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
         cmbRol.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel2.add(cmbRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, 260, 40));
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setText("Bienvenido");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, -1, -1));
+
         jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 260, 40));
 
         jImageBox1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logoD.png"))); // NOI18N
-        jPanel2.add(jImageBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 370, 230));
+        jPanel2.add(jImageBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, -40, 370, 230));
 
         jImageBox2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-dentist-60.png"))); // NOI18N
         jPanel2.add(jImageBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 270, 50, -1));
@@ -123,6 +129,10 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
 
         lblHora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jPanel2.add(lblHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 520, 160, 30));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setText("Rol:");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, -1, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(53, 45, 460, 560));
 
@@ -238,6 +248,8 @@ String horacomp=hora+":"+min;
     private JImageBox jImageBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblHora;
