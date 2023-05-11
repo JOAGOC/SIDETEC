@@ -379,7 +379,7 @@ public void limpiar(){
         });
         jPanel1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 240, -1));
 
-        lblAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-añadir-usuario-masculino-90.png"))); // NOI18N
+        lblAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/añadirpaciente90 (1).png"))); // NOI18N
         lblAgregar.setToolTipText("Agregar");
         lblAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -387,7 +387,7 @@ public void limpiar(){
                 lblAgregarMouseClicked(evt);
             }
         });
-        jPanel1.add(lblAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 600, 100, 90));
+        jPanel1.add(lblAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 610, 120, 90));
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(153, 153, 153));
@@ -440,7 +440,7 @@ public void limpiar(){
                 lblEliminarMouseClicked(evt);
             }
         });
-        jPanel1.add(lblEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 610, 90, 80));
+        jPanel1.add(lblEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 620, 90, 80));
 
         lblApellido.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblApellido.setText("Apellido:");
@@ -496,7 +496,7 @@ public void limpiar(){
                 lblModificarMouseClicked(evt);
             }
         });
-        jPanel1.add(lblModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 610, 110, 80));
+        jPanel1.add(lblModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 620, 110, 80));
 
         lblLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-clear-90.png"))); // NOI18N
         lblLimpiar.setToolTipText("Limpiar");
@@ -524,7 +524,7 @@ public void limpiar(){
         lblBack1.setBackground(new java.awt.Color(0, 0, 0));
         lblBack1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblBack1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblBack1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/flecha-izquierda90.png"))); // NOI18N
+        lblBack1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-volver-4.png"))); // NOI18N
         lblBack1.setText("Regresar           ");
         lblBack1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         lblBack1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -547,7 +547,7 @@ public void limpiar(){
         lblPaciente1.setBackground(new java.awt.Color(0, 0, 0));
         lblPaciente1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblPaciente1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPaciente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/anadir.png"))); // NOI18N
+        lblPaciente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-añadir-usuario-masculino-52.png"))); // NOI18N
         lblPaciente1.setText("Registro de Paciente ");
         lblPaciente1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         lblPaciente1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -565,12 +565,12 @@ public void limpiar(){
             }
         });
         MenuPleglable1.add(lblPaciente1);
-        lblPaciente1.setBounds(20, 180, 291, 66);
+        lblPaciente1.setBounds(20, 180, 279, 54);
 
         lblCitas1.setBackground(new java.awt.Color(0, 0, 0));
         lblCitas1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblCitas1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblCitas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/calendario90.png"))); // NOI18N
+        lblCitas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-planificación-de-tareas-52.png"))); // NOI18N
         lblCitas1.setText("Gestion de Citas      ");
         lblCitas1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         lblCitas1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -588,12 +588,12 @@ public void limpiar(){
             }
         });
         MenuPleglable1.add(lblCitas1);
-        lblCitas1.setBounds(0, 310, 330, 66);
+        lblCitas1.setBounds(0, 310, 330, 54);
 
         lblExpediente1.setBackground(new java.awt.Color(0, 0, 0));
         lblExpediente1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblExpediente1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblExpediente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reportar90.png"))); // NOI18N
+        lblExpediente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-docket-52.png"))); // NOI18N
         lblExpediente1.setText("Expediente Clínico    ");
         lblExpediente1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         lblExpediente1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -611,7 +611,7 @@ public void limpiar(){
             }
         });
         MenuPleglable1.add(lblExpediente1);
-        lblExpediente1.setBounds(0, 430, 330, 66);
+        lblExpediente1.setBounds(0, 430, 330, 54);
 
         jLabel7.setBackground(new java.awt.Color(0, 0, 0));
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -651,7 +651,7 @@ public void limpiar(){
         lblPass1.setBackground(new java.awt.Color(0, 0, 0));
         lblPass1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblPass1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPass1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/seguro.png"))); // NOI18N
+        lblPass1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-contraseña-52.png"))); // NOI18N
         lblPass1.setText("Gestion Contraseñas ");
         lblPass1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         lblPass1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -669,7 +669,7 @@ public void limpiar(){
             }
         });
         MenuPleglable1.add(lblPass1);
-        lblPass1.setBounds(10, 540, 310, 66);
+        lblPass1.setBounds(10, 540, 310, 54);
         MenuPleglable1.add(jSeparator4);
         jSeparator4.setBounds(0, 640, 270, 30);
         MenuPleglable1.add(jSeparator5);
@@ -681,7 +681,7 @@ public void limpiar(){
         MenuPleglable1.add(jSeparator8);
         jSeparator8.setBounds(0, 520, 270, 30);
         MenuPleglable1.add(jImageBox2);
-        jImageBox2.setBounds(60, 60, 140, 140);
+        jImageBox2.setBounds(60, 60, 140, 0);
 
         jPanel1.add(MenuPleglable1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -1, 269, 750));
 

@@ -397,7 +397,7 @@ private void Imagen(JLabel lbl,String ruta){
         lblPaciente1.setBackground(new java.awt.Color(0, 0, 0));
         lblPaciente1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblPaciente1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPaciente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/anadir.png"))); // NOI18N
+        lblPaciente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-añadir-usuario-masculino-52.png"))); // NOI18N
         lblPaciente1.setText("Registro de Paciente ");
         lblPaciente1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         lblPaciente1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -415,12 +415,12 @@ private void Imagen(JLabel lbl,String ruta){
             }
         });
         MenuPleglable1.add(lblPaciente1);
-        lblPaciente1.setBounds(20, 180, 291, 66);
+        lblPaciente1.setBounds(20, 180, 279, 54);
 
         lblCitas1.setBackground(new java.awt.Color(0, 0, 0));
         lblCitas1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblCitas1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblCitas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/calendario90.png"))); // NOI18N
+        lblCitas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-planificación-de-tareas-52.png"))); // NOI18N
         lblCitas1.setText("Gestión de Citas      ");
         lblCitas1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         lblCitas1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -438,12 +438,12 @@ private void Imagen(JLabel lbl,String ruta){
             }
         });
         MenuPleglable1.add(lblCitas1);
-        lblCitas1.setBounds(0, 310, 330, 66);
+        lblCitas1.setBounds(0, 310, 330, 54);
 
         lblExpediente1.setBackground(new java.awt.Color(0, 0, 0));
         lblExpediente1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblExpediente1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblExpediente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reportar90.png"))); // NOI18N
+        lblExpediente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-docket-52.png"))); // NOI18N
         lblExpediente1.setText("Expediente Clínico    ");
         lblExpediente1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         lblExpediente1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -461,7 +461,7 @@ private void Imagen(JLabel lbl,String ruta){
             }
         });
         MenuPleglable1.add(lblExpediente1);
-        lblExpediente1.setBounds(0, 430, 330, 66);
+        lblExpediente1.setBounds(0, 430, 330, 54);
 
         jLabel9.setBackground(new java.awt.Color(0, 0, 0));
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -498,7 +498,7 @@ private void Imagen(JLabel lbl,String ruta){
         lblPass1.setBackground(new java.awt.Color(0, 0, 0));
         lblPass1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblPass1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPass1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/seguro.png"))); // NOI18N
+        lblPass1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-contraseña-52.png"))); // NOI18N
         lblPass1.setText("Gestion Contraseñas ");
         lblPass1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         lblPass1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -516,7 +516,7 @@ private void Imagen(JLabel lbl,String ruta){
             }
         });
         MenuPleglable1.add(lblPass1);
-        lblPass1.setBounds(10, 540, 310, 66);
+        lblPass1.setBounds(10, 540, 310, 54);
         MenuPleglable1.add(jSeparator4);
         jSeparator4.setBounds(0, 640, 270, 30);
         MenuPleglable1.add(jSeparator5);
@@ -572,7 +572,6 @@ private void Imagen(JLabel lbl,String ruta){
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 830, 940, 40));
 
-        jImageBox3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/terminado.png"))); // NOI18N
         jImageBox3.setToolTipText("Cita Finalizada");
         jImageBox3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -581,7 +580,6 @@ private void Imagen(JLabel lbl,String ruta){
         });
         jPanel1.add(jImageBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 730, 70, -1));
 
-        jImageBox4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cita-medica (1).png"))); // NOI18N
         jImageBox4.setToolTipText("Guardar Cita");
         jImageBox4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -590,7 +588,6 @@ private void Imagen(JLabel lbl,String ruta){
         });
         jPanel1.add(jImageBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 730, 80, -1));
 
-        jImageBox5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/borrar.png"))); // NOI18N
         jImageBox5.setToolTipText("Eliminar Cita");
         jImageBox5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -599,7 +596,6 @@ private void Imagen(JLabel lbl,String ruta){
         });
         jPanel1.add(jImageBox5, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 730, 70, -1));
 
-        jImageBox6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fecha-del-calendario.png"))); // NOI18N
         jImageBox6.setToolTipText("Confirmar Cita");
         jImageBox6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -608,7 +604,6 @@ private void Imagen(JLabel lbl,String ruta){
         });
         jPanel1.add(jImageBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 730, 70, -1));
 
-        jImageBox7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar1.png"))); // NOI18N
         jImageBox7.setToolTipText("Modificar");
         jImageBox7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1154,11 +1149,6 @@ private boolean isDateChooserNotEmpty(JDateChooser dateChooser) {
         }
     }
 
-
-
-
-       
-        
         limpiar();
     }//GEN-LAST:event_jImageBox7MouseClicked
 
@@ -1173,7 +1163,7 @@ private boolean isDateChooserNotEmpty(JDateChooser dateChooser) {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

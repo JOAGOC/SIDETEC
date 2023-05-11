@@ -51,6 +51,17 @@ insert into Usuarios values (1,'Dentista','Dentis123','Dentista');
 select usuario, contraseña from usuarios;
 select*from usuarios;
 delete from usuarios where id_usuario=2;
+
+Create table gestion_cita (
+  idGestionCita INT AUTO_INCREMENT PRIMARY KEY,
+  fecha DATE,
+  horario varchar(50),
+  estatus varchar(20),
+  idPaciente INT,
+  detalleCita varchar(250),
+  FOREIGN KEY (idPaciente) REFERENCES pacientes(id)
+);
+
 -- |Motivos:
 -- Limpieza dental
 -- Dolor de muelas

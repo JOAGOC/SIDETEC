@@ -36,7 +36,7 @@ public class Ventana_Presentacion extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 108, 183));
 
@@ -163,7 +163,7 @@ public class Ventana_Presentacion extends javax.swing.JFrame {
         }
         //</editor-fold>
         
-        Ventana_Presentacion vp= new Ventana_Presentacion();
+        Ventana_Presentacion vp = new Ventana_Presentacion();
         vp.setVisible(true);
         
         try {
@@ -182,7 +182,7 @@ public class Ventana_Presentacion extends javax.swing.JFrame {
                 if (i==70) {
                 vp.jLabel2.setText("Cargando pacientes...");
                 }
-                 if (i==100) {
+                 if (i==90) {
                 vp.jLabel2.setText("Cargando Citas...");
                 }
                 if (i==100) {
@@ -190,11 +190,14 @@ public class Ventana_Presentacion extends javax.swing.JFrame {
                 }
                 vp.jProgressBar1.setValue(i);
             }
+            VentanaInicio_SesionDentista login =new VentanaInicio_SesionDentista();
+            login.setVisible(true);
+            vp.dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
+     
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JImageBox jImageBox1;
     private javax.swing.JLabel jLabel1;
