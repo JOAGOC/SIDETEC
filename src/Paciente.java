@@ -1,4 +1,11 @@
 
+import static Conexión.Conexión.getConnection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class Paciente {
     private int id;
     private String nombre;
@@ -75,4 +82,51 @@ public class Paciente {
         this.direccion = direccion;
     }
     
+    public static Paciente consultar(int id){
+        try {
+            ResultSet row = getConnection()
+                    .prepareStatement(
+                            String.format(
+                                    "Select * from pacientes where id like %d;",
+                                    id))
+                    .executeQuery();
+            while (row.next()) {
+                int index = 1;
+                return new Paciente(row.getInt(index++),
+                        row.getString(index++),
+                        row.getString(index++),
+                        row.getInt(index++),
+                        row.getString(index++),
+                        row.getString(index++),
+                        row.getString(index++));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public static Paciente consultar(String telefono){
+        try {
+            ResultSet row = getConnection()
+                    .prepareStatement(
+                            String.format(
+                                    "Select * from pacientes where telefono like %s;",
+                                    telefono))
+                    .executeQuery();
+            while (row.next()) {
+                int index = 1;
+                return new Paciente(row.getInt(index++),
+                        row.getString(index++),
+                        row.getString(index++),
+                        row.getInt(index++),
+                        row.getString(index++),
+                        row.getString(index++),
+                        row.getString(index++));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

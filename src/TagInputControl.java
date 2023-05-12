@@ -64,7 +64,7 @@ public class TagInputControl extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        String tag = tagInputField.getText().replaceAll("^\\s+|\\s+$|\\s+(?=\\s)", "");
+        String tag = limpiarCadena(tagInputField.getText());
         if (!tag.isEmpty()) {
             if (tags.contains(tag)){
                 tagInputField.setText("");
@@ -114,6 +114,10 @@ public class TagInputControl extends JPanel implements ActionListener {
                 });
             });
         }
+    }
+
+    public static String limpiarCadena(String s) {
+        return s.replaceAll("^\\s+|\\s+$|\\s+(?=\\s)", "");
     }
 
     public JTextField getTagInputField() {
@@ -169,8 +173,27 @@ public class TagInputControl extends JPanel implements ActionListener {
     public List<String> getTags() {
         return tags;
     }
+    
+    public String getTags(int a){
+        return tags.toString().replaceAll("\\[|\\]", "");
+    }
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public void clear() {
+        tagPanel.removeAll();
+        tagInputField.setText("");
+        tags.clear();
+    }
+
+    public void setTags(String tags) {
+        String[] tagsArray;
+                tagsArray = tags.split(", ");
+                for (String s : tagsArray){
+                    tagInputField.setText(s);
+                    actionPerformed(null);
+                }
     }
 }

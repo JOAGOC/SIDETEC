@@ -44,7 +44,7 @@ public class ExpedienteClínico implements Cloneable, CRUD {
             ResultSet row = getConnection()
                     .prepareStatement(
                             String.format(
-                                    "Select * from expediente_clinico where id_paciente = %d order by fecha,folio desc;",
+                                    "Select * from expediente_clinico where estado = '1' and id_paciente = %d order by fecha,folio desc;",
                                     id_paciente))
                     .executeQuery();
             List<ExpedienteClínico> expedientes = new ArrayList<ExpedienteClínico>();
@@ -122,14 +122,14 @@ public class ExpedienteClínico implements Cloneable, CRUD {
         try {
             var stmn = getConnection().prepareStatement(query);
             int index = 1;
-            stmn.setDate(index++, fecha);
+            stmn.setString(index++, fecha.toString());
             stmn.setString(index++, motivo);
             stmn.setString(index++, enfermedad);
             stmn.setString(index++, observaciones);
             stmn.setString(index++, tratamiento);
             stmn.setString(index++, estado.c);
             stmn.setInt(index++, id_paciente);
-            System.out.println(stmn.toString());
+            System.out.println(stmn);
             stmn.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
@@ -143,7 +143,7 @@ public class ExpedienteClínico implements Cloneable, CRUD {
         try {
             var stmnt = getConnection().prepareStatement(query);
             int index = 1;
-            stmnt.setObject(index++, Estado.Inactivo);
+            stmnt.setObject(index++, Estado.Inactivo.c);
             stmnt.setObject(index++, folio);
             stmnt.executeUpdate();
         } catch (Exception e) {
