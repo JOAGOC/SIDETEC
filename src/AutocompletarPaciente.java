@@ -15,7 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 public class AutocompletarPaciente {
-    Paciente paciente = new Paciente();
+    //Paciente paciente = new Paciente();
 
     public void MostrarDatos(final JComboBox combobox){
         combobox.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
@@ -25,7 +25,7 @@ public class AutocompletarPaciente {
 
                 // Permitimos la entrada de cualquier carácter alfabético, el espacio y la tecla retroceso
                 if (Character.isAlphabetic(evt.getKeyChar()) || evt.getKeyCode() == KeyEvent.VK_SPACE || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    combobox.setModel(paciente.ObtenerLista(cadenaEscrita));
+                    //combobox.setModel(paciente.ObtenerLista(cadenaEscrita));
                     if (combobox.getItemCount() > 0) { 
                         combobox.showPopup();
 
