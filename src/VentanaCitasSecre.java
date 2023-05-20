@@ -370,7 +370,7 @@ private void Imagen(JLabel lbl,String ruta){
         lblBack1.setBackground(new java.awt.Color(0, 0, 0));
         lblBack1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblBack1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblBack1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/flecha-izquierda90.png"))); // NOI18N
+        lblBack1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-volver-4.png"))); // NOI18N
         lblBack1.setText("Regresar           ");
         lblBack1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         lblBack1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -393,7 +393,7 @@ private void Imagen(JLabel lbl,String ruta){
         lblPaciente1.setBackground(new java.awt.Color(0, 0, 0));
         lblPaciente1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblPaciente1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPaciente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/anadir.png"))); // NOI18N
+        lblPaciente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-añadir-usuario-masculino-52.png"))); // NOI18N
         lblPaciente1.setText("Registro de Paciente ");
         lblPaciente1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         lblPaciente1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -411,12 +411,12 @@ private void Imagen(JLabel lbl,String ruta){
             }
         });
         MenuPleglable1.add(lblPaciente1);
-        lblPaciente1.setBounds(20, 180, 291, 66);
+        lblPaciente1.setBounds(20, 180, 279, 54);
 
         lblCitas1.setBackground(new java.awt.Color(0, 0, 0));
         lblCitas1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblCitas1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblCitas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/calendario90.png"))); // NOI18N
+        lblCitas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-planificación-de-tareas-52.png"))); // NOI18N
         lblCitas1.setText("Gestión de Citas      ");
         lblCitas1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         lblCitas1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -434,12 +434,12 @@ private void Imagen(JLabel lbl,String ruta){
             }
         });
         MenuPleglable1.add(lblCitas1);
-        lblCitas1.setBounds(0, 310, 330, 66);
+        lblCitas1.setBounds(0, 310, 330, 54);
 
         jLabel9.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 2, 24)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("      OPCIONES   ");
+        jLabel9.setText("Opciones");
         jLabel9.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel9.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
@@ -574,7 +574,7 @@ private void Imagen(JLabel lbl,String ruta){
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 867, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 

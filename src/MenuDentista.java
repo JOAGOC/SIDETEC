@@ -223,6 +223,51 @@ public class MenuDentista extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "NO SE PUEDEN VISUALIZAR LOS DATOS DE LA TABLA " + e, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
+    /*
+    private void Buscar(String valor) throws SQLException {
+        try {
+            Connection con1 = null;
+            DefaultTableModel m = (DefaultTableModel) tblCita.getModel();
+            m.setRowCount(0);
+
+            Conexión conect1 = new Conexión();
+            con1 = conect1.getConnection();
+
+            String dts[] = new String[6];
+            String sql = "SELECT gestion_cita.fecha, gestion_cita.horario, gestion_cita.estatus, " +
+                        "CONCAT(pacientes.nombre, ' ', pacientes.apellido) AS 'Nombre Completo', " +
+                        "pacientes.telefono AS 'Telefono', gestion_cita.detalleCita AS 'Detalle Cita' " +
+                        "FROM gestion_cita LEFT JOIN pacientes ON gestion_cita.idPaciente = pacientes.id " +
+                        "WHERE  pacientes.nombre LIKE '%"+valor+"%' " +
+                        "OR pacientes.apellido LIKE '%"+valor+"%' " +
+                        "OR pacientes.telefono LIKE '%"+valor+"%' " +
+                        "OR gestion_cita.fecha LIKE '%"+valor+"%' " +
+                        "OR gestion_cita.horario LIKE '%"+valor+"%' ";
+
+            Statement st = con1.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                dts[0] = rs.getString("gestion_cita.fecha");
+                dts[1] = rs.getString("gestion_cita.horario");
+                dts[2] = rs.getString("gestion_cita.estatus");
+                dts[3] = rs.getString("Nombre Completo");
+                dts[4] = rs.getString("pacientes.telefono");
+                dts[5] = rs.getString("Detalle Cita");
+                m.addRow(dts);
+            }
+
+            int columnaEstado = 2;
+            tblCita.getColumnModel().getColumn(columnaEstado).setCellRenderer(colorRenderer);
+            tblCita.setModel(m);
+            txtBuscar.setText("");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "NO SE PUEDEN VISUALIZAR LOS DATOS DE LA TABLA " + e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    /*
+    
+    */
  /* private void finalizarCita(){
         int fila = tblCita.getSelectedRow();
         if (fila == -1)

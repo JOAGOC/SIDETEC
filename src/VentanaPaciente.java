@@ -595,7 +595,7 @@ public void limpiar(){
             }
         });
         MenuPleglable1.add(lblPaciente1);
-        lblPaciente1.setBounds(20, 180, 284, 54);
+        lblPaciente1.setBounds(20, 180, 279, 54);
 
         lblCitas1.setBackground(new java.awt.Color(0, 0, 0));
         lblCitas1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -807,18 +807,17 @@ void llenarCamposTexto(String[] datos) {
         if (valor.equals("")) {
             sql = "SELECT * FROM pacientes";
         }else{
-            sql = "SELECT * FROM pacientes";
-            if (cbxBuscar.getSelectedItem().toString().equals("Nombre")) {
-                sql = "SELECT * FROM pacientes WHERE nombre='"+valor+"'";
-            }else if (cbxBuscar.getSelectedItem().toString().equals("Apellido")) {
-                sql = "SELECT * FROM pacientes WHERE apellido='"+valor+"'";
-            }
+            sql = "SELECT * FROM pacientes WHERE id LIKE '%" + valor + "%' OR nombre LIKE '%" + 
+                    valor + "%' OR apellido LIKE '%" + 
+                    valor + "%' OR telefono LIKE '%" + 
+                    valor + "%'";
         }
+        
         String []Datos = new String [7];
         try{
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            boolean llenar= true;
+            //boolean llenar= true;
             while(rs.next()){
                 Datos[0] = rs.getString(1);
                 Datos[1] = rs.getString(2);
@@ -828,7 +827,7 @@ void llenarCamposTexto(String[] datos) {
                 Datos[5] = rs.getString(6);
                 Datos[6] = rs.getString(7);                
                 modelo.addRow(Datos);
-                llenar =true;
+                //llenar =true;
             }
             
             tblPaciente.setModel(modelo);
@@ -1082,9 +1081,11 @@ void llenarCamposTexto(String[] datos) {
     }//GEN-LAST:event_lblAgregarMouseClicked
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        if(txtBuscar.getText().equals("")){
+        /*if(txtBuscar.getText().equals("")){
             cargarDatos();
         }
+        */
+        Buscar(txtBuscar.getText());
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed

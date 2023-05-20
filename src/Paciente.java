@@ -4,6 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.*;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import Conexión.Conexión;
 
 
 public class Paciente {
@@ -14,6 +18,8 @@ public class Paciente {
     private String genero;
     private String telefono;
     private String direccion;
+    
+    Connection cn;
     public Paciente(){}
 
     public Paciente(int id, String nombre, String apellido, int edad, String genero, String telefono, String direccion) {
@@ -129,4 +135,81 @@ public class Paciente {
         }
         return null;
     }
+  /*  
+   public DefaultComboBoxModel ObtenerLista(String cadena){
+    DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+    String[] palabras = cadena.split(" ");
+    String sql = "SELECT CONCAT(nombre,' ',apellido) FROM pacientes WHERE ";
+
+    Conexión con=new Conexión();
+    cn=con.getConnection();
+    
+    for (int i = 0; i < palabras.length; i++) {
+        if (i > 0) {
+            sql += " OR ";
+        }
+        sql += "nombre LIKE '%"+palabras[i]+"%' OR apellido LIKE '%"+palabras[i]+"%'";
+    }
+
+ 
+    try {
+        Statement st = cn.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+
+        modelo.removeAllElements();
+        while (rs.next()) {
+            modelo.addElement(rs.getString(1)); 
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al llamar la BD");
+        System.out.println("Conexion incorrecta: "+ ex);
+    }
+    return modelo;
+}
+*/
+public DefaultComboBoxModel ObtenerLista(String cadena){
+    DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+    if (cadena.equals("")) {
+        // Si la cadena está vacía, no hagas nada.
+        return modelo;
+    }
+
+    String[] palabras = cadena.split(" ");  
+    String sql = "SELECT CONCAT(nombre,' ',apellido) FROM pacientes WHERE ";
+
+    Conexión con = new Conexión();
+    cn = con.getConnection();
+    
+    for (int i = 0; i < palabras.length; i++) {
+        if (i > 0) {
+            sql += " AND ";
+        }
+        sql += "LOWER(CONCAT(nombre,' ',apellido)) LIKE LOWER('%"+palabras[i]+"%')";  
+    }
+
+    sql += " ORDER BY CASE WHEN LOWER(CONCAT(nombre,' ',apellido)) LIKE LOWER('"+cadena+"%') THEN 1 ELSE 2 END, CONCAT(nombre,' ',apellido)";
+
+    try {
+        Statement st = cn.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+
+        modelo.removeAllElements();
+        boolean pacienteEncontrado = false;
+        while (rs.next()) {
+            modelo.addElement(rs.getString(1)); 
+            pacienteEncontrado = true;
+        }
+
+        if (!pacienteEncontrado) {
+            JOptionPane.showMessageDialog(null, "El paciente que busca no está registrado.");
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al llamar la BD");
+        System.out.println("Conexion incorrecta: "+ ex);
+    }
+    return modelo;
+}
+
+
+    
 }
