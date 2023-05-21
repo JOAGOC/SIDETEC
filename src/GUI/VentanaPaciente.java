@@ -839,7 +839,7 @@ void Buscar(String valor) {
     } catch(SQLException ex) {
         showMessageDialog(null, "Error en la conexión a la base de datos");
     }
-}
+}//busca
 
         
  
