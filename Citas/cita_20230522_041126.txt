@@ -1,0 +1,9 @@
+------------ CONSULTORIO DENTAL ------------
+Nombre del paciente: Sofía Ruiz
+Teléfono: 8901234567
+Hora: 12:30:00
+Fecha: 2023-05-21
+Detalle de la cita: Caries dental
+Duración: 01:00 minutos
+
+--Dra. Luz Elena Hernández

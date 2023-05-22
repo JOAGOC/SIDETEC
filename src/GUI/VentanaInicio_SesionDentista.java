@@ -10,6 +10,10 @@ import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 
 import Componentes.JImageBox;
+import java.awt.Color;
+import javax.swing.JComboBox;
+import static javax.swing.JOptionPane.showMessageDialog;
+import javax.swing.JTextField;
 
 
 public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
@@ -23,25 +27,10 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         lblHora.setText("Fecha: "+fechacomp);
         
-    /*  this.Imagen(this.lbLogo,"Imagenes\\logoD.png");
-        this.Imagen(this.lblUsuario,"Imagenes\\usuario.png");
-        this.Imagen(this.lblContraseña,"Imagenes\\candado.png");
-       
-        this.setSize(650, 780);*/
+   
         
     }
-   /* private ImageIcon imagen;
-    private Icon icono;
-    private void Imagen(JLabel lbl,String ruta){
-        this.imagen=new ImageIcon(ruta);
-        this.icono=new ImageIcon(
-                this.imagen.getImage().getScaledInstance
-                       (lbl.getWidth(),
-                        lbl.getHeight(),
-                        Image.SCALE_SMOOTH));
-        lbl.setIcon(this.icono);
-        repaint();
-      }*/
+  
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -54,10 +43,10 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
         cmbRol = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jImageBox1 = new JImageBox();
-        jImageBox2 = new JImageBox();
-        jImageBox3 = new JImageBox();
-        jLabel2 = new javax.swing.JLabel();
+        jImageBox1 = new Componentes.JImageBox();
+        jImageBox2 = new Componentes.JImageBox();
+        jImageBox3 = new Componentes.JImageBox();
+        lblRol = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         lblHora = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -116,9 +105,9 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
         jImageBox3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-contraseña-60.png"))); // NOI18N
         jPanel2.add(jImageBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, 50, -1));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setText("Rol:");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, -1, -1));
+        lblRol.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblRol.setText("Rol:");
+        jPanel2.add(lblRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, -1, -1));
 
         txtUsuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel2.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, 260, 40));
@@ -147,9 +136,44 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+private boolean validaCampo(JTextField t){
+        try{   estaVacio(t);
+        }catch(Exception e){
+            showMessageDialog(this,e.getMessage());t.requestFocus(); return true;
+        }
+        return false;
+    }
+    
+    private void estaVacio(JTextField t)throws Exception{
+        String cad=t.getText().trim();
+        if(cad.equals("")) throw new Exception("Campo vacio");
+    }
+    private void comboVacio(JComboBox c ) throws Exception{
+        if(c.getSelectedIndex()<1)throw new Exception("Combo Vacio");
+    }
+    
+     private boolean validaCombo(JComboBox c){
+          try{
+           comboVacio(c);
+       }catch(Exception e){
+           showMessageDialog(this,e.getMessage()); c.requestFocus();return true;
+       }
+        return false;
+    }
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
-   consultarUsuario(txtUsuario.getText(),txtPassword.getText());
+   if(validaCampo(txtUsuario)){
+            
+            return;
+        }
+   if(validaCampo(txtPassword)){
+           
+            return;
+        }
+   if(validaCombo(cmbRol)){
+            lblRol.setForeground(Color.RED);
+            return;
+        }else lblRol.setForeground(Color.BLACK);
+        consultarUsuario(txtUsuario.getText(),txtPassword.getText());
    
     }//GEN-LAST:event_btnInicioActionPerformed
 
@@ -241,16 +265,16 @@ String horacomp=hora+":"+min;
     private javax.swing.JButton btnInicio;
     private javax.swing.JComboBox<String> cmbRol;
     private javax.swing.JCheckBox jCheckBox1;
-    private JImageBox jImageBox1;
-    private JImageBox jImageBox2;
-    private JImageBox jImageBox3;
+    private Componentes.JImageBox jImageBox1;
+    private Componentes.JImageBox jImageBox2;
+    private Componentes.JImageBox jImageBox3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblHora;
+    private javax.swing.JLabel lblRol;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables

@@ -1,0 +1,9 @@
+------------ CONSULTORIO DENTAL ------------
+Nombre del paciente: Miguel García
+Teléfono: 7890123456
+Hora: 12:00:00
+Fecha: 2023-05-21
+Detalle de la cita: Caries dental
+Duración:  minutos
+
+--Dra. Luz Elena Hernández

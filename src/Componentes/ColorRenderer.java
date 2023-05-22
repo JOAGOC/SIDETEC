@@ -30,12 +30,19 @@ public class ColorRenderer extends DefaultTableCellRenderer{
             c.setBackground(Color.RED);
             c.setForeground(Color.WHITE);
         } else if (estado.equals("Confirmar")) {
-            c.setBackground(Color.ORANGE);
+            c.setBackground(Color.YELLOW);
             c.setForeground(Color.BLACK);
         } else if (estado.equals("Finalizada")) {
             c.setBackground(Color.BLUE);
             c.setForeground(Color.WHITE);
+        }else if (estado.equals("Bloqueado")) {
+            c.setBackground(Color.BLACK);
+            c.setForeground(Color.WHITE);
+        }else if (estado.equals("Durante")) {
+            c.setBackground(Color.ORANGE);
+            c.setForeground(Color.BLACK);
         }
+        
         
         return c;
     }

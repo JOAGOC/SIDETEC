@@ -1,0 +1,9 @@
+------------ CONSULTORIO DENTAL ------------
+Hora: 15:30:00
+Fecha: 2023-05-21
+Nombre del paciente: Daniel Díaz
+Teléfono: 0987654321
+Detalle de la cita: Sensibilidad dental
+Duración:  minutos
+
+--Dra. Luz Elena Hernández

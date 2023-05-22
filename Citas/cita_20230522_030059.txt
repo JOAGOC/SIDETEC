@@ -1,0 +1,9 @@
+------------ CONSULTORIO DENTAL ------------
+Nombre del paciente: Carlos Rodríguez
+Teléfono: 3456789012
+Hora: 14:00:00
+Fecha: 2023-05-21
+Detalle de la cita: Caries dental
+Duración: 01:00 minutos
+
+--Dra. Luz Elena Hernández
