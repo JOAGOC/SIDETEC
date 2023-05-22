@@ -1,6 +1,5 @@
 package GUI;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -13,10 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import static javax.swing.JOptionPane.showMessageDialog;
 import org.mindrot.jbcrypt.BCrypt;
-
 import ClasesSQL.Usuario;
-import Componentes.JImageBox;
-
 import static javax.swing.JOptionPane.showConfirmDialog;
 import javax.swing.table.TableColumn;
 
@@ -76,26 +72,32 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
             public void focusGained(FocusEvent e) {
             }
         });
-        cmbRol.addActionListener(new ActionListener() {
+        ActionListener a;
+        cmbRol.addActionListener(a = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if ((tablaUsuarios.getSelectedRow() == -1) || tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0).equals((Object) "Dentista"))
-                    return;
                 String selectedOption = (String) cmbRol.getSelectedItem();
                 usuario.setRol(selectedOption);
             }
         });
         usuario = new Usuario();
+        a.actionPerformed(null);
     }
 
     private void llenarTabla() {
         tablaUsuarios.setModel(tabla = Usuario.Consultar());
         TableColumn col = tablaUsuarios.getColumnModel().getColumn(0);
         tablaUsuarios.getColumnModel().removeColumn(col);
+        col = tablaUsuarios.getColumnModel().getColumn(tablaUsuarios.getColumnModel().getColumnCount()-1);
+        tablaUsuarios.getColumnModel().removeColumn(col);
     }
     
     private void eliminar() {
         if (tablaUsuarios.getSelectedRow()==-1){
             showMessageDialog(this, "Seleccione un usuario para eliminar");
+            return;
+        }
+        if (usuario.getRol().equals("Dentista")) {
+            showMessageDialog(this, "El usuario dentista no puede ser eliminado.");
             return;
         }
         String s = "";
@@ -146,6 +148,15 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         cmbRol.setSelectedIndex(0);
     }
 
+    public static boolean confirmarContraseña(String contraseña1,String contraseña2) {
+        if (!contraseña1.equals(contraseña2)) {
+            showMessageDialog(null,
+                    "Las contraseñas no coinciden", "", 1, null);
+            return true;
+        }
+        return false;
+    }
+    
     private boolean confirmarContraseña() {
         if (!usuario.getContraseña().equals(txtConfirmar.getText())) {
             showMessageDialog(this,
@@ -155,6 +166,16 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         return false;
     }
 
+    public static boolean contraseñaInválida(String contraseña) {
+        if (!validarContraseña.apply(contraseña)) {
+            showMessageDialog(null,
+                    "La contraseña debe contener al menos una minúscula, una mayúscula y un número. Reescriba otra contraseña y vuelva a intentarlo",
+                    "Contraseña Inválida", 1, null);
+            return true;
+        }
+        return false;
+    }
+    
     private boolean contraseñaInválida() {
         if (!validarContraseña.apply(txtContraseña.getText())) {
             showMessageDialog(this,
@@ -173,10 +194,6 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
                 return true;
             }
         }
-//        if (cmbRol.getSelectedIndex()==0){
-//            showMessageDialog(this, "Rellene todos los campos para continuar.", "Campo vacío", 1, null);
-//            return true;
-//        }
         return false;
     }
 
@@ -214,7 +231,7 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtContraseña = new javax.swing.JTextField();
         txtConfirmar = new javax.swing.JTextField();
-        jImageBox2 = new JImageBox();
+        jImageBox2 = new Componentes.JImageBox();
         jLabel5 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         btnActualizar = new javax.swing.JButton();
@@ -259,7 +276,7 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Usuario");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 67, -1));
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 67, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("Confirmar Contraseña");
@@ -325,11 +342,6 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("Eliminar");
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
         jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 390, 100, 36));
         btnEliminar.setVisible(true);
 
@@ -339,7 +351,6 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         btnRegistrar.setText("Agregar");
         btnRegistrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 390, 120, 36));
-        btnRegistrar.setVisible(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -380,22 +391,6 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
             cmbRol.setSelectedItem(rol);
         } catch(Exception e){}
     }
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        this.eliminar();    
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        this.registrar();
-    }//GEN-LAST:event_btnRegistrarActionPerformed
-
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        this.actualizar();
-    }//GEN-LAST:event_btnActualizarActionPerformed
 
     public static void main(String args[]) {
         // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
@@ -459,7 +454,7 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cmbRol;
-    private JImageBox jImageBox2;
+    private Componentes.JImageBox jImageBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

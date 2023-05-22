@@ -1,15 +1,11 @@
 package Interfaces;
 
-import java.lang.invoke.StringConcatException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
 import javax.swing.table.DefaultTableModel;
 import com.mysql.cj.jdbc.result.ResultSetMetaData;
-
 import Componentes.AutoCompleteTextField;
-
 import static Conexión.Conexión.getConnection;
 
 public interface CRUD{
@@ -27,7 +23,7 @@ public interface CRUD{
             while(data.next()){
                 registros.add(data.getObject(1).toString());
             }
-            atf.setItems((String[]) registros.toArray());
+            atf.setItems(registros.toArray(new String[registros.size()]));
         } catch (Exception e) {
             e.printStackTrace();
         }

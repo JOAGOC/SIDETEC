@@ -1,5 +1,6 @@
 package GUI;
 
+import static javax.swing.JOptionPane.showMessageDialog;
 import com.toedter.calendar.JDateChooser;
 import ClasesSQL.ExpedienteClínico;
 import Componentes.ColorRenderer;
@@ -11,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JToggleButton;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
@@ -22,6 +24,7 @@ public class VentanaExpedienteMenu extends javax.swing.JFrame {
     private ImageIcon icono;
     Desface desplace;
     JTableHeader th;
+    private boolean contextoTbl;
 
     public VentanaExpedienteMenu() {
         initComponents();
@@ -34,6 +37,13 @@ public class VentanaExpedienteMenu extends javax.swing.JFrame {
                 buscarPaciente();
             }
         });
+        jToggleButton1.addActionListener(new ActionListener() {
+            private final String DEFAULT = "<html><center>Búsqueda ";
+            public void actionPerformed(ActionEvent e) {
+                JToggleButton tb = ((JToggleButton) e.getSource());
+                tb.setText(DEFAULT + (tb.isSelected()?"Estricta":"Relajada"));
+            }
+        });
     }
 
     private void buscarPaciente() {
@@ -42,9 +52,15 @@ public class VentanaExpedienteMenu extends javax.swing.JFrame {
         System.out.println(limpiarCadena(paciente));
         System.out.println(fecha);
         try {
-            ExpedienteClínico.buscar(folio.matches("[1-9][0-9]*")? folio : "", paciente, fecha, rootPaneCheckingEnabled);
+            tblCita.setModel(ExpedienteClínico.buscar(folio.matches("^[1-9][0-9]*$")? folio : "", paciente, fecha, jToggleButton1.isSelected())); 
+            contextoTbl = true;
         } catch (Exception e) {
-            e.printStackTrace();
+            if (contextoTbl){
+                tblCita.setModel(ExpedienteClínico.consultar());
+                contextoTbl = false;
+            }
+            else
+            showMessageDialog(this,e.getMessage());
         }
     }
 
@@ -63,6 +79,7 @@ public class VentanaExpedienteMenu extends javax.swing.JFrame {
         dtFecha = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
         casillaFecha = new javax.swing.JCheckBox();
+        jToggleButton1 = new javax.swing.JToggleButton();
         MenuPleglable1 = new javax.swing.JPanel();
         lblBack1 = new javax.swing.JLabel();
         lblPaciente1 = new javax.swing.JLabel();
@@ -127,27 +144,31 @@ public class VentanaExpedienteMenu extends javax.swing.JFrame {
             }
         });
 
+        jToggleButton1.setText("<html><center>Busqueda Exacta");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtFolio, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(dtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(casillaFecha)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnBuscar))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 795, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -156,18 +177,25 @@ public class VentanaExpedienteMenu extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(txtFolio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnBuscar)
-                        .addComponent(jLabel5)
-                        .addComponent(txtPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6))
-                    .addComponent(dtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(casillaFecha))
-                .addGap(15, 15, 15)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel4)
+                                .addComponent(txtFolio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnBuscar)
+                                .addComponent(jLabel5)
+                                .addComponent(txtPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6))
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(casillaFecha)
+                                .addComponent(dtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(31, Short.MAX_VALUE))
         );
@@ -554,6 +582,7 @@ public class VentanaExpedienteMenu extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel lblBack1;
     private javax.swing.JLabel lblCitas1;
     private javax.swing.JLabel lblExpediente1;
