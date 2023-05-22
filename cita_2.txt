@@ -1,9 +1,0 @@
------------- CONSULTORIO DENTAL ------------
-Hora: 15:30:00
-Fecha: 2023-05-21
-Nombre del paciente: David Guerrero
-Teléfono: 4321098765
-Detalle de la cita: Sensibilidad dental
-Duración: 1 minutos
-
---Dra. Luz Elena Hernández

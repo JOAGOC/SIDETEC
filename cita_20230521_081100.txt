@@ -1,9 +1,0 @@
------------- CONSULTORIO DENTAL ------------
-Nombre del paciente: Manuel Ortega
-Teléfono: 6543210987
-Hora: 12:00:00
-Fecha: 2023-05-21
-Detalle de la cita: Limpieza dental
-Duración: 1 minutos
-
---Dra. Luz Elena Hernández

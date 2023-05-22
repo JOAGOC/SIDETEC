@@ -1,7 +1,0 @@
------------- CONSULTORIO DENTAL ------------Hora: 
-Fecha: 
-Nombre del paciente:  
-Teléfono: 
-Detalle de la cita: 
-Duración: 1 minutos
-Dra. Luz Elena Hernández
