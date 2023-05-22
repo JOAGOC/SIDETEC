@@ -1,0 +1,9 @@
+------------ CONSULTORIO DENTAL ------------
+Nombre del paciente: Fernanda Torres
+Teléfono: 9876543210
+Hora: 13:30:00
+Fecha: 2023-05-27
+Detalle de la cita: Caries dental, Dolor de muelas
+Duración: 1 minutos
+
+--Dra. Luz Elena Hernández

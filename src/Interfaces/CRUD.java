@@ -16,18 +16,18 @@ public interface CRUD{
     * @param query la consulta SQL para llenar el Autocomplete
     * @param atf el objeto autocomplete que se quiere llenar
     */
-    public static void cargarAutocompletar(String query, AutoCompleteTextField atf){
-        try {
-            ResultSet data = getConnection().prepareStatement(query).executeQuery();
-            ArrayList<String> registros = new ArrayList<String>();
-            while(data.next()){
-                registros.add(data.getObject(1).toString());
-            }
-            atf.setItems(registros.toArray(new String[registros.size()]));
-        } catch (Exception e) {
-            e.printStackTrace();
+  public static void cargarAutocompletar(String query, AutoCompleteTextField atf){
+    try {
+        ResultSet data = getConnection().prepareStatement(query).executeQuery();
+        ArrayList<String> registros = new ArrayList<String>();
+        while(data.next()){
+            registros.add(data.getObject(1).toString());
         }
+        atf.setItems(registros.toArray(new String[registros.size()]));
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
 
     public static DefaultTableModel consultar(String query){
         DefaultTableModel m;

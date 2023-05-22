@@ -25,27 +25,9 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
     public VentanaInicio_SesionDentista() {
         initComponents();
         setLocationRelativeTo(null);
-        lblHora.setText("Fecha: " + fechacomp);
-        /*  this.Imagen(this.lbLogo,"Imagenes\\logoD.png");
-        this.Imagen(this.lblUsuario,"Imagenes\\usuario.png");
-        this.Imagen(this.lblContraseña,"Imagenes\\candado.png");
-       
-        this.setSize(650, 780);*/
-
+        lblHora.setText("Fecha: "+fechacomp);   
     }
-
-    /* private ImageIcon imagen;
-    private Icon icono;
-    private void Imagen(JLabel lbl,String ruta){
-        this.imagen=new ImageIcon(ruta);
-        this.icono=new ImageIcon(
-                this.imagen.getImage().getScaledInstance
-                       (lbl.getWidth(),
-                        lbl.getHeight(),
-                        Image.SCALE_SMOOTH));
-        lbl.setIcon(this.icono);
-        repaint();
-      }*/
+  
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

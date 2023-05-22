@@ -21,6 +21,7 @@ public class Ventana_Presentacion extends javax.swing.JFrame {
      */
     public Ventana_Presentacion() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

@@ -739,38 +739,38 @@ void llenarCamposTexto(String[] datos) {
     txtDireccion.setText(datos[6]);
 }
 
-    void Buscar(String valor){
-        Connection con = null;
-        Conexión conect = new Conexión();
-        con = conect.getConnection();
-        DefaultTableModel modelo = new DefaultTableModel();
-        
-        modelo.addColumn("ID");
-        modelo.addColumn("Nombre");
-        modelo.addColumn("Apellido");
-        modelo.addColumn("Edad");
-        modelo.addColumn("Genéro");
-        modelo.addColumn("Teléfono");
-        modelo.addColumn("Dirección");
-        
-        tblPaciente.setModel(modelo);
-        String sql="";
-        if (valor.equals("")) {
-            sql = "SELECT * FROM pacientes";
-        }else{
-            sql = "SELECT * FROM pacientes";
-            if (cbxBuscar.getSelectedItem().toString().equals("Nombre")) {
-                sql = "SELECT * FROM pacientes WHERE nombre='"+valor+"'";
-            }else if (cbxBuscar.getSelectedItem().toString().equals("Apellido")) {
-                sql = "SELECT * FROM pacientes WHERE apellido='"+valor+"'";
-            }
-        }
-        String []Datos = new String [7];
-        try{
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            boolean llenar= true;
-            while(rs.next()){
+    void Buscar(String valor) {
+    Connection con = null;
+    Conexión conect = new Conexión();
+    con = conect.getConnection();
+    DefaultTableModel modelo = new DefaultTableModel();
+    
+    modelo.addColumn("ID");
+    modelo.addColumn("Nombre");
+    modelo.addColumn("Apellido");
+    modelo.addColumn("Edad");
+    modelo.addColumn("Genéro");
+    modelo.addColumn("Teléfono");
+    modelo.addColumn("Dirección");
+    
+    tblPaciente.setModel(modelo);
+    String sql = "";
+    if (valor.equals("")) {
+        sql = "SELECT * FROM pacientes";
+    } else {
+        sql = "SELECT * FROM pacientes WHERE id LIKE '%" 
+                + valor + "%' OR nombre LIKE '%" 
+                + valor + "%' OR apellido LIKE '%" 
+                + valor + "%' OR telefono LIKE '%" + valor + "%'";
+    }
+    String[] Datos = new String[7];
+    try {
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        if (!rs.next()) {
+            showMessageDialog(null, "Paciente no encontrado");
+        } else {
+            do {
                 Datos[0] = rs.getString(1);
                 Datos[1] = rs.getString(2);
                 Datos[2] = rs.getString(3);
@@ -779,16 +779,16 @@ void llenarCamposTexto(String[] datos) {
                 Datos[5] = rs.getString(6);
                 Datos[6] = rs.getString(7);                
                 modelo.addRow(Datos);
-                llenar =true;
-            }
-            
-            tblPaciente.setModel(modelo);
-            colortabla();
-            
-        }catch(SQLException ex){
-            showMessageDialog(null, "Paciente no encontrado");
+            } while (rs.next());
         }
+        
+        tblPaciente.setModel(modelo);
+        colortabla();
+        
+    } catch(SQLException ex) {
+        showMessageDialog(null, "Error en la conexión a la base de datos");
     }
+}
         
  
 
@@ -1033,9 +1033,7 @@ void llenarCamposTexto(String[] datos) {
     }//GEN-LAST:event_lblAgregarMouseClicked
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        if(txtBuscar.getText().equals("")){
-            cargarDatos();
-        }
+       Buscar(txtBuscar.getText());
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
