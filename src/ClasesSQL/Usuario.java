@@ -17,6 +17,7 @@ public class Usuario implements CRUD {
     public boolean cambiarContra;
 
     public Usuario() {
+        usuario = contraseña = rol = "";
     }
     
     public static void main(String[] args) {
@@ -78,8 +79,8 @@ public class Usuario implements CRUD {
     }
 
     public String insertar() {
-        String query = String.format("Insert into Usuarios(usuario,contraseña,rol,cambiarContra) values ('%s','%s','%s',1);", usuario,
-                contraseña, rol);
+        String query = String.format("Insert into Usuarios(usuario,contraseña,rol,cambiarContra) values ('%s','%s','Secretaria',1);", usuario,
+                contraseña);
         try {
             getConnection().prepareStatement(query).executeUpdate();
         } catch (Exception e) {

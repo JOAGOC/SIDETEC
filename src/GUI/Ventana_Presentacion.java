@@ -2,7 +2,6 @@ package GUI;
 
 
 import javax.swing.JOptionPane;
-
 import Componentes.JImageBox;
 
 /*
@@ -195,8 +194,7 @@ public class Ventana_Presentacion extends javax.swing.JFrame {
                 }
                 vp.jProgressBar1.setValue(i);
             }
-            VentanaInicio_SesionDentista login =new VentanaInicio_SesionDentista();
-            login.setVisible(true);
+            new VentanaInicio_SesionDentista().setVisible(true);
             vp.dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);

@@ -807,7 +807,7 @@ public void limpiar(){
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuDentista().setVisible(true);
+                new MenuSecretaria2().setVisible(true);
             }
         });
     }

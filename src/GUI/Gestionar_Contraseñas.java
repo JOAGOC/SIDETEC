@@ -23,6 +23,7 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
 
     public Gestionar_Contraseñas() {
         initComponents();
+        usuario = new Usuario();
         llenarTabla();
         tablaUsuarios.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             @Override
@@ -75,11 +76,12 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         ActionListener a;
         cmbRol.addActionListener(a = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                if (usuario.getRol().equals("Dentista"))
+                    return;
                 String selectedOption = (String) cmbRol.getSelectedItem();
                 usuario.setRol(selectedOption);
             }
         });
-        usuario = new Usuario();
         a.actionPerformed(null);
     }
 

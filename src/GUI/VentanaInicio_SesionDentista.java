@@ -1,15 +1,10 @@
 package GUI;
 
 import ClasesSQL.Usuario;
-import Conexión.Conexión;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 
-import Componentes.JImageBox;
 import javax.swing.JFrame;
 import static javax.swing.JOptionPane.showConfirmDialog;
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -39,8 +34,6 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
         lblHora = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jImageBox2 = new Componentes.JImageBox();
-        jLabel2 = new javax.swing.JLabel();
-        cmbRol = new javax.swing.JComboBox<>();
         txtUsuarioP1 = new javax.swing.JTextField();
         txtPasswordP1 = new javax.swing.JPasswordField();
         jImageBox3 = new Componentes.JImageBox();
@@ -80,16 +73,6 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
 
         jImageBox2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-dentist-60.png"))); // NOI18N
         jPanel3.add(jImageBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 50, -1));
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setText("Rol:");
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
-
-        cmbRol.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        cmbRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona", "Dentista", "Secretaria" }));
-        cmbRol.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        cmbRol.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel3.add(cmbRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 260, 40));
 
         txtUsuarioP1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel3.add(txtUsuarioP1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 260, 40));
@@ -195,26 +178,6 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnInicioP1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioP1ActionPerformed
-        usr = Usuario.buscar(txtUsuarioP1.getText(), txtPasswordP1.getText());
-        if (usr == null) {
-            showMessageDialog(this, "Usuario o contraseña incorrectos");
-        }
-        if (usr.cambiarContra) {
-            int option = showConfirmDialog(this, "Se detecto que su contraseña se actualizo, ¿Desea cambiarla?", "Cambia tu contraseña", JOptionPane.YES_NO_CANCEL_OPTION);
-            if (option == JOptionPane.YES_OPTION) {
-                jPanel3.setVisible(false);
-                jPanel4.setVisible(true);
-            } else if (option == JOptionPane.NO_OPTION) {
-                usr.actualizar_cambiarContra();
-                siguienteVentana();
-            } else if (option == JOptionPane.CANCEL_OPTION) {
-                siguienteVentana();
-            }
-        }
-//        consultarUsuario(txtUsuario.getText(),txtPassword.getText());
-    }//GEN-LAST:event_btnInicioP1ActionPerformed
-
     private void siguienteVentana() {
         JFrame next = usr.getRol().equals("Dentista") ? new MenuDentista() : new MenuSecretaria2();
         next.setVisible(true);
@@ -237,15 +200,6 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
         siguienteVentana();
     }//GEN-LAST:event_btnInicioP2ActionPerformed
 
-    private void jCheckBox1P1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1P1ActionPerformed
-        if (jCheckBox1P1.isSelected()){
-            txtPasswordP1.setEchoChar((char) 0);
-        }
-        else{
-            txtPasswordP1.setEchoChar('•');
-        }
-    }//GEN-LAST:event_jCheckBox1P1ActionPerformed
-
     private void jCheckBoxP2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxP2ActionPerformed
         if (jCheckBoxP2.isSelected()){
             txtPasswordP2.setEchoChar((char) 0);
@@ -257,47 +211,40 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jCheckBoxP2ActionPerformed
 
+    private void btnInicioP1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioP1ActionPerformed
+        usr = Usuario.buscar(txtUsuarioP1.getText(), txtPasswordP1.getText());
+        if (usr == null) {
+            showMessageDialog(this, "Usuario o contraseña incorrectos");
+            return;
+        }
+        if (usr.cambiarContra) {
+            int option = showConfirmDialog(this, "Se detecto que su contraseña se actualizo, ¿Desea cambiarla?", "Cambia tu contraseña", JOptionPane.YES_NO_CANCEL_OPTION);
+            if (option == JOptionPane.YES_OPTION) {
+                jPanel3.setVisible(false);
+                jPanel4.setVisible(true);
+            } else if (option == JOptionPane.NO_OPTION) {
+                usr.actualizar_cambiarContra();
+                siguienteVentana();
+            } else if (option == JOptionPane.CANCEL_OPTION) {
+                siguienteVentana();
+            }
+        } else {
+            siguienteVentana();
+        }
+        //        consultarUsuario(txtUsuario.getText(),txtPassword.getText());
+    }//GEN-LAST:event_btnInicioP1ActionPerformed
+
+    private void jCheckBox1P1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1P1ActionPerformed
+        if (jCheckBox1P1.isSelected()){
+            txtPasswordP1.setEchoChar((char) 0);
+        }
+        else{
+            txtPasswordP1.setEchoChar('•');
+        }
+    }//GEN-LAST:event_jCheckBox1P1ActionPerformed
+
     private boolean igualContraseña() {
         return usr.getContraseña().equals(txtPasswordConfP2.getText());
-    }
-
-    public void consultarUsuario(String user, String pass) {
-        // TODO add your handling code here:
-        Connection con = null;
-        Conexión conect = null;
-        // Se inicializa a null
-        String usuarioCorrecto = null;
-        String passCorrecto = null;
-        try {
-            con = conect.getConnection();
-            PreparedStatement pst = con.prepareStatement("SELECT usuario, contraseña FROM Usuarios where usuario='" + user + "'");
-            // PreparedStatement pst2 = con.prepareStatement("SET GLOBAL time_zone = '-3:00'");
-            ResultSet rs = pst.executeQuery();
-            // ResultSet rs2 = pst2.executeQuery();
-            if (rs.next()) {
-                usuarioCorrecto = rs.getString(1);
-                passCorrecto = rs.getString(2);
-            }
-            if (user.equals(usuarioCorrecto) && pass.equals(passCorrecto)) {
-                if (cmbRol.getSelectedItem().toString().equals("Dentista")) {
-                    MenuDentista next = new MenuDentista();
-                    next.setVisible(true);
-                    next.setLocationRelativeTo(null);
-                    this.dispose();
-                } else {
-                    if (cmbRol.getSelectedItem().toString().equals("Secretaria")) {
-                        MenuSecretaria2 next = new MenuSecretaria2();
-                        next.setVisible(true);
-                        next.setLocationRelativeTo(null);
-                        this.dispose();
-                    }
-                }//if user
-            } else if (!user.equals(usuarioCorrecto) || !pass.equals(passCorrecto)) {
-                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error " + e);
-        }
     }
 
     public static void main(String args[]) {
@@ -343,7 +290,6 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInicioP1;
     private javax.swing.JButton btnInicioP2;
-    private javax.swing.JComboBox<String> cmbRol;
     private javax.swing.JCheckBox jCheckBox1P1;
     private javax.swing.JCheckBox jCheckBoxP2;
     private Componentes.JImageBox jImageBox1;
@@ -351,7 +297,6 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
     private Componentes.JImageBox jImageBox3;
     private Componentes.JImageBox jImageBox5;
     private Componentes.JImageBox jImageBox6;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
