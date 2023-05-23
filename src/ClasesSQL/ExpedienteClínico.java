@@ -14,11 +14,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class ExpedienteClínico implements Cloneable, CRUD {
 
-    /**
-     *
-     */
     private static final String CONSULTA_TABLA = "Select folio as Folio, fecha as Fecha, motivo as Motivo, enfermedad as Enfermedad, observaciones as Observaciones,\n"
-            + "tratamiento as Tratamiento, IF(estado like '0','Inactivo','Activo') as Estado, CONCAT_WS(' ',nombre, apellido,'-',id) as Paciente\n"
+            + "tratamiento as Tratamiento, CONCAT_WS(' ',nombre, apellido,'-',id) as Paciente\n"
             + "from expediente_clinico inner join pacientes on id_paciente = id where estado like '1'";
 
     public enum Estado {

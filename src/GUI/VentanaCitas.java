@@ -766,7 +766,7 @@ public class VentanaCitas extends javax.swing.JFrame {
         if (!estatus.equals("Durante"))
             DuranteCita();
         Paciente p = Paciente.consultar(text);
-        new VentanaExpediente(p, fecha, tags).setVisible(true);
+        new VentanaExpediente(p, fecha, tags, false).setVisible(true);
     }//GEN-LAST:event_lblDuranteMouseClicked
 
     public void cargarDatos() {

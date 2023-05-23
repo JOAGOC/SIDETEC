@@ -60,7 +60,11 @@ public interface CRUD{
                 return nombreCol;
             };
             
-            tabla = new DefaultTableModel(devlolverColumnas.apply(columnas),0);
+            tabla = new DefaultTableModel(devlolverColumnas.apply(columnas),0){
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
             int index = 0;
             Object[] registro = new Object[columnas.getColumnCount()];
             while(data.next()){

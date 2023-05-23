@@ -3,13 +3,16 @@ package GUI;
 import static Componentes.TagInputControl.limpiarCadena;
 import static javax.swing.JOptionPane.showMessageDialog;
 import static javax.swing.JOptionPane.showConfirmDialog;
+
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import ClasesSQL.ExpedienteClínico;
 import ClasesSQL.Paciente;
 import Componentes.TagInputControl;
@@ -24,45 +27,57 @@ public class VentanaExpediente extends javax.swing.JFrame {
         iniciar();
     }
 
-    public VentanaExpediente(Paciente paciente, String fecha, String tags) {
+    public VentanaExpediente(Paciente paciente, String fecha, String tags, boolean gestion) {
         iniciar();
         this.paciente = paciente;
         txtPaciente.setText(paciente.getNombre() + " " + paciente.getApellido());
+        // Desplegar info del paciente
 
-        expedientes = ExpedienteClínico.consultar(paciente.getId());
-        expedientes.forEach((expediente) -> cmbExpedientes
-                .addItem(expediente.getFecha().toString() + " - " + expediente.getFolio()));
-        for (ExpedienteClínico expedienteClínico : expedientes) {
-            if (expedienteClínico.getFecha().toString().equals(fecha)) {
-                expedienteSel = expedienteClínico;
-                break;
+        if (gestion) {
+            btnAgregar1.setVisible(false);
+            // Preparar interfaz
+
+            expedientes = ExpedienteClínico.consultar(paciente.getId());
+            expedientes.forEach((expediente) -> cmbExpedientes
+                    .addItem(expediente.getFecha().toString() + " - " + expediente.getFolio()));
+            for (ExpedienteClínico expedienteClínico : expedientes) {
+                if (expedienteClínico.getFecha().toString().equals(fecha)) {
+                    expedienteSel = expedienteClínico;
+                    break;
+                }
+                // Buscar el expediente de la fecha pasada como parámetro
             }
-        }
+            // Buscar los expedientes del paciente
 
-        cmbExpedientes.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (cmbExpedientes.getSelectedIndex() == 0
-                        || expedientes.get(cmbExpedientes.getSelectedIndex() - 1).equals(expedienteSel))
-                    return;
-                expedienteSel = expedientes.get(cmbExpedientes.getSelectedIndex() - 1);
-                tagsEnfermedad.clear();
-                tagsMotivo.clear();
-                cargarExpediente();
-            }
-        });
-
-        if (expedienteSel == null) {
+            cmbExpedientes.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    if (cmbExpedientes.getSelectedIndex() == 0
+                            || expedientes.get(cmbExpedientes.getSelectedIndex() - 1).equals(expedienteSel))
+                        return;
+                    expedienteSel = expedientes.get(cmbExpedientes.getSelectedIndex() - 1);
+                    tagsEnfermedad.clear();
+                    tagsMotivo.clear();
+                    cargarExpediente();
+                }
+            });
+            // Al seleccionar, se carga el expediente
+            if (expedienteSel == null)
+                return;
+            cmbExpedientes.setSelectedItem(expedienteSel.getFecha().toString() + " - " + expedienteSel.getFolio());
+            cargarExpediente();
+            // Seleccionar el expediente encontrado
+        } else {
+            Component[] comps = { btnModificar1, btnEliminar, cmbExpedientes, jLabel1 };
+            for (Component c : comps)
+                c.setVisible(false);
             tagsMotivo.setTags(tags);
             try {
                 dtFecha1.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(fecha));
-            } catch (ParseException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            return;
+            // Preparar la interfaz
         }
-
-        cmbExpedientes.setSelectedItem(expedienteSel.getFecha().toString() + " - " + expedienteSel.getFolio());
-        cargarExpediente();
     }
 
     private void cargarExpediente() {
@@ -81,6 +96,24 @@ public class VentanaExpediente extends javax.swing.JFrame {
         txtTratamiento.setWrapStyleWord(true);
         txtObservaciones.setLineWrap(true);
         txtObservaciones.setWrapStyleWord(true);
+        btnAgregar1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                agregar(e);
+            }
+        });
+        btnEliminar.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                eliminar(e);
+            }
+        });
+        btnModificar1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                modificar(e);
+            }
+        });
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated
@@ -143,12 +176,15 @@ public class VentanaExpediente extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(69, 204, 209));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        txtFolio.setEditable(false);
         txtFolio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel3.add(txtFolio, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 20, 85, -1));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel10.setText("Folio:");
         jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 18, -1, -1));
+
+        dtFecha1.setEnabled(false);
         jPanel3.add(dtFecha1, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 87, 260, 28));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -169,10 +205,12 @@ public class VentanaExpediente extends javax.swing.JFrame {
 
         tagsMotivo.setButtonColor(new java.awt.Color(0, 108, 183));
         tagsMotivo.setButtonTextColor(new java.awt.Color(255, 255, 255));
+        tagsMotivo.setTagInputField(autoCompleteTextField2);
         jPanel3.add(tagsMotivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 183, 273, 212));
 
         tagsEnfermedad.setButtonColor(new java.awt.Color(0, 108, 183));
         tagsEnfermedad.setButtonTextColor(new java.awt.Color(255, 255, 255));
+        tagsEnfermedad.setTagInputField(autoCompleteTextField1);
         jPanel3.add(tagsEnfermedad, new org.netbeans.lib.awtextra.AbsoluteConstraints(315, 183, 285, 212));
 
         txtTratamiento.setColumns(20);
@@ -193,6 +231,7 @@ public class VentanaExpediente extends javax.swing.JFrame {
         jLabel12.setText("Paciente:");
         jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
 
+        txtPaciente.setEditable(false);
         txtPaciente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel3.add(txtPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 48, 260, 30));
 
@@ -231,7 +270,7 @@ public class VentanaExpediente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnModificar1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnModificar1MouseClicked
+    private void modificar(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnModificar1MouseClicked
         if (showConfirmDialog(this, "¿Desea actualizar el expediente clínico?", "Confirmar",
                 JOptionPane.YES_NO_OPTION) != 0)
             return;
@@ -245,7 +284,7 @@ public class VentanaExpediente extends javax.swing.JFrame {
             this.dispose();
     }// GEN-LAST:event_btnModificar1MouseClicked
 
-    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnEliminarMouseClicked
+    private void eliminar(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnEliminarMouseClicked
         if (showConfirmDialog(this, "¿Desea Eliminar el expediente clínico?", "Confirmar",
                 JOptionPane.YES_NO_OPTION) != 0)
             return;
@@ -255,7 +294,7 @@ public class VentanaExpediente extends javax.swing.JFrame {
             this.dispose();
     }// GEN-LAST:event_btnEliminarMouseClicked
 
-    private void btnAgregar1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnAgregar1MouseClicked
+    private void agregar(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnAgregar1MouseClicked
         try {
             // if (validarCampos())
             // throw new Exception("Lo siento, debes completar todos los campos del
@@ -318,12 +357,12 @@ public class VentanaExpediente extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaExpediente().setVisible(true);
+                Paciente p = new Paciente(23, "Javier", "Ramírez", 0,"", "", "");
+                new VentanaExpediente(p,"2023-05-24","",false).setVisible(true);
             }
         });
     }
 
-    private DefaultTableModel m;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Componentes.AutoCompleteTextField autoCompleteTextField1;
     private Componentes.AutoCompleteTextField autoCompleteTextField2;
