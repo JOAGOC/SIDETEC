@@ -25,11 +25,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -191,6 +194,8 @@ private void MostrarBotones(){
         autoCompleteTextField1.setItems(new String[] {"Limpieza dental", "Dolor de muelas", "Caries dental", "Extracción dental", "Blanqueamiento dental", "Ortodoncia", "Diente astillado", "Problemas de encías", "Revisión de rutina", "Problemas de mordida", "Prótesis dental", "Inflamación dental", "Sensibilidad dental", "Implante dental"});
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(1379, 914));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setMinimumSize(new java.awt.Dimension(1180, 880));
@@ -400,9 +405,6 @@ private void MostrarBotones(){
         tblCita.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblCitaMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                tblCitaMouseEntered(evt);
             }
         });
         jScrollPane2.setViewportView(tblCita);
@@ -748,10 +750,10 @@ private void MostrarBotones(){
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 875, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
         );
 
-        pack();
+        setBounds(0, 0, 1379, 807);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBuscarMouseClicked
@@ -806,10 +808,6 @@ private void MostrarBotones(){
     private void lblDisponibleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDisponibleMouseClicked
         DisponibleCita();
     }//GEN-LAST:event_lblDisponibleMouseClicked
-
-    private void tblCitaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCitaMouseEntered
-        MostrarBotones();
-    }//GEN-LAST:event_tblCitaMouseEntered
 
     public void cargarDatos() {
         try {
@@ -1469,15 +1467,17 @@ private void DisponibleCita() {
             int fila = tblCita.getSelectedRow();
             txtDiaCita.setText(tblCita.getValueAt(fila, 0).toString());
             txtHoraCita.setText(tblCita.getValueAt(fila, 1).toString());
-            txtTelefono.setText(tblCita.getValueAt(fila, 4).toString());
-            String tags;
-            if (!(tags = (String) tblCita.getValueAt(fila, 5)).equals("")) {
-                tagInputControl1.setTags(tags);
-            }
-            
-            if (!tblCita.getValueAt(fila, 6).toString().equals("")) {
-                txtDuracion.setText(tblCita.getValueAt(fila, 6).toString());
-            } 
+            try {
+                txtTelefono.setText(tblCita.getValueAt(fila, 4).toString());
+                String tags;
+                if (!(tags = (String) tblCita.getValueAt(fila, 5)).equals("")) {
+                    tagInputControl1.setTags(tags);
+                }
+
+                if (!tblCita.getValueAt(fila, 6).toString().equals("")) {
+                    txtDuracion.setText(tblCita.getValueAt(fila, 6).toString());
+                } 
+            } catch (Exception e) {}
             
             switch (tblCita.getValueAt(fila, 2).toString()) {
                 case "Disponible":
@@ -1673,8 +1673,25 @@ private void DisponibleCita() {
 
     }// GEN-LAST:event_btnMostrarActionPerformed
 
+    public boolean validarHoraPasada() throws HeadlessException {
+        String xd = txtDiaCita.getText()+" "+txtHoraCita.getText();
+        Calendar fechaCita = Calendar.getInstance();
+        try {
+            fechaCita.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(xd));
+        } catch (ParseException ex) {
+            Logger.getLogger(VentanaCitasSecre.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (Calendar.getInstance().compareTo(fechaCita) == 1) {
+            JOptionPane.showMessageDialog(this, "No se puede agendar una cita para fechas y horas pasadas.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return true;
+        }
+        return false;
+    }
+    
     private void lblGuardarMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblGuardarMouseClicked
-        //agregar();
+        if (validarHoraPasada())
+            return;
+        
         if(txtDiaCita.getText().toString().equals("")){
          JOptionPane.showMessageDialog(this, "Debe elegir un día de cita", "Advertencia", JOptionPane.WARNING_MESSAGE);
         return;

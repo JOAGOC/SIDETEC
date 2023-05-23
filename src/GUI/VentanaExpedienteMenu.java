@@ -4,9 +4,11 @@ import static javax.swing.JOptionPane.showMessageDialog;
 import ClasesSQL.ExpedienteClínico;
 import ClasesSQL.Paciente;
 import Componentes.ColorRenderer;
+import Componentes.DTable;
 import desplazable.Desface;
 import static Componentes.TagInputControl.*;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -14,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
 import java.util.function.Function;
+import javax.swing.JTable;
 
 import javax.swing.JToggleButton;
 import javax.swing.table.DefaultTableModel;
@@ -42,6 +45,7 @@ public class VentanaExpedienteMenu extends javax.swing.JFrame {
                 }
             }});
         tblCita.setModel(ExpedienteClínico.consultar());
+        estiloCabeceras(tblCita);
         btnBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -71,11 +75,10 @@ public class VentanaExpedienteMenu extends javax.swing.JFrame {
 
     private void buscarPaciente() {
         String folio = txtFolio.getText(),paciente = txtPaciente.getText(),fecha = casillaFecha.isSelected()? new SimpleDateFormat("yyyy-MM-dd").format(dtFecha.getDate()):"";
-        System.out.println(folio.matches("^[1-9][0-9]*$")? folio : "");
-        System.out.println(limpiarCadena(paciente));
-        System.out.println(fecha);
         try {
             tblCita.setModel(ExpedienteClínico.buscar(folio.matches("^[1-9][0-9]*$")? folio : "", paciente, fecha, jToggleButton1.isSelected()));
+            if (tblCita.getModel().getRowCount()==0)
+                showMessageDialog(this,"No se encontró ningún expediente.");
             contextoTbl = true;
         } catch (Exception e) {
             if (contextoTbl){
@@ -85,7 +88,14 @@ public class VentanaExpedienteMenu extends javax.swing.JFrame {
             else
             showMessageDialog(this,e.getMessage());
         }
+        estiloCabeceras(tblCita);
+    }
 
+    public static void estiloCabeceras(JTable tblCita) {
+        DTable d = new DTable(new Color(230, 192, 233), Color.BLACK);
+        for (int columnIndex = 0; columnIndex < tblCita.getColumnModel().getColumnCount(); columnIndex++) {
+            tblCita.getColumnModel().getColumn(columnIndex).setHeaderRenderer(d);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

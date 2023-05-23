@@ -90,6 +90,7 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
 
     private void llenarTabla() {
         tablaUsuarios.setModel(tabla = Usuario.Consultar());
+        VentanaExpedienteMenu.estiloCabeceras(tablaUsuarios);
         TableColumn col = tablaUsuarios.getColumnModel().getColumn(0);
         tablaUsuarios.getColumnModel().removeColumn(col);
         col = tablaUsuarios.getColumnModel().getColumn(tablaUsuarios.getColumnModel().getColumnCount()-1);
