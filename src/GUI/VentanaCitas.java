@@ -1,5 +1,6 @@
 package GUI;
 
+import ClasesSQL.ExpedienteClínico;
 import static Interfaces.CRUD.cargarAutocompletar;
 import Conexión.Conexión;
 import com.toedter.calendar.JDateChooser;
@@ -15,23 +16,31 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Image;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.SwingUtilities;
 
-import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -66,47 +75,15 @@ public class VentanaCitas extends javax.swing.JFrame {
         int columnaEstado = 2; // reemplazar con el índice de la columna que contiene los estados
         DefaultTableModel modelo = (DefaultTableModel) tblCita.getModel();
 
- modelo.addTableModelListener(new TableModelListener() {
-    @Override
-    public void tableChanged(TableModelEvent e) {
-        if (e.getType() == TableModelEvent.UPDATE) {
-            int row = e.getFirstRow()+1;
-            int column = e.getColumn();
-            
-            if (column == 6) { // Si se modificó la columna "Duración"
-                String duracion = (String) modelo.getValueAt(row, column);
-                int duracionEnMinutos = getDuracionEnMinutos(duracion);
-                int rowsToBlock = duracionEnMinutos / 30;
-                
-                // Verificar si alguna hora en el rango ya está bloqueada
-                for (int i = 1; i < rowsToBlock; i++) {
-                    if (row + i < modelo.getRowCount()) {
-                        if (!modelo.getValueAt(row + i, 1).toString().isEmpty()) {
-                            JOptionPane.showMessageDialog(null, "Horario ya está bloqueado");
-                            return;
-                        }
-                    }
-                }
-                
-                // Bloquear las horas
-                for (int i = 1; i < rowsToBlock; i++) {
-                    if (row + i < modelo.getRowCount()) {
-                        modelo.setValueAt("Bloqueado", row + i, 2);
-                    }
-                }
-            }
-        }
-    }
-     
-        }); 
         tblCita.getColumnModel().getColumn(columnaEstado).setCellRenderer(colorRenderer);
-        lblConfirmar.setEnabled(false);
-        lblFinalizar.setEnabled(false);
-        lblGuardar.setEnabled(true);
-        lblEliminar.setEnabled(false);
-        lblModificar.setEnabled(false);
-
-        // this.Imagen(this.lblGuardar,"Imagenes\\cita-medica.png");
+        lblConfirmar.setVisible(false);
+        lblFinalizar.setVisible(false);
+        lblGuardar.setVisible(true);
+        lblEliminar.setVisible(false);
+        lblModificar.setVisible(false);
+        lblDurante.setVisible(false);
+        lblBloquear.setVisible(true);
+        lblDisponible.setVisible(false);
 
         tblCita.getColumnModel().getColumn(0).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
         tblCita.getColumnModel().getColumn(1).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
@@ -123,22 +100,7 @@ public class VentanaCitas extends javax.swing.JFrame {
 
           
     }
-  private int getDuracionEnMinutos(String duracion) {
-        switch (duracion) {
-            case "30 min":
-                return 30;
-            case "45 min":
-                return 45;
-            case "1 hora":
-                return 60;
-            case "1 hora y media":
-                return 90;
-            case "2 horas":
-                return 120;
-            default:
-                return 0;
-        }
-    }
+  
     private void Imagen(JLabel lbl, String ruta) {
         this.imagen = new ImageIcon(ruta);
         this.icono = new ImageIcon(
@@ -149,7 +111,15 @@ public class VentanaCitas extends javax.swing.JFrame {
         lbl.setIcon(this.icono);
         repaint();
     }
-
+private void MostrarBotones(){
+                    lblConfirmar.setVisible(false);
+                    lblGuardar.setVisible(true);
+                    lblFinalizar.setVisible(false);
+                    lblDurante.setVisible(false);
+                    lblBloquear.setVisible(true);
+                    lblEliminar.setVisible(false);
+                    lblDisponible.setVisible(false);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -184,6 +154,7 @@ public class VentanaCitas extends javax.swing.JFrame {
         btnBuscar1 = new Componentes.JImageBox();
         jLabel16 = new javax.swing.JLabel();
         txtDuracion = new javax.swing.JTextField();
+        lblDuracion = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         fecha = new com.toedter.calendar.JDateChooser();
@@ -211,6 +182,10 @@ public class VentanaCitas extends javax.swing.JFrame {
         lblEliminar = new Componentes.JImageBox();
         lblConfirmar = new Componentes.JImageBox();
         lblModificar = new Componentes.JImageBox();
+        lblLimpiar = new javax.swing.JLabel();
+        lblDurante = new Componentes.JImageBox();
+        lblBloquear = new Componentes.JImageBox();
+        lblDisponible = new Componentes.JImageBox();
         lblFinalizar = new Componentes.JImageBox();
 
         autoCompleteTextField1.setItems(new String[] {"Limpieza dental", "Dolor de muelas", "Caries dental", "Extracción dental", "Blanqueamiento dental", "Ortodoncia", "Diente astillado", "Problemas de encías", "Revisión de rutina", "Problemas de mordida", "Prótesis dental", "Inflamación dental", "Sensibilidad dental", "Implante dental"});
@@ -218,7 +193,8 @@ public class VentanaCitas extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setMinimumSize(new java.awt.Dimension(1180, 1242));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1180, 880));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1000, 880));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(69, 204, 209));
@@ -287,7 +263,11 @@ public class VentanaCitas extends javax.swing.JFrame {
         });
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel16.setText("Duración:");
+        jLabel16.setText("horas");
+        jLabel16.setEnabled(false);
+
+        lblDuracion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblDuracion.setText("Duración:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -297,62 +277,61 @@ public class VentanaCitas extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel6))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel5)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(lblDetalle)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(tagInputControl1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(19, 19, 19)
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel14)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtDiaCita, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel15)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtHoraCita, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel16)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(49, 49, 49))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel14)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtDiaCita, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel15)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtHoraCita, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(19, 19, 19)
+                                        .addComponent(jLabel11)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(lblDuracion)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel16))))))
+                    .addComponent(jLabel5)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblDetalle)
+                        .addGap(18, 18, 18)
+                        .addComponent(tagInputControl1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(345, 345, 345)
-                    .addComponent(btnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(627, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(260, 260, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(cmbPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(cmbPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnBuscar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
@@ -363,35 +342,37 @@ public class VentanaCitas extends javax.swing.JFrame {
                             .addComponent(jLabel6)
                             .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(8, 8, 8)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblDetalle)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel14)
-                                .addComponent(txtDiaCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel15)
-                                .addComponent(txtHoraCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel16)
-                            .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 30, Short.MAX_VALUE))
-                    .addComponent(tagInputControl1, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
+                            .addComponent(jLabel8)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(lblDetalle)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(tagInputControl1, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11)
+                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel14)
+                            .addComponent(txtDiaCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15)
+                            .addComponent(txtHoraCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblDuracion))
+                            .addComponent(jLabel16))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(10, 10, 10)
-                    .addComponent(btnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(184, Short.MAX_VALUE)))
         );
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 470, 1020, 240));
@@ -413,12 +394,15 @@ public class VentanaCitas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "No. Fecha", "Hora", "Status", "Nombre paciente", "Telefono", "Detalle Cita", "Duración"
+                "No. Fecha", "Hora", "Estatus", "Nombre paciente", "Telefono", "Detalle Cita", "Duración"
             }
         ));
         tblCita.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblCitaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tblCitaMouseEntered(evt);
             }
         });
         jScrollPane2.setViewportView(tblCita);
@@ -679,7 +663,7 @@ public class VentanaCitas extends javax.swing.JFrame {
                 lblGuardarMouseClicked(evt);
             }
         });
-        jPanel1.add(lblGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 730, 80, -1));
+        jPanel1.add(lblGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 720, 80, -1));
 
         lblEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/borrar.png"))); // NOI18N
         lblEliminar.setToolTipText("Eliminar Cita");
@@ -688,7 +672,7 @@ public class VentanaCitas extends javax.swing.JFrame {
                 lblEliminarMouseClicked(evt);
             }
         });
-        jPanel1.add(lblEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 730, 90, -1));
+        jPanel1.add(lblEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 710, 100, -1));
 
         lblConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fecha-del-calendario.png"))); // NOI18N
         lblConfirmar.setToolTipText("Confirmar Cita");
@@ -697,7 +681,7 @@ public class VentanaCitas extends javax.swing.JFrame {
                 lblConfirmarMouseClicked(evt);
             }
         });
-        jPanel1.add(lblConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 730, 70, -1));
+        jPanel1.add(lblConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 720, 80, -1));
 
         lblModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar1.png"))); // NOI18N
         lblModificar.setToolTipText("Modificar");
@@ -706,7 +690,44 @@ public class VentanaCitas extends javax.swing.JFrame {
                 lblModificarMouseClicked(evt);
             }
         });
-        jPanel1.add(lblModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 730, 70, 70));
+        jPanel1.add(lblModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 720, 80, -1));
+
+        lblLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-clear-90.png"))); // NOI18N
+        lblLimpiar.setToolTipText("Limpiar");
+        lblLimpiar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        lblLimpiar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblLimpiarMouseClicked(evt);
+            }
+        });
+        jPanel1.add(lblLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 730, 90, 70));
+
+        lblDurante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/calendario2.png"))); // NOI18N
+        lblDurante.setToolTipText("Durante");
+        lblDurante.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDuranteMouseClicked(evt);
+            }
+        });
+        jPanel1.add(lblDurante, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 720, 90, -1));
+
+        lblBloquear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cuaderno.png"))); // NOI18N
+        lblBloquear.setToolTipText("Cita bloqueada");
+        lblBloquear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBloquearMouseClicked(evt);
+            }
+        });
+        jPanel1.add(lblBloquear, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 720, 90, -1));
+
+        lblDisponible.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cuaderno3.png"))); // NOI18N
+        lblDisponible.setToolTipText("Disponible");
+        lblDisponible.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDisponibleMouseClicked(evt);
+            }
+        });
+        jPanel1.add(lblDisponible, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 730, -1, 80));
 
         lblFinalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/terminado.png"))); // NOI18N
         lblFinalizar.setToolTipText("Cita Finalizada");
@@ -715,7 +736,7 @@ public class VentanaCitas extends javax.swing.JFrame {
                 lblFinalizarMouseClicked(evt);
             }
         });
-        jPanel1.add(lblFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 730, 80, 80));
+        jPanel1.add(lblFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 720, -1, 100));
 
         jScrollPane1.setViewportView(jPanel1);
 
@@ -723,13 +744,11 @@ public class VentanaCitas extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1363, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 875, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -751,6 +770,46 @@ public class VentanaCitas extends javax.swing.JFrame {
         Buscar(valorBusqueda);
         
     }//GEN-LAST:event_btnBuscar1MouseClicked
+
+    private void lblLimpiarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLimpiarMouseClicked
+        limpiar();
+    }//GEN-LAST:event_lblLimpiarMouseClicked
+
+    private void lblBloquearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBloquearMouseClicked
+       bloquearCita();
+    }//GEN-LAST:event_lblBloquearMouseClicked
+
+    private void lblDuranteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDuranteMouseClicked
+        String estatus = tblCita.getValueAt(tblCita.getSelectedRow(), 2).toString();
+       String text = txtTelefono.getText(), fecha, tags;
+            fecha = tblCita.getValueAt(tblCita.getSelectedRow(), 0).toString();
+            tags = tagInputControl1.getTags(0);
+            Paciente p = Paciente.consultar(text);
+        try {
+            if (!estatus.equals("Durante"))
+                DuranteCita();
+    
+            
+            //Obtiene la información necesaria para el expediente
+    
+            if (ExpedienteClínico.existeBD(fecha, p.getId()))
+                new VentanaExpediente(p, fecha, tags, true).setVisible(true);
+            else
+                new VentanaExpediente(p, fecha, tags, false).setVisible(true);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+    }//GEN-LAST:event_lblDuranteMouseClicked
+
+    private void lblDisponibleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDisponibleMouseClicked
+        DisponibleCita();
+    }//GEN-LAST:event_lblDisponibleMouseClicked
+
+    private void tblCitaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCitaMouseEntered
+        MostrarBotones();
+    }//GEN-LAST:event_tblCitaMouseEntered
 
     public void cargarDatos() {
         try {
@@ -835,6 +894,7 @@ public class VentanaCitas extends javax.swing.JFrame {
         txtNombre.setText(datos[1]);
         txtApellido.setText(datos[2]);
         txtTelefono.setText(datos[3]);
+        //txtDuracion.setText(datos[6]);
     }
 
     public void limpiar() {
@@ -846,12 +906,13 @@ public class VentanaCitas extends javax.swing.JFrame {
         this.txtTelefono.setText("");
         this.tagInputControl1.clear();
         this.cmbPaciente.setText("");
+        this.txtDuracion.setText("");
       //txtBuscar.requestFocus();
     }// limpiar
 
     public void vaciarTabla() {
         DefaultTableModel m = (DefaultTableModel) tblCita.getModel();
-        String titulos[] = { "No. Fecha", "Hora", "Status", "Nombre del paciente", "Telefono", "Detalle cita", "Duración" };
+        String titulos[] = { "No. Fecha", "Hora", "Estatus", "Nombre del paciente", "Telefono", "Detalle cita", "Duración" };
         m = new DefaultTableModel(null, titulos);
         tblCita.setModel(m);
     }// vaciarTabla
@@ -871,7 +932,18 @@ public class VentanaCitas extends javax.swing.JFrame {
         }
         return false;
     }
+    private boolean validaCampo(JTextField t){
+        try{   estaVacio(t);
+        }catch(Exception e){
+            showMessageDialog(this,e.getMessage());t.requestFocus(); return true;
+        }
+        return false;
+    }
     
+    private void estaVacio(JTextField t)throws Exception{
+        String cad=t.getText().trim();
+        if(cad.equals("")) throw new Exception("Campo vacio");
+    }
    void Buscar(String valor) {
     Connection con = null;
     Conexión conect = new Conexión();
@@ -885,6 +957,7 @@ public class VentanaCitas extends javax.swing.JFrame {
             sql += " AND ";
         }
         sql += "CONCAT(nombre, ' ', apellido) LIKE ?";
+       
     }
 
     try {
@@ -902,6 +975,7 @@ public class VentanaCitas extends javax.swing.JFrame {
             datos[1] = rs.getString(2);
             datos[2] = rs.getString(3);
             datos[3] = rs.getString(4);
+            
 
             encontrado = true;
         }
@@ -912,19 +986,14 @@ public class VentanaCitas extends javax.swing.JFrame {
             // Limpia los campos de texto si no se encuentra el registro
             String[] vacio = { "", "", "", "" };
             llenarCamposTexto(vacio);
-            showMessageDialog(null, "Paciente no encontrado");
+            showMessageDialog(null, "No existe el paciente o está mal escrito el nombre");
         }
     } 
     catch (SQLException ex) {
         System.out.println("ERROR AL BUSCAR: " + ex);
     }
 }
-
-    
-
-    
-
-
+/*
     private void agregar() {
         if (validaMotivo(tagInputControl1)) {
             lblDetalle.setForeground(Color.RED);
@@ -970,7 +1039,112 @@ public class VentanaCitas extends javax.swing.JFrame {
             }
 
     }// agregar
+    */
+   private void agregar2() {
+       // Convertir la hora de la cita a LocalTime
+      
+String horaCitaString = txtHoraCita.getText();
+DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+LocalTime horaCita = LocalTime.parse(horaCitaString, formatter);
 
+// Establecer la hora límite
+LocalTime horaLimite = LocalTime.parse("16:30:00", formatter);
+
+// Validar si la hora de la cita es después de la hora límite
+if (horaCita.isAfter(horaLimite)) {
+    JOptionPane.showMessageDialog(this, "Ya no hay horas disponibles", "Advertencia", JOptionPane.WARNING_MESSAGE);
+    return;
+}
+     String duracion = txtDuracion.getText().trim();
+   
+
+    // Validar el formato de duración (00:00)
+    if (!duracion.matches("\\d{2}:\\d{2}")) {
+        JOptionPane.showMessageDialog(this, "El formato de duración debe ser 00:00", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+       if (validaMotivo(tagInputControl1)) {
+        lblDetalle.setForeground(Color.RED);
+        return;
+    } else {
+        lblDetalle.setForeground(Color.BLACK);
+    }
+
+    int fila = tblCita.getSelectedRow();
+    if (fila == -1) {
+        JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UN REGISTRO", "Advertencia",
+                JOptionPane.WARNING_MESSAGE);
+    } else {
+        try {
+            Connection con = null;
+            Conexión conect = new Conexión();
+            con = conect.getConnection();
+            Statement st = con.createStatement();
+            
+            // Confirmar la cita original
+            String sql = "UPDATE gestion_cita SET idPaciente = ?, estatus = 'Confirmar', detalleCita= ?, duracion= ? WHERE fecha = ? AND horario = ? AND estatus='Disponible'";
+            PreparedStatement pst = con.prepareCall(sql);
+            pst.setString(1, txtID.getText());
+            pst.setString(2, tagInputControl1.getTags(0));
+            pst.setString(3, txtDuracion.getText());
+            pst.setString(4, txtDiaCita.getText());
+            pst.setString(5, txtHoraCita.getText());
+            int n = pst.executeUpdate();
+
+            if (n > 0) {
+                // Convertir la duración a minutos
+                String duracionString = txtDuracion.getText();
+                int duracionMinutos;
+                if (duracionString.contains(":")) {
+                    // Si la duración está en formato HH:mm
+                    int horas = Integer.parseInt(duracionString.split(":")[0]);
+                    int minutos = Integer.parseInt(duracionString.split(":")[1]);
+                    duracionMinutos = horas * 60 + minutos;
+                } else {
+                    // Si la duración está en minutos
+                    duracionMinutos = Integer.parseInt(duracionString);
+                }
+
+                // Bloquear las citas en función de la fecha, la hora y la duración
+                String bloquearCitasSQL = "{CALL actualizarCitas(?, ?, ?)}";
+                CallableStatement bloquearCitasStmt = con.prepareCall(bloquearCitasSQL);
+                bloquearCitasStmt.setString(1, txtDiaCita.getText());
+                bloquearCitasStmt.setString(2, txtHoraCita.getText());
+                bloquearCitasStmt.setInt(3, duracionMinutos);
+                bloquearCitasStmt.execute();
+
+                // Cambiar el estado de las casillas debajo de la cita agregada a "Bloqueado"
+                int index = tblCita.getSelectedRow();
+                int rows = tblCita.getRowCount();
+                for (int i = index + 1; i < rows; i++) {
+                    String estado = (String) tblCita.getValueAt(i, 1); // Obtener el estado actual de la casilla
+                    if (estado.equals("Disponible")) {
+                        tblCita.setValueAt("Bloqueado", i, 1); // Cambiar el estado en la columna correspondiente
+                    }
+                }
+                
+                JOptionPane.showMessageDialog(this, "CITA GUARDADA CORRECTAMENTE");
+                limpiar();
+                vaciarTabla();
+                Date fechaSeleccionada = fecha.getDate();
+                if (fechaSeleccionada == null) {
+                    cargarDatos();
+                } else {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    String fechaFormateada = sdf.format(fechaSeleccionada);
+                    cargarDatos2();
+                    this.colorTabla();
+                }
+            }
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(this, "LOS DATOS NO HAN SIDO GUARDADOS CORRECTAMENTE" + e, "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}//agregar2
+
+
+/*
     private void Eliminar() {
         int fila = tblCita.getSelectedRow();
         if (fila == -1) {
@@ -1007,7 +1181,77 @@ public class VentanaCitas extends javax.swing.JFrame {
                         JOptionPane.ERROR_MESSAGE);
             }
 
-    }// Eliminar
+    }// Eliminar*/
+   private void eliminarCita() {
+      
+    int fila = tblCita.getSelectedRow();
+    
+    if (fila == -1) {
+        JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UN REGISTRO", "Advertencia",
+                JOptionPane.WARNING_MESSAGE);
+    } else {
+        int opc = JOptionPane.showConfirmDialog(this, "¿ESTA SEGURO QUE DESEA ELIMINAR ESTÁ CITA?", "Pregunta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (opc == JOptionPane.YES_OPTION){
+        try {
+            Connection con = null;
+            Conexión conect = new Conexión();
+            con = conect.getConnection();
+            Statement st = con.createStatement();
+            String fechaCita = txtDiaCita.getText();
+            String horaCita = txtHoraCita.getText();
+            
+            // Obtener la duración de la cita seleccionada
+            String duracionString = (String) tblCita.getValueAt(fila, 6);
+            int horas = Integer.parseInt(duracionString.split(":")[0]);
+            int minutos = Integer.parseInt(duracionString.split(":")[1]);
+            int duracionMinutos = horas * 60 + minutos;
+
+            // Desbloquear las citas en función de la fecha, la hora y la duración
+            String desbloquearCitasSQL = "{CALL desbloquearCitas(?, ?, ?)}";
+            CallableStatement desbloquearCitasStmt = con.prepareCall(desbloquearCitasSQL);
+            desbloquearCitasStmt.setString(1, fechaCita);
+            desbloquearCitasStmt.setString(2, horaCita);
+            desbloquearCitasStmt.setInt(3, duracionMinutos);
+            desbloquearCitasStmt.execute();
+
+            String sql = "UPDATE gestion_cita SET idPaciente = NULL, estatus = 'Disponible', detalleCita = '', duracion = NULL WHERE fecha = ? AND horario = ?";
+            PreparedStatement pst = con.prepareCall(sql);
+            pst.setString(1, fechaCita);
+            pst.setString(2, horaCita);
+            int n = pst.executeUpdate();
+            if (n > 0) {
+                // Cambiar el estado de las casillas bloqueadas a "Disponible"
+                int index = tblCita.getSelectedRow();
+                int rows = tblCita.getRowCount();
+                for (int i = index + 1; i < rows; i++) {
+                    String estado = (String) tblCita.getValueAt(i, 1);
+                    if (estado.equals("Bloqueado")) {
+                        tblCita.setValueAt("Disponible", i, 1); // Cambiar el estado en la columna correspondiente
+                    }
+                }
+                
+                JOptionPane.showMessageDialog(this, "CITA ELIMINADA CORRECTAMENTE");
+                limpiar();
+                vaciarTabla();
+                Date fechaSeleccionada = fecha.getDate();
+                if (fechaSeleccionada == null) {
+                    cargarDatos();
+                    this.colorTabla();
+                } else {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    String fechaFormateada = sdf.format(fechaSeleccionada);
+                    cargarDatos2();
+                    this.colorTabla();
+                }
+            }
+            
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(this, "LOS DATOS NO HAN SIDO ELIMINADOS CORRECTAMENTE" + e, "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+            }
+    }
+}//eliminarCita
 
     private void confirmar() {
         int fila = tblCita.getSelectedRow();
@@ -1045,7 +1289,43 @@ public class VentanaCitas extends javax.swing.JFrame {
             }
 
     }// Confirmar
+private void DuranteCita() {
+        int fila = tblCita.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UN REGISTRO", "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+        } else
+            try {
+                Connection con = null;
+                Conexión conect = new Conexión();
+                con = conect.getConnection();
+                Statement st = con.createStatement();
+                String sql = "UPDATE gestion_cita SET  estatus = 'Durante' WHERE fecha = ? AND horario = ? AND estatus='Confirmada'";
+                PreparedStatement pst = con.prepareCall(sql);
+                pst.setString(1, txtDiaCita.getText());
+                pst.setString(2, txtHoraCita.getText());
+                int n = pst.executeUpdate();
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(this, "Está atendiendo al paciente, favor de llenar su expediente");
+                    limpiar();
+                    vaciarTabla();
+                    Date fechaSeleccionada = fecha.getDate();
+                    if (fechaSeleccionada == null) {
+                        cargarDatos();
+                        this.colorTabla();
+                    } else {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        String fechaFormateada = sdf.format(fechaSeleccionada);
+                        cargarDatos2();
+                        this.colorTabla();
+                    }
+                }
+            } catch (SQLException | HeadlessException e) {
+                JOptionPane.showMessageDialog(this, "LOS DATOS NO HAN SIDO ACTUALIZADOS CORRECTAMENTE" + e, "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
 
+    }// DuranteCita
     private void finalizarCita() {
         int fila = tblCita.getSelectedRow();
         if (fila == -1) {
@@ -1057,7 +1337,7 @@ public class VentanaCitas extends javax.swing.JFrame {
                 Conexión conect = new Conexión();
                 con = conect.getConnection();
                 Statement st = con.createStatement();
-                String sql = "UPDATE gestion_cita SET  estatus = 'Finalizada' WHERE fecha = ? AND horario = ? AND estatus='Confirmada'";
+                String sql = "UPDATE gestion_cita SET  estatus = 'Finalizada' WHERE fecha = ? AND horario = ? AND estatus='Durante'";
                 PreparedStatement pst = con.prepareCall(sql);
                 pst.setString(1, txtDiaCita.getText());
                 pst.setString(2, txtHoraCita.getText());
@@ -1095,13 +1375,13 @@ public class VentanaCitas extends javax.swing.JFrame {
                 Conexión conect = new Conexión();
                 con = conect.getConnection();
                 Statement st = con.createStatement();
-                String sql = "UPDATE gestion_cita SET  estatus = 'Bloqueada' WHERE fecha = ? AND horario = ? AND estatus='Disponible'";
+                String sql = "UPDATE gestion_cita SET  estatus = 'Bloqueado' WHERE fecha = ? AND horario = ? AND estatus='Disponible'";
                 PreparedStatement pst = con.prepareCall(sql);
                 pst.setString(1, txtDiaCita.getText());
                 pst.setString(2, txtHoraCita.getText());
                 int n = pst.executeUpdate();
                 if (n > 0) {
-                    JOptionPane.showMessageDialog(this, "CITA CONFIRMADA CORRECTAMENTE");
+                    JOptionPane.showMessageDialog(this, "CITA BLOQUEADA CORRECTAMENTE");
                     limpiar();
                     vaciarTabla();
                     Date fechaSeleccionada = fecha.getDate();
@@ -1120,7 +1400,42 @@ public class VentanaCitas extends javax.swing.JFrame {
             }
 
     }// Bloquear
+private void DisponibleCita() {
+        int fila = tblCita.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UN REGISTRO", "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+        } else
+            try {
+                Connection con = null;
+                Conexión conect = new Conexión();
+                con = conect.getConnection();
+                Statement st = con.createStatement();
+                String sql = "UPDATE gestion_cita SET  estatus = 'Disponible' WHERE fecha = ? AND horario = ? AND estatus='Bloqueado'";
+                PreparedStatement pst = con.prepareCall(sql);
+                pst.setString(1, txtDiaCita.getText());
+                pst.setString(2, txtHoraCita.getText());
+                int n = pst.executeUpdate();
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(this, "CITA CAMBIADA CORRECTAMENTE");
+                    limpiar();
+                    vaciarTabla();
+                    Date fechaSeleccionada = fecha.getDate();
+                    if (fechaSeleccionada == null) {
+                        cargarDatos();
+                    } else {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        String fechaFormateada = sdf.format(fechaSeleccionada);
+                        cargarDatos2();
+                        this.colorTabla();
+                    }
+                }
+            } catch (SQLException | HeadlessException e) {
+                JOptionPane.showMessageDialog(this, "LOS DATOS NO HAN SIDO ACTUALIZADOS CORRECTAMENTE" + e, "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
 
+    }// Bloquear
     private void colorTabla() {
         tblCita.getColumnModel().getColumn(0).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
         tblCita.getColumnModel().getColumn(1).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
@@ -1159,30 +1474,77 @@ public class VentanaCitas extends javax.swing.JFrame {
             if (!(tags = (String) tblCita.getValueAt(fila, 5)).equals("")) {
                 tagInputControl1.setTags(tags);
             }
-
-            if (tblCita.getValueAt(fila, 2).toString().equals("Disponible")) {
-                lblConfirmar.setEnabled(false);
-                lblFinalizar.setEnabled(false);
-                lblGuardar.setEnabled(true);
-                lblEliminar.setEnabled(false);
-                lblModificar.setEnabled(false);
-            } else if (tblCita.getValueAt(fila, 2).toString().equals("Confirmar")) {
-                lblConfirmar.setEnabled(true);
-                lblGuardar.setEnabled(false);
-                lblFinalizar.setEnabled(false);
+            
+            if (!tblCita.getValueAt(fila, 6).toString().equals("")) {
+                txtDuracion.setText(tblCita.getValueAt(fila, 6).toString());
+            } 
+            
+            switch (tblCita.getValueAt(fila, 2).toString()) {
+                case "Disponible":
+                    lblConfirmar.setVisible(true);
+                    lblGuardar.setVisible(true);
+                    lblFinalizar.setVisible(false);
+                    lblDurante.setVisible(false);
+                    lblBloquear.setVisible(true);
+                    lblEliminar.setVisible(false);
+                    lblModificar.setVisible(true);
+                    lblDisponible.setVisible(false);
+                    break;
+                case "Confirmar":
+                    lblConfirmar.setVisible(true);
+                    lblGuardar.setVisible(false);
+                    lblFinalizar.setVisible(false);
+                    lblDurante.setVisible(false);
+                    lblBloquear.setVisible(false);
+                    lblEliminar.setVisible(true);
+                    lblModificar.setVisible(true);
+                    lblDisponible.setVisible(false);
+                    break;
+                case "Confirmada":
+                    lblConfirmar.setVisible(false);
+                    lblGuardar.setVisible(false);
+                    lblFinalizar.setVisible(false);
+                    lblDurante.setVisible(true);
+                    lblBloquear.setVisible(false);
+                    lblEliminar.setVisible(true);
+                    lblModificar.setVisible(true);
+                    lblDisponible.setVisible(false);
+                    break;
+                case "Durante":
+                    lblConfirmar.setVisible(false);
+                    lblGuardar.setVisible(false);
+                    lblFinalizar.setVisible(true);
+                    lblDurante.setVisible(true);
+                    lblBloquear.setVisible(false);
+                    lblEliminar.setVisible(true);
+                    lblModificar.setVisible(true);
+                    lblDisponible.setVisible(false);
+                    break;
+                case "Finalizada":
+                    lblConfirmar.setVisible(false);
+                    lblGuardar.setVisible(true);
+                    lblFinalizar.setVisible(true);
+                    lblDurante.setVisible(false);
+                    lblBloquear.setVisible(true);
+                    lblEliminar.setVisible(true);
+                    lblModificar.setVisible(true);
+                    lblDisponible.setVisible(false);
+                    break;
+                case "Bloqueado":
+                    lblConfirmar.setVisible(false);
+                    lblGuardar.setVisible(false);
+                    lblFinalizar.setVisible(false);
+                    lblDurante.setVisible(false);
+                    lblBloquear.setVisible(false);
+                    lblEliminar.setVisible(false);
+                    lblModificar.setVisible(false);
+                    lblDisponible.setVisible(true);
+                    break;
+                default:
+               
+                    break;
             }
-            if (tblCita.getValueAt(fila, 2).toString().equals("Confirmada")) {
-                lblFinalizar.setEnabled(true);
-                lblGuardar.setEnabled(false);
-                lblConfirmar.setEnabled(false);
-            }
-
-            if (tblCita.getValueAt(fila, 2).toString().equals("Confirmar")
-                    || tblCita.getValueAt(fila, 2).toString().equals("Confirmada")
-                    || tblCita.getValueAt(fila, 2).toString().equals("Finalizada")) {
-                lblEliminar.setEnabled(true);
-                lblGuardar.setEnabled(false);
-            }
+           System.out.println(tblCita.getValueAt(fila, 2));
             String cellValue = tblCita.getValueAt(fila, 3).toString();
             String[] parts = cellValue.split(" ");
             if (parts.length == 2) {
@@ -1312,75 +1674,223 @@ public class VentanaCitas extends javax.swing.JFrame {
     }// GEN-LAST:event_btnMostrarActionPerformed
 
     private void lblGuardarMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblGuardarMouseClicked
-        agregar();
+        //agregar();
+        if(txtDiaCita.getText().toString().equals("")){
+         JOptionPane.showMessageDialog(this, "Debe elegir un día de cita", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+     }
+     if(txtHoraCita.getText().toString().equals("")){
+         JOptionPane.showMessageDialog(this, "Debe elegir una hora de cita", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+     }
+       // Obtener la fecha y hora actuales del sistema
+    LocalDateTime fechaHoraActual = LocalDateTime.now();
+    
 
+    // Convertir la fecha y hora de la cita a LocalDateTime
+    String fechaCitaString = txtDiaCita.getText();
+    String horaCitaString = txtHoraCita.getText();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); // ajusta el formato de acuerdo a cómo ingreses las fechas y horas
+    LocalDateTime fechaHoraCita = LocalDateTime.parse(fechaCitaString + " " + horaCitaString, formatter);
+   
+
+    // Validar si la fecha y hora de la cita son antes de la fecha y hora actuales
+    if (fechaHoraCita.isBefore(fechaHoraCita)) {
+        JOptionPane.showMessageDialog(this, "No puedes seleccionar una fecha y/o hora en el pasado", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+        int fila = tblCita.getSelectedRow();
+        if(tblCita.getValueAt(fila, 2).equals("Disponible")){
+           lblConfirmar.setVisible(false);
+           lblGuardar.setVisible(true);
+           lblFinalizar.setVisible(false);
+                lblDurante.setVisible(false);
+                lblBloquear.setVisible(true);
+                lblEliminar.setVisible(false);
+        String nombre= txtNombre.getText();
+        String apellido= txtApellido.getText();
+        String nombreC=nombre+" "+apellido;
+        guardarCita(nombreC,txtHoraCita.getText(), txtDiaCita.getText(),tagInputControl1.getTags(0),txtDuracion.getText());
+   agregar2();
+        }
+        else {showMessageDialog(null,"No se puede agendar la cita, revisa el estatus");}
     }// GEN-LAST:event_lblGuardarMouseClicked
 
+    public void guardarCita(String nombrePaciente,String hora, String fecha,  String detalleCita, String duracion) {
+       // Obtener la fecha y hora actual como parte del nombre del archivo
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String timeStamp = dateFormat.format(new Date());
+        String nombre= txtNombre.getText();
+        String apellido= txtApellido.getText();
+        String nombreC=nombre+" "+apellido;
+        // Crear el nombre del archivo de texto con la marca de tiempo
+        String nombreArchivo = DIRECTORIO_CITAS+nombreC+"_cita_" + timeStamp + ".txt";
+        // Crear una cadena de texto con los datos de la cita
+        String cita ="Nombre del paciente: " + nombrePaciente + "\n" +
+                      "Hora: " + hora + "\n" +
+                      "Fecha: " + fecha + "\n" + 
+                      "Detalle de la cita: " + detalleCita + "\n" +
+                      "Duración: " + duracion + " horas\n\n";
+
+        // Guardar la cita en el archivo de texto
+        // Guardar la cita en el archivo de texto
+        try (BufferedWriter escritor = new BufferedWriter(new FileWriter(nombreArchivo))) {
+            escritor.write("------------ CONSULTORIO DENTAL ------------\n");
+            escritor.write("------------ Dra. Luz Elena Hernández ------\n\n");
+            escritor.write("------------ Tu próxima cita es: ------------\n\n");
+            escritor.write(cita);
+            escritor.write("************ En caso de no poder asistir a la cita ************\n");
+            escritor.write("************ favor de llamar 24hr antes al número 3112541256 ************\n");
+            
+            System.out.println("La cita se ha guardado correctamente en el archivo: " + nombreArchivo);
+        } catch (IOException e) {
+            System.out.println("Ha ocurrido un error al guardar la cita en el archivo.");
+            e.printStackTrace();
+        }
+    
+    }
     private void lblEliminarMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblEliminarMouseClicked
-        Eliminar();
+        int fila=tblCita.getSelectedRow();
+        
+        if(tblCita.getValueAt(fila, 2).toString().equals("Disponible")){
+        showMessageDialog(null, "REVISE EL ESTATUS DE LA CITA", "Advertencia",
+                JOptionPane.WARNING_MESSAGE);
+    }else {
+        eliminarCita();}
+        
     }// GEN-LAST:event_lblEliminarMouseClicked
 
     private void lblConfirmarMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblConfirmarMouseClicked
         confirmar();
-        lblConfirmar.setEnabled(false);
+        //lblConfirmar.setEnabled(false);
     }// GEN-LAST:event_lblConfirmarMouseClicked
 
     private void lblModificarMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblModificarMouseClicked
         if (validaMotivo(tagInputControl1)) {
-            lblDetalle.setForeground(Color.RED);
+        lblDetalle.setForeground(Color.RED);
+        return;
+    } else {
+        lblDetalle.setForeground(Color.BLACK);
+    }
+        if(validaCampo(txtDuracion)){
+            lblDuracion.setForeground(Color.RED);
             return;
-        } else
-            lblDetalle.setForeground(Color.BLACK);
-        int fila = tblCita.getSelectedRow();
-        if (fila == -1) {
-            JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UN REGISTRO", "Advertencia",
-                    JOptionPane.WARNING_MESSAGE);
-        } else {
-            try {
-                Connection con = null;
-                Conexión conect = new Conexión();
-                con = conect.getConnection();
-                Statement st = con.createStatement();
-                String sql = "UPDATE gestion_cita SET detalleCita = ? WHERE fecha = ? AND horario = ?";
-                PreparedStatement pst = con.prepareCall(sql);
-                // Obtener el detalle seleccionado en el JComboBox
-                pst.setString(1, tagInputControl1.getTags(0));
-                pst.setString(2, txtDiaCita.getText());
-                pst.setString(3, txtHoraCita.getText());
-                int n = pst.executeUpdate();
-                if (n > 0) {
-                    JOptionPane.showMessageDialog(this, "CITA MODIFICADA CORRECTAMENTE");
-                    limpiar();
-                    vaciarTabla();
-                    Date fechaSeleccionada = fecha.getDate();
-                    if (fechaSeleccionada == null) {
-                        cargarDatos();
-                        this.colorTabla();
-                    } else {
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                        String fechaFormateada = sdf.format(fechaSeleccionada);
-                        cargarDatos2();
-                        this.colorTabla();
-                    }
-                }
-            } catch (SQLException | HeadlessException e) {
-                JOptionPane.showMessageDialog(this, "LOS DATOS NO HAN SIDO MODIFICADOS CORRECTAMENTE" + e, "Error",
-                        JOptionPane.ERROR_MESSAGE);
+        }else lblDuracion.setForeground(Color.BLACK);
+
+    int fila = tblCita.getSelectedRow();
+    if (fila == -1) {
+        JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UN REGISTRO", "Advertencia",
+                JOptionPane.WARNING_MESSAGE);
+    } else {
+        try {
+            Connection con = null;
+            Conexión conect = new Conexión();
+            con = conect.getConnection();
+            Statement st = con.createStatement();
+
+            // Obtener la duración actual de la cita seleccionada
+            String duracionActual = (String) tblCita.getValueAt(fila, 6);
+            // Obtener la nueva duración ingresada
+            String nuevaDuracion = txtDuracion.getText();
+
+            // Verificar si la duración ha cambiado
+            if (!duracionActual.equals(nuevaDuracion)) {
+                // Convertir la duración actual y la nueva duración a minutos
+                int duracionActualMinutos = convertirDuracionADuracionMinutos(duracionActual);
+                int nuevaDuracionMinutos = convertirDuracionADuracionMinutos(nuevaDuracion);
+
+                // Desbloquear las citas correspondientes a la duración actual
+                desbloquearCitas(con, txtDiaCita.getText(), txtHoraCita.getText(), duracionActualMinutos);
+
+                // Bloquear las citas correspondientes a la nueva duración
+                bloquearCitas(con, txtDiaCita.getText(), txtHoraCita.getText(), nuevaDuracionMinutos);
             }
+
+            String sql = "UPDATE gestion_cita SET detalleCita = ?, duracion = ? WHERE fecha = ? AND horario = ?";
+            PreparedStatement pst = con.prepareCall(sql);
+            pst.setString(1, tagInputControl1.getTags(0));
+            pst.setString(2, nuevaDuracion);
+            pst.setString(3, txtDiaCita.getText());
+            pst.setString(4, txtHoraCita.getText());
+            int n = pst.executeUpdate();
+            if (n > 0) {
+                JOptionPane.showMessageDialog(this, "CITA MODIFICADA CORRECTAMENTE");
+                limpiar();
+                vaciarTabla();
+                Date fechaSeleccionada = fecha.getDate();
+                if (fechaSeleccionada == null) {
+                    cargarDatos();
+                    this.colorTabla();
+                } else {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    String fechaFormateada = sdf.format(fechaSeleccionada);
+                    cargarDatos2();
+                    this.colorTabla();
+                }
+            }
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(this, "LOS DATOS NO HAN SIDO MODIFICADOS CORRECTAMENTE" + e, "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
+    }
 
-        limpiar();
+    limpiar();
     }// GEN-LAST:event_lblModificarMouseClicked
+private int convertirDuracionADuracionMinutos(String duracion) {
+    if (duracion.contains(":")) {
+        // Si la duración está en formato HH:mm
+        int horas = Integer.parseInt(duracion.split(":")[0]);
+        int minutos = Integer.parseInt(duracion.split(":")[1]);
+        return horas * 60 + minutos;
+    } else {
+        // Si la duración está en formato decimal
+        float duracionDecimal = Float.parseFloat(duracion);
+        return Math.round(duracionDecimal * 60);
+    }
+}
 
+private void bloquearCitas(Connection con, String fechaCita, String horaCita, int duracion) throws SQLException {
+    // Calcular la hora de finalización de la cita
+    LocalTime horaFinCita = LocalTime.parse(horaCita).plusMinutes(duracion);
+
+    // Actualizar el estado de las citas en el rango de tiempo de la cita actual a "Bloqueado"
+    String sql = "UPDATE gestion_cita SET estatus = 'Bloqueado' WHERE fecha = ? AND horario >= ? AND horario < ? AND estatus = 'Disponible'";
+    PreparedStatement pst = con.prepareStatement(sql);
+    pst.setString(1, fechaCita);
+    pst.setString(2, horaCita);
+    pst.setString(3, horaFinCita.toString());
+    pst.executeUpdate();
+}
+
+private void desbloquearCitas(Connection con, String fechaCita, String horaCita, int duracion) throws SQLException {
+    // Calcular la hora de finalización de la cita
+    LocalTime horaFinCita = LocalTime.parse(horaCita).plusMinutes(duracion);
+
+    // Actualizar el estado de las citas en el rango de tiempo de la cita actual a "Disponible"
+    String sql = "UPDATE gestion_cita SET estatus = 'Disponible' WHERE fecha = ? AND horario >= ? AND horario < ? AND estatus = 'Bloqueado'";
+    PreparedStatement pst = con.prepareStatement(sql);
+    pst.setString(1, fechaCita);
+    pst.setString(2, horaCita);
+    pst.setString(3, horaFinCita.toString());
+    pst.executeUpdate();
+}
     private void lblFinalizarMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblFinalizarMouseClicked
         String text = txtTelefono.getText(), fecha, tags, estatus;
         fecha = tblCita.getValueAt(tblCita.getSelectedRow(), 0).toString();
         estatus = tblCita.getValueAt(tblCita.getSelectedRow(), 2).toString();
         tags = tagInputControl1.getTags(0);
-        if (!estatus.equals("Finalizada"))
-            finalizarCita();
         Paciente p = Paciente.consultar(text);
-        new VentanaExpediente(p, fecha, tags).setVisible(true);
+        
+        if(!estatus.equals("Finalizada")){
+        finalizarCita();
+        }
+         
+        //Obtiene la información necesaria para el expediente
+
+        if (ExpedienteClínico.existeBD(fecha, p.getId()))
+            new VentanaExpediente(p, fecha, tags, true).setVisible(true);
+        else
+            new VentanaExpediente(p, fecha, tags, false).setVisible(true);
     }// GEN-LAST:event_lblFinalizarMouseClicked
 
     /**
@@ -1429,6 +1939,7 @@ public class VentanaCitas extends javax.swing.JFrame {
     }
 
     private DefaultTableModel m;
+    private static final String DIRECTORIO_CITAS = "Citas/";
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MenuPleglable1;
     private Componentes.AutoCompleteTextField autoCompleteTextField1;
@@ -1460,14 +1971,19 @@ public class VentanaCitas extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JLabel lblBack1;
+    private Componentes.JImageBox lblBloquear;
     private Componentes.JImageBox lblBuscar;
     private javax.swing.JLabel lblCitas1;
     private Componentes.JImageBox lblConfirmar;
     private javax.swing.JLabel lblDetalle;
+    private Componentes.JImageBox lblDisponible;
+    private javax.swing.JLabel lblDuracion;
+    private Componentes.JImageBox lblDurante;
     private Componentes.JImageBox lblEliminar;
     private javax.swing.JLabel lblExpediente1;
     private Componentes.JImageBox lblFinalizar;
     private Componentes.JImageBox lblGuardar;
+    private javax.swing.JLabel lblLimpiar;
     private javax.swing.JLabel lblMenu1;
     private Componentes.JImageBox lblModificar;
     private javax.swing.JLabel lblPaciente1;

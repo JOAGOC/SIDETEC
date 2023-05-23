@@ -8,6 +8,7 @@ import Componentes.DTable;
 import Componentes.JImageBox;
 import desplazable.Desface;
 import java.awt.Color;
+import java.awt.Font;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,11 +23,13 @@ import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 public class MenuDentista extends javax.swing.JFrame {
     ColorRenderer colorRenderer = new ColorRenderer();
     private ImageIcon imagen;
     private ImageIcon icono;
     Desface desplace;
+    JTableHeader th;
     public MenuDentista() {
         initComponents();
         desplace = new Desface();
@@ -46,6 +49,7 @@ public class MenuDentista extends javax.swing.JFrame {
         tblCita.getColumnModel().getColumn(3).setHeaderRenderer(new DTable(new Color(230,192,233),Color.BLACK));
         tblCita.getColumnModel().getColumn(4).setHeaderRenderer(new DTable(new Color(230,192,233),Color.BLACK));
         tblCita.getColumnModel().getColumn(5).setHeaderRenderer(new DTable(new Color(230,192,233),Color.BLACK));
+        tblCita.getColumnModel().getColumn(6).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
             }
 
    /* private void Imagen(JLabel lbl,String ruta){
@@ -64,10 +68,10 @@ public class MenuDentista extends javax.swing.JFrame {
             DefaultTableModel m = (DefaultTableModel) tblCita.getModel();
             Conexión conect1 = new Conexión();
             con1 = conect1.getConnection();
-            String dts[] = new String[6];
+            String dts[] = new String[7];
             String sql = "SELECT gestion_cita.fecha, gestion_cita.horario, gestion_cita.estatus, " +
              "CONCAT(pacientes.nombre, ' ', pacientes.apellido) AS 'Nombre Completo', " +
-             "pacientes.telefono AS 'Telefono', gestion_cita.detalleCita AS 'Detalle Cita' " +
+             "pacientes.telefono AS 'Telefono', gestion_cita.detalleCita AS 'Detalle Cita', gestion_cita.duracion AS 'Duración'  " +
              "FROM gestion_cita  JOIN pacientes ON gestion_cita.idPaciente = pacientes.id where fecha=current_date()";
 
             Statement st = con1.createStatement();
@@ -79,6 +83,7 @@ public class MenuDentista extends javax.swing.JFrame {
                 dts[3] = rs.getString("Nombre Completo");
                 dts[4] = rs.getString("pacientes.telefono");
                 dts[5] = rs.getString("Detalle Cita");
+                dts[6] = rs.getString("Duración");
                 m.addRow(dts);
             }
             int columnaEstado = 2; // reemplazar con el índice de la columna que contiene los estados
@@ -144,15 +149,19 @@ public class MenuDentista extends javax.swing.JFrame {
         Conexión conect1 = new Conexión();
         con1 = conect1.getConnection();
 
-        String dts[] = new String[6];
+        String dts[] = new String[7];
         String sql = "SELECT gestion_cita.fecha, gestion_cita.horario, gestion_cita.estatus, " +
                      "CONCAT(pacientes.nombre, ' ', pacientes.apellido) AS 'Nombre Completo', " +
-                     "pacientes.telefono AS 'Telefono', gestion_cita.detalleCita AS 'Detalle Cita' " +
+                     "pacientes.telefono AS 'Telefono', gestion_cita.detalleCita AS 'Detalle Cita', gestion_cita.duracion AS 'Duración'  " +
                      "FROM gestion_cita  JOIN pacientes ON gestion_cita.idPaciente = pacientes.id " +
                      "WHERE fecha = '" + fechaFormateada + "'";
         Statement st = con1.createStatement();
         ResultSet rs = st.executeQuery(sql);
-
+        // Verificar si hay resultados
+        if (!rs.isBeforeFirst()) {
+            JOptionPane.showMessageDialog(this, "No hay citas en este día", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         while (rs.next()) {
             dts[0] = rs.getString("gestion_cita.fecha");
             dts[1] = rs.getString("gestion_cita.horario");
@@ -160,6 +169,7 @@ public class MenuDentista extends javax.swing.JFrame {
             dts[3] = rs.getString("Nombre Completo");
             dts[4] = rs.getString("pacientes.telefono");
             dts[5] = rs.getString("Detalle Cita");
+            dts[6] = rs.getString("Duración");
             m.addRow(dts);
         }
         int columnaEstado = 2; // reemplazar con el índice de la columna que contiene los estados
@@ -169,41 +179,36 @@ public class MenuDentista extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "NO SE PUEDEN VISUALIZAR LOS DATOS DE LA TABLA " + e, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
-    
-    private void Buscar(String valor) throws SQLException{
+    private void colorTabla() {
+        tblCita.getColumnModel().getColumn(0).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblCita.getColumnModel().getColumn(1).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblCita.getColumnModel().getColumn(2).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblCita.getColumnModel().getColumn(3).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblCita.getColumnModel().getColumn(4).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblCita.getColumnModel().getColumn(5).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblCita.getColumnModel().getColumn(6).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblCita.getColumnModel().getColumn(7).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        th = tblCita.getTableHeader();
+        Font fuente = new Font("Arial", Font.BOLD, 16);
+        th.setFont(fuente);
+        tblCita.getColumnModel().getColumn(5).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+    }
+   private void Buscar1(String valor) throws SQLException {
     try {
         Connection con1 = null;
         DefaultTableModel m = (DefaultTableModel) tblCita.getModel();
-        m.setRowCount(0); // Limpiar todas las filas existentes de la tabla antes de cargar los nuevos datos
+        m.setRowCount(0); 
 
         Conexión conect1 = new Conexión();
         con1 = conect1.getConnection();
 
-        String dts[] = new String[6];
-        String sql = "";
-        if (cbxBuscar.getSelectedItem().toString().equals("Nombre")){
-          sql = "SELECT gestion_cita.fecha, gestion_cita.horario, gestion_cita.estatus, " +
+        String dts[] = new String[7];
+        String sql = "SELECT gestion_cita.fecha, gestion_cita.horario, gestion_cita.estatus, " +
                      "CONCAT(pacientes.nombre, ' ', pacientes.apellido) AS 'Nombre Completo', " +
-                     "pacientes.telefono AS 'Telefono', gestion_cita.detalleCita AS 'Detalle Cita' " +
+                     "pacientes.telefono AS 'Telefono', gestion_cita.detalleCita AS 'Detalle Cita',gestion_cita.duracion AS 'Duración' " +
                      "FROM gestion_cita LEFT JOIN pacientes ON gestion_cita.idPaciente = pacientes.id " +
-                     "WHERE  pacientes.nombre='"+valor+"'";
-          
-     
-        } 
-        else if(cbxBuscar.getSelectedItem().toString().equals("Apellido")){
-            sql = "SELECT gestion_cita.fecha, gestion_cita.horario, gestion_cita.estatus, " +
-                     "CONCAT(pacientes.nombre, ' ', pacientes.apellido) AS 'Nombre Completo', " +
-                     "pacientes.telefono AS 'Telefono', gestion_cita.detalleCita AS 'Detalle Cita' " +
-                     "FROM gestion_cita LEFT JOIN pacientes ON gestion_cita.idPaciente = pacientes.id " +
-                     "WHERE  pacientes.apellido='"+valor+"'";
-        
-        }else if(cbxBuscar.getSelectedItem().toString().equals("Id")){
-         sql = "SELECT gestion_cita.fecha, gestion_cita.horario, gestion_cita.estatus, " +
-                     "CONCAT(pacientes.nombre, ' ', pacientes.apellido) AS 'Nombre Completo', " +
-                     "pacientes.telefono AS 'Telefono', gestion_cita.detalleCita AS 'Detalle Cita' " +
-                     "FROM gestion_cita LEFT JOIN pacientes ON gestion_cita.idPaciente = pacientes.id " +
-                     "WHERE  pacientes.ID='"+valor+"'";
-        }
+                     "WHERE  pacientes.nombre LIKE '%"+valor+"%' OR pacientes.apellido LIKE '%"+valor+"%' OR pacientes.telefono LIKE '%"+valor+"%'";
+                     
         Statement st = con1.createStatement();
         ResultSet rs = st.executeQuery(sql);
 
@@ -212,61 +217,24 @@ public class MenuDentista extends javax.swing.JFrame {
             dts[1] = rs.getString("gestion_cita.horario");
             dts[2] = rs.getString("gestion_cita.estatus");
             dts[3] = rs.getString("Nombre Completo");
-            dts[4] = rs.getString("pacientes.telefono");
+            dts[4] = rs.getString("Telefono");
             dts[5] = rs.getString("Detalle Cita");
+            dts[6] = rs.getString("Duración");
             m.addRow(dts);
         }
-        int columnaEstado = 2; // reemplazar con el índice de la columna que contiene los estados
+        int columnaEstado = 2; 
         tblCita.getColumnModel().getColumn(columnaEstado).setCellRenderer(colorRenderer);
         tblCita.setModel(m);
-        txtBuscar.setText("");
+        // Eliminamos la siguiente línea para evitar que se borre el texto después de cada búsqueda
+        // txtBuscar.setText("");
     } catch (SQLException e) {
         JOptionPane.showMessageDialog(null, "NO SE PUEDEN VISUALIZAR LOS DATOS DE LA TABLA " + e, "Error", JOptionPane.ERROR_MESSAGE);
     }
-}
+}//buscar1
+   
     
- 
+  
 
- /* private void finalizarCita(){
-        int fila = tblCita.getSelectedRow();
-        if (fila == -1)
-        {
-            JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UN REGISTRO", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
-        else
-        try
-        {
-            Connection con = null;
-            Conexión conect = new Conexión();
-            con = conect.getConnection();
-            Statement st = con.createStatement();
-            String sql = "UPDATE gestion_cita SET  estatus = 'Finalizada' WHERE fecha = ? AND horario = ? AND estatus='Confirmada'";
-            PreparedStatement pst = con.prepareCall(sql);
-            pst.setString(1, txtDiaCita.getText());
-            pst.setString(2, txtHoraCita.getText());
-            int n = pst.executeUpdate();
-            if (n > 0)
-            {
-                JOptionPane.showMessageDialog(this, "CITA FINALIZADA CORRECTAMENTE");
-                limpiar();
-                vaciarTabla();
-                Date fechaSeleccionada = fecha.getDate();
-                if (fechaSeleccionada == null) {
-                cargarDatos();
-                } else {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                String fechaFormateada = sdf.format(fechaSeleccionada);
-                cargarDatos2();
-                }
-            }
-        } catch (SQLException | HeadlessException e)
-        {
-            JOptionPane.showMessageDialog(this, "LOS DATOS NO HAN SIDO ACTUALIZADOS CORRECTAMENTE"+e, "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        
-         
-    }//FinalizarCita
-    */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -292,7 +260,6 @@ public class MenuDentista extends javax.swing.JFrame {
         fecha = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
-        cbxBuscar = new javax.swing.JComboBox<>();
         jImageBox1 = new Componentes.JImageBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblCita = new javax.swing.JTable();
@@ -315,7 +282,7 @@ public class MenuDentista extends javax.swing.JFrame {
         lblBack.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblBack.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-volver-4.png"))); // NOI18N
-        lblBack.setText("Regresar           ");
+        lblBack.setText("Cerrar Sesión           ");
         lblBack.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         lblBack.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblBack.setFocusable(false);
@@ -482,7 +449,7 @@ public class MenuDentista extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(322, 322, 322)
                 .addComponent(jLabel1)
-                .addContainerGap(466, Short.MAX_VALUE))
+                .addContainerGap(484, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -498,7 +465,7 @@ public class MenuDentista extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 1038, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -512,7 +479,7 @@ public class MenuDentista extends javax.swing.JFrame {
         jLabel4.setText("Fecha:");
         jLabel4.setMaximumSize(new java.awt.Dimension(86, 22));
         jLabel4.setMinimumSize(new java.awt.Dimension(86, 22));
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 13, -1, 29));
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, 29));
 
         fecha.setMinSelectableDate(new java.util.Date(-62135744327000L));
         fecha.setMinimumSize(new java.awt.Dimension(64, 23));
@@ -522,21 +489,20 @@ public class MenuDentista extends javax.swing.JFrame {
                 fechaMouseClicked(evt);
             }
         });
-        jPanel3.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(98, 13, 154, 29));
+        jPanel3.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 154, 29));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Paciente:");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, -1, -1));
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, -1, -1));
 
         txtBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtBuscar.setPreferredSize(new java.awt.Dimension(200, 22));
-        jPanel3.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, 170, 28));
-
-        cbxBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Nombre", "Apellido", "Id" }));
-        cbxBuscar.setMinimumSize(new java.awt.Dimension(130, 28));
-        cbxBuscar.setPreferredSize(new java.awt.Dimension(140, 28));
-        jPanel3.add(cbxBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 20, 160, -1));
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
+        jPanel3.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 50, 170, 28));
 
         jImageBox1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lupa.png"))); // NOI18N
         jImageBox1.setPreferredSize(new java.awt.Dimension(32, 32));
@@ -545,7 +511,7 @@ public class MenuDentista extends javax.swing.JFrame {
                 jImageBox1MouseClicked(evt);
             }
         });
-        jPanel3.add(jImageBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 10, 50, 40));
+        jPanel3.add(jImageBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 40, 50, 40));
 
         tblCita.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tblCita.setModel(new javax.swing.table.DefaultTableModel(
@@ -553,7 +519,7 @@ public class MenuDentista extends javax.swing.JFrame {
 
             },
             new String [] {
-                "No. Fecha", "Hora", "Status", "Nombre del paciente", "Telefono", "Detalle Cita"
+                "No. Fecha", "Hora", "Estatus", "Nombre del paciente", "Telefono", "Detalle Cita", "Duración"
             }
         ));
         tblCita.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -563,11 +529,11 @@ public class MenuDentista extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tblCita);
 
-        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 766, 334));
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 780, 334));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 520, 60));
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 30, 390, 60));
 
         jPanel2.setBackground(new java.awt.Color(69, 204, 209));
 
@@ -614,26 +580,26 @@ public class MenuDentista extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(191, Short.MAX_VALUE)
+                .addContainerGap(205, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addGap(33, 33, 33)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(228, Short.MAX_VALUE)))
+                    .addContainerGap(242, Short.MAX_VALUE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addGap(26, 26, 26)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(30, Short.MAX_VALUE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -643,28 +609,29 @@ public class MenuDentista extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(MenuPleglable, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
+                        .addGap(49, 49, 49)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 817, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(78, 78, 78))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 836, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(MenuPleglable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -697,7 +664,7 @@ public class MenuDentista extends javax.swing.JFrame {
             cargarDatos2();
         }else if(!txtBuscar.equals("")) {
             try {
-                Buscar(txtBuscar.getText());
+                Buscar1(txtBuscar.getText());
             } catch (SQLException ex) {
               showMessageDialog(this,ex);
             }
@@ -759,7 +726,7 @@ public class MenuDentista extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExpedienteMouseEntered
 
     private void lblExpedienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpedienteMouseClicked
-        VentanaExpediente exp=new VentanaExpediente();
+        VentanaExpedienteMenu exp=new VentanaExpedienteMenu();
         exp.setVisible(true);
         exp.setLocationRelativeTo(null);
         this.dispose();
@@ -816,12 +783,20 @@ public class MenuDentista extends javax.swing.JFrame {
             cargarDatos2();
         }else if(!txtBuscar.equals("")) {
             try {
-                Buscar(txtBuscar.getText());
-            } catch (SQLException ex) {
-              showMessageDialog(this,ex);
-            }
+            Buscar1(txtBuscar.getText());
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuDentista.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
     }//GEN-LAST:event_jImageBox1MouseClicked
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        try {
+            Buscar1(txtBuscar.getText());
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuDentista.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtBuscarKeyReleased
 private boolean isDateChooserNotEmpty(JDateChooser dateChooser) {
     Date selectedDate = dateChooser.getDate();
     return selectedDate != null;
@@ -848,7 +823,7 @@ public void limpiar(){
     }//limpiar*/
   public void vaciarTabla(){
         DefaultTableModel m = (DefaultTableModel) tblCita.getModel();
-        String titulos[] = {"No. Fecha","Hora","Status","Nombre del paciente","Telefono","Detalle cita"};
+        String titulos[] = {"No. Fecha","Hora","Estatus","Nombre del paciente","Telefono","Detalle cita"};
         m = new DefaultTableModel(null,titulos);
         tblCita.setModel(m);
     }//vaciarTabla
@@ -884,7 +859,6 @@ public void limpiar(){
 private DefaultTableModel m;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MenuPleglable;
-    private javax.swing.JComboBox<String> cbxBuscar;
     private com.toedter.calendar.JDateChooser fecha;
     private Componentes.JImageBox jImageBox1;
     private javax.swing.JLabel jLabel1;

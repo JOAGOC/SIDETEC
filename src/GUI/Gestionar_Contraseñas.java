@@ -21,12 +21,12 @@ import static javax.swing.JOptionPane.showConfirmDialog;
 import javax.swing.table.TableColumn;
 
 public class Gestionar_Contraseñas extends javax.swing.JFrame {
-
-    DefaultTableModel tabla;
+ DefaultTableModel tabla;
     Usuario usuario;
 
     public Gestionar_Contraseñas() {
         initComponents();
+        usuario = new Usuario();
         llenarTabla();
         tablaUsuarios.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             @Override
@@ -76,26 +76,33 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
             public void focusGained(FocusEvent e) {
             }
         });
-        cmbRol.addActionListener(new ActionListener() {
+        ActionListener a;
+        cmbRol.addActionListener(a = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if ((tablaUsuarios.getSelectedRow() == -1) || tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0).equals((Object) "Dentista"))
+                if (usuario.getRol().equals("Dentista"))
                     return;
                 String selectedOption = (String) cmbRol.getSelectedItem();
                 usuario.setRol(selectedOption);
             }
         });
-        usuario = new Usuario();
+        a.actionPerformed(null);
     }
 
     private void llenarTabla() {
         tablaUsuarios.setModel(tabla = Usuario.Consultar());
         TableColumn col = tablaUsuarios.getColumnModel().getColumn(0);
         tablaUsuarios.getColumnModel().removeColumn(col);
+        col = tablaUsuarios.getColumnModel().getColumn(tablaUsuarios.getColumnModel().getColumnCount()-1);
+        tablaUsuarios.getColumnModel().removeColumn(col);
     }
     
     private void eliminar() {
         if (tablaUsuarios.getSelectedRow()==-1){
             showMessageDialog(this, "Seleccione un usuario para eliminar");
+            return;
+        }
+        if (usuario.getRol().equals("Dentista")) {
+            showMessageDialog(this, "El usuario dentista no puede ser eliminado.");
             return;
         }
         String s = "";
@@ -146,6 +153,15 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         cmbRol.setSelectedIndex(0);
     }
 
+    public static boolean confirmarContraseña(String contraseña1,String contraseña2) {
+        if (!contraseña1.equals(contraseña2)) {
+            showMessageDialog(null,
+                    "Las contraseñas no coinciden", "", 1, null);
+            return true;
+        }
+        return false;
+    }
+    
     private boolean confirmarContraseña() {
         if (!usuario.getContraseña().equals(txtConfirmar.getText())) {
             showMessageDialog(this,
@@ -155,6 +171,16 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         return false;
     }
 
+    public static boolean contraseñaInválida(String contraseña) {
+        if (!validarContraseña.apply(contraseña)) {
+            showMessageDialog(null,
+                    "La contraseña debe contener al menos una minúscula, una mayúscula y un número. Reescriba otra contraseña y vuelva a intentarlo",
+                    "Contraseña Inválida", 1, null);
+            return true;
+        }
+        return false;
+    }
+    
     private boolean contraseñaInválida() {
         if (!validarContraseña.apply(txtContraseña.getText())) {
             showMessageDialog(this,
@@ -173,10 +199,6 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
                 return true;
             }
         }
-//        if (cmbRol.getSelectedIndex()==0){
-//            showMessageDialog(this, "Rellene todos los campos para continuar.", "Campo vacío", 1, null);
-//            return true;
-//        }
         return false;
     }
 
@@ -214,7 +236,7 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtContraseña = new javax.swing.JTextField();
         txtConfirmar = new javax.swing.JTextField();
-        jImageBox2 = new JImageBox();
+        jImageBox2 = new Componentes.JImageBox();
         jLabel5 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         btnActualizar = new javax.swing.JButton();
@@ -317,13 +339,20 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         btnActualizar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnActualizar.setForeground(new java.awt.Color(255, 255, 255));
         btnActualizar.setText("Actualizar");
+        btnActualizar.setBorderPainted(false);
         btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 390, 110, 36));
 
         btnEliminar.setBackground(new java.awt.Color(0, 108, 183));
         btnEliminar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("Eliminar");
+        btnEliminar.setBorderPainted(false);
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -337,24 +366,22 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         btnRegistrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrar.setText("Agregar");
+        btnRegistrar.setBorderPainted(false);
         btnRegistrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 390, 120, 36));
-        btnRegistrar.setVisible(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -459,7 +486,7 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cmbRol;
-    private JImageBox jImageBox2;
+    private Componentes.JImageBox jImageBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

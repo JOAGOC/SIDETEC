@@ -22,6 +22,7 @@ import javax.swing.table.JTableHeader;
 
 import Componentes.DTable;
 import Componentes.JImageBox;
+import java.sql.CallableStatement;
 
 
 public class VentanaPaciente extends javax.swing.JFrame {
@@ -210,7 +211,6 @@ public void limpiar(){
         tblPaciente = new javax.swing.JTable();
         lblNombre = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
-        cbxBuscar = new javax.swing.JComboBox<>();
         lblEliminar = new javax.swing.JLabel();
         lblApellido = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
@@ -235,7 +235,7 @@ public void limpiar(){
         jSeparator6 = new javax.swing.JSeparator();
         jSeparator7 = new javax.swing.JSeparator();
         jSeparator8 = new javax.swing.JSeparator();
-        jImageBox2 = new JImageBox();
+        jImageBox2 = new Componentes.JImageBox();
         jPanel4 = new javax.swing.JPanel();
         panel1 = new java.awt.Panel();
         jLabel1 = new javax.swing.JLabel();
@@ -433,7 +433,7 @@ public void limpiar(){
         txtID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel1.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, 120, -1));
 
-        tblPaciente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tblPaciente.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tblPaciente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -458,11 +458,6 @@ public void limpiar(){
 
         txtDireccion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel1.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 250, 240, -1));
-
-        cbxBuscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        cbxBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Nombre", "Apellido" }));
-        cbxBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel1.add(cbxBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 230, -1));
 
         lblEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-eliminar-90.png"))); // NOI18N
         lblEliminar.setToolTipText("Eliminar");
@@ -497,7 +492,7 @@ public void limpiar(){
                 txtBuscarKeyReleased(evt);
             }
         });
-        jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 310, 350, 30));
+        jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 610, 30));
 
         txtEdad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtEdad.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -597,7 +592,7 @@ public void limpiar(){
             }
         });
         MenuPleglable1.add(lblPaciente1);
-        lblPaciente1.setBounds(20, 180, 284, 54);
+        lblPaciente1.setBounds(20, 180, 279, 54);
 
         lblCitas1.setBackground(new java.awt.Color(0, 0, 0));
         lblCitas1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -1011,40 +1006,68 @@ void Buscar(String valor) {
 
     private void lblEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEliminarMouseClicked
         int fila = tblPaciente.getSelectedRow();
-        if (fila == -1)
-        {
-            JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UN REGISTRO", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
-        else
-        {
-            int opc = JOptionPane.showConfirmDialog(this, "¿ESTA SEGURO QUE DESEA ELIMINAR ESTE PACIENTE (SE ELIMINARA TODAS SUS CITAS)?", "Pregunta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (opc == JOptionPane.YES_OPTION)
-            {
-                try
-                {
-                    Connection con = null;
-                    Conexión conect = new Conexión();
-                    con = conect.getConnection();
-                    Statement st = con.createStatement();
-                    String sql = "delete from pacientes where id = ?";
-                    PreparedStatement pst = con.prepareStatement(sql);
-                    pst.setInt(1, Integer.parseInt(txtID.getText()));
-                    int n = pst.executeUpdate();
-                    if (n > 0)
-                    {
-                        JOptionPane.showMessageDialog(this, "DATOS ELIMINADOS CORRECTAMENTE");
-                        limpiar();
-                        vaciarTabla();
-                        colortabla();
-                        cargarDatos();
+    if (fila == -1) {
+        JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UN REGISTRO", "Advertencia", JOptionPane.WARNING_MESSAGE);
+    } else {
+        int opc = JOptionPane.showConfirmDialog(this, "¿ESTA SEGURO QUE DESEA ELIMINAR ESTE PACIENTE (SE ELIMINARAN TODAS SUS CITAS)?", "Pregunta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (opc == JOptionPane.YES_OPTION) {
+            try {
+                Connection con = null;
+                Conexión conect = new Conexión();
+                con = conect.getConnection();
+                Statement st = con.createStatement();
+                String idPaciente = txtID.getText();
 
-                    }
-                } catch (SQLException ex)
-                {
-                    JOptionPane.showMessageDialog(this, "DATOS NO ELIMINADOS CORRECTAMENTE" + ex.getMessage());
+                // Primero, desbloquear todas las citas asociadas a este paciente
+                String sqlCitas = "SELECT fecha, horario, duracion FROM gestion_cita WHERE idPaciente = ?";
+                PreparedStatement pstCitas = con.prepareStatement(sqlCitas);
+                pstCitas.setInt(1, Integer.parseInt(idPaciente));
+                ResultSet rsCitas = pstCitas.executeQuery();
+                while (rsCitas.next()) {
+                    String fechaCita = rsCitas.getString("fecha");
+                    String horaCita = rsCitas.getString("horario");
+                    String duracionStr = rsCitas.getString("duracion");
+                    
+                    // Convertir la duración a minutos
+                    String[] partes = duracionStr.split(":");
+                    int horas = Integer.parseInt(partes[0]);
+                    int minutos = Integer.parseInt(partes[1]);
+                    int duracionMinutos = horas * 60 + minutos;
+
+                    // Desbloquear las citas en función de la fecha, la hora y la duración
+                    String desbloquearCitasSQL = "{CALL desbloquearCitas(?, ?, ?)}";
+                    CallableStatement desbloquearCitasStmt = con.prepareCall(desbloquearCitasSQL);
+                    desbloquearCitasStmt.setString(1, fechaCita);
+                    desbloquearCitasStmt.setString(2, horaCita);
+                    desbloquearCitasStmt.setInt(3, duracionMinutos);
+                    desbloquearCitasStmt.execute();
                 }
+
+                // Ahora que todas las citas del paciente se han desbloqueado, las actualizamos a 'Disponible'
+                String sqlUpdateCitas = "UPDATE gestion_cita SET idPaciente = NULL, estatus = 'Disponible', detalleCita = '', duracion = NULL WHERE idPaciente = ?";
+                PreparedStatement pstUpdateCitas = con.prepareStatement(sqlUpdateCitas);
+                pstUpdateCitas.setInt(1, Integer.parseInt(idPaciente));
+                pstUpdateCitas.executeUpdate();
+
+                // Finalmente, eliminamos al paciente
+                String sqlDeletePaciente = "DELETE FROM pacientes WHERE id = ?";
+                PreparedStatement pstDeletePaciente = con.prepareStatement(sqlDeletePaciente);
+                pstDeletePaciente.setInt(1, Integer.parseInt(idPaciente));
+                int n = pstDeletePaciente.executeUpdate();
+
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(this, "DATOS ELIMINADOS CORRECTAMENTE");
+                    limpiar();
+                    vaciarTabla();
+                    colortabla();
+                    cargarDatos();
+                }
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "DATOS NO ELIMINADOS CORRECTAMENTE" + ex.getMessage());
             }
         }
+    }
     }//GEN-LAST:event_lblEliminarMouseClicked
 
     private void lblAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAgregarMouseClicked
@@ -1155,7 +1178,7 @@ void Buscar(String valor) {
     }//GEN-LAST:event_lblExpediente1MouseEntered
 
     private void lblExpediente1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpediente1MouseClicked
-        VentanaExpediente exp=new VentanaExpediente();
+        VentanaExpedienteMenu exp=new VentanaExpedienteMenu();
         exp.setVisible(true);
         exp.setLocationRelativeTo(null);
         this.dispose();
@@ -1291,9 +1314,8 @@ private DefaultTableModel m;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MenuPleglable;
     private javax.swing.JPanel MenuPleglable1;
-    private javax.swing.JComboBox<String> cbxBuscar;
     private javax.swing.JComboBox<String> cmbGenero;
-    private JImageBox jImageBox2;
+    private Componentes.JImageBox jImageBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;

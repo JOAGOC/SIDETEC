@@ -1,0 +1,13 @@
+------------ CONSULTORIO DENTAL ------------
+------------ Dra. Luz Elena Hernández ------
+
+------------ Tu próxima cita es: ------------
+
+Nombre del paciente: Carmen Martínez
+Hora: 12:00:00
+Fecha: 2023-05-22
+Detalle de la cita: Limpieza dental
+Duración:  horas
+
+************ En caso de no poder asistir a la cita ************
+************ favor de llamar 24hr antes al número 3112541256 ************

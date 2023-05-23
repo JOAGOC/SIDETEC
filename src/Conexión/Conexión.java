@@ -17,7 +17,7 @@ public class Conexión{
             String db = "jdbc:mysql://localhost:3306/consultorio_dental?serverTimezone=America/Los_Angeles";
             TimeZone timeZone = TimeZone.getTimeZone("UTC-07:00");
             TimeZone.setDefault(timeZone);
-            con = DriverManager.getConnection(db, "root", "admi1");
+            con = DriverManager.getConnection(db, "root", "root");
             con.prepareStatement("SET GLOBAL time_zone = '-07:00';").executeQuery();
             System.out.println("CONECTADO");
             return con;
