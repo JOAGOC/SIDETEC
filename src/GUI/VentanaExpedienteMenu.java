@@ -4,9 +4,11 @@ import static javax.swing.JOptionPane.showMessageDialog;
 import ClasesSQL.ExpedienteClínico;
 import ClasesSQL.Paciente;
 import Componentes.ColorRenderer;
+import Componentes.DTable;
 import desplazable.Desface;
 import static Componentes.TagInputControl.*;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -33,12 +35,14 @@ public class VentanaExpedienteMenu extends javax.swing.JFrame {
         tblCita.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                
                 if (e.getClickCount() == 2) {
                     int row = tblCita.rowAtPoint(e.getPoint());
                     String id;
                     id = tblCita.getValueAt(row, 6).toString().split(" - ")[1];
                     Paciente p = Paciente.consultar(Integer.parseInt(id));
                     new VentanaExpediente(p, tblCita.getValueAt(row, 1).toString() , "",true).setVisible(true);
+                    colorTabla();
                 }
             }});
         tblCita.setModel(ExpedienteClínico.consultar());
@@ -46,6 +50,7 @@ public class VentanaExpedienteMenu extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 buscarPaciente();
+                colorTabla();
             }
         });
         jToggleButton1.addActionListener(new ActionListener() {
@@ -53,6 +58,7 @@ public class VentanaExpedienteMenu extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 JToggleButton tb = ((JToggleButton) e.getSource());
                 tb.setText(DEFAULT + (tb.isSelected()?"Estricta":"Relajada"));
+                colorTabla();
             }
         });
         btnLimpiar.addMouseListener(new MouseAdapter(){
@@ -65,10 +71,31 @@ public class VentanaExpedienteMenu extends javax.swing.JFrame {
                 if (!contextoTbl)
                     return;
                 buscarPaciente();
+                colorTabla();
+                
             }
         });
+        tblCita.getColumnModel().getColumn(0).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblCita.getColumnModel().getColumn(1).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblCita.getColumnModel().getColumn(2).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblCita.getColumnModel().getColumn(3).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblCita.getColumnModel().getColumn(4).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblCita.getColumnModel().getColumn(5).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblCita.getColumnModel().getColumn(6).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
     }
-
+private void colorTabla() {
+        tblCita.getColumnModel().getColumn(0).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblCita.getColumnModel().getColumn(1).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblCita.getColumnModel().getColumn(2).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+          tblCita.getColumnModel().getColumn(3).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblCita.getColumnModel().getColumn(4).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblCita.getColumnModel().getColumn(5).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblCita.getColumnModel().getColumn(6).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        th = tblCita.getTableHeader();
+        Font fuente = new Font("Arial", Font.BOLD, 16);
+        th.setFont(fuente);
+       
+    }
     private void buscarPaciente() {
         String folio = txtFolio.getText(),paciente = txtPaciente.getText(),fecha = casillaFecha.isSelected()? new SimpleDateFormat("yyyy-MM-dd").format(dtFecha.getDate()):"";
         System.out.println(folio.matches("^[1-9][0-9]*$")? folio : "");
@@ -488,10 +515,7 @@ public class VentanaExpedienteMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCitas1MouseExited
 
     private void lblExpediente1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpediente1MouseClicked
-        VentanaExpediente exp = new VentanaExpediente();
-        exp.setVisible(true);
-        exp.setLocationRelativeTo(null);
-        this.dispose();
+        
     }//GEN-LAST:event_lblExpediente1MouseClicked
 
     private void lblExpediente1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpediente1MouseEntered

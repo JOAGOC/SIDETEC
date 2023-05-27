@@ -26,8 +26,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.logging.Logger;
@@ -96,7 +98,7 @@ public class VentanaCitas extends javax.swing.JFrame {
         Font fuente = new Font("Arial", Font.BOLD, 16);
         th.setFont(fuente);
         tblCita.getColumnModel().getColumn(5).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
-        cargarAutocompletar("SELECT CONCAT(nombre, ' ', apellido) FROM pacientes ORDER BY CONCAT(nombre, ' ', apellido)",cmbPaciente);
+        cargarAutocompletar("SELECT CONCAT(nombre, ' ', apellido, ' - ', telefono) FROM pacientes ORDER BY CONCAT(nombre, ' ', apellido)", cmbPaciente);
 
           
     }
@@ -111,15 +113,7 @@ public class VentanaCitas extends javax.swing.JFrame {
         lbl.setIcon(this.icono);
         repaint();
     }
-private void MostrarBotones(){
-                    lblConfirmar.setVisible(false);
-                    lblGuardar.setVisible(true);
-                    lblFinalizar.setVisible(false);
-                    lblDurante.setVisible(false);
-                    lblBloquear.setVisible(true);
-                    lblEliminar.setVisible(false);
-                    lblDisponible.setVisible(false);
-}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -400,9 +394,6 @@ private void MostrarBotones(){
         tblCita.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblCitaMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                tblCitaMouseEntered(evt);
             }
         });
         jScrollPane2.setViewportView(tblCita);
@@ -807,10 +798,6 @@ private void MostrarBotones(){
         DisponibleCita();
     }//GEN-LAST:event_lblDisponibleMouseClicked
 
-    private void tblCitaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCitaMouseEntered
-        MostrarBotones();
-    }//GEN-LAST:event_tblCitaMouseEntered
-
     public void cargarDatos() {
         try {
             Connection con1 = null;
@@ -945,6 +932,7 @@ private void MostrarBotones(){
         if(cad.equals("")) throw new Exception("Campo vacio");
     }
    void Buscar(String valor) {
+  
     Connection con = null;
     Conexión conect = new Conexión();
     con = conect.getConnection();
@@ -954,16 +942,16 @@ private void MostrarBotones(){
 
     for (int i = 0; i < palabras.length; i++) {
         if (i > 0) {
-            sql += " AND ";
+            sql += " OR ";
         }
-        sql += "CONCAT(nombre, ' ', apellido) LIKE ?";
-       
+        sql += "(CONCAT(nombre, ' ', apellido) LIKE ? OR telefono LIKE ?)";
     }
 
     try {
         PreparedStatement pst = con.prepareStatement(sql);
         for (int i = 0; i < palabras.length; i++) {
-            pst.setString(i + 1, "%" + palabras[i] + "%");
+            pst.setString(2 * i + 1, "%" + palabras[i] + "%");
+            pst.setString(2 * i + 2, "%" + palabras[i] + "%");
         }
 
         ResultSet rs = pst.executeQuery();
@@ -976,7 +964,6 @@ private void MostrarBotones(){
             datos[2] = rs.getString(3);
             datos[3] = rs.getString(4);
             
-
             encontrado = true;
         }
 
@@ -986,12 +973,14 @@ private void MostrarBotones(){
             // Limpia los campos de texto si no se encuentra el registro
             String[] vacio = { "", "", "", "" };
             llenarCamposTexto(vacio);
-            showMessageDialog(null, "No existe el paciente o está mal escrito el nombre");
+            showMessageDialog(null, "No existe el paciente o está mal escrito el nombre o teléfono");
         }
     } 
     catch (SQLException ex) {
         System.out.println("ERROR AL BUSCAR: " + ex);
     }
+
+
 }
 /*
     private void agregar() {
@@ -1040,22 +1029,37 @@ private void MostrarBotones(){
 
     }// agregar
     */
-   private void agregar2() {
-       // Convertir la hora de la cita a LocalTime
-      
-String horaCitaString = txtHoraCita.getText();
-DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-LocalTime horaCita = LocalTime.parse(horaCitaString, formatter);
+  private void agregar2() {
+      int fila1 = tblCita.getSelectedRow();
+    String valorColumna1 = tblCita.getValueAt(fila1, 0).toString();
+String valorColumna2 = tblCita.getValueAt(fila1, 1).toString();
 
-// Establecer la hora límite
-LocalTime horaLimite = LocalTime.parse("16:30:00", formatter);
 
-// Validar si la hora de la cita es después de la hora límite
-if (horaCita.isAfter(horaLimite)) {
-    JOptionPane.showMessageDialog(this, "Ya no hay horas disponibles", "Advertencia", JOptionPane.WARNING_MESSAGE);
+LocalDate fechaActual = LocalDate.now();
+DateTimeFormatter formatterFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+String fechaActualString = fechaActual.format(formatterFecha);
+//System.out.println("Fecha actual del sistema: " + fechaActualString);
+
+ZoneId zonaHoraria = ZoneId.of("America/Tijuana");
+LocalTime horaActual = LocalTime.now(zonaHoraria);
+DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm:ss");
+String horaActualString = horaActual.format(formatterHora);
+System.out.println("Hora actual en Tijuana: " + horaActualString);
+
+// Parsear la fecha y hora de la tabla
+LocalDate fechaTabla = LocalDate.parse(valorColumna1, formatterFecha);
+LocalTime horaTabla = LocalTime.parse(valorColumna2, formatterHora);
+
+// Comparar la fecha y hora actual con la fecha y hora de la tabla
+if (fechaActual.isAfter(fechaTabla) || (fechaActual.equals(fechaTabla) && horaActual.isAfter(horaTabla))) {
+    // La fecha y hora actual son posteriores a la fecha y hora de la tabla, continuar con el método
+    // ...
+    showMessageDialog(this,"No se aceptan fechar y horas anteriores","Advertencia",JOptionPane.WARNING_MESSAGE);
     return;
-}
-     String duracion = txtDuracion.getText().trim();
+    
+} else {
+    // La fecha y hora actual son anteriores o iguales a la fecha y hora de la tabla, no continuar con el método
+    String duracion = txtDuracion.getText().trim();
    
 
     // Validar el formato de duración (00:00)
@@ -1141,6 +1145,12 @@ if (horaCita.isAfter(horaLimite)) {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+}
+
+      
+
+     
 }//agregar2
 
 
@@ -1469,26 +1479,29 @@ private void DisponibleCita() {
             int fila = tblCita.getSelectedRow();
             txtDiaCita.setText(tblCita.getValueAt(fila, 0).toString());
             txtHoraCita.setText(tblCita.getValueAt(fila, 1).toString());
-            txtTelefono.setText(tblCita.getValueAt(fila, 4).toString());
-            String tags;
-            if (!(tags = (String) tblCita.getValueAt(fila, 5)).equals("")) {
-                tagInputControl1.setTags(tags);
-            }
-            
-            if (!tblCita.getValueAt(fila, 6).toString().equals("")) {
-                txtDuracion.setText(tblCita.getValueAt(fila, 6).toString());
-            } 
+            try {
+                txtTelefono.setText(tblCita.getValueAt(fila, 4).toString());
+                String tags;
+                if (!(tags = (String) tblCita.getValueAt(fila, 5)).equals("")) {
+                    tagInputControl1.setTags(tags);
+                }
+
+                if (!tblCita.getValueAt(fila, 6).toString().equals("")) {
+                    txtDuracion.setText(tblCita.getValueAt(fila, 6).toString());
+                } 
+            } catch (Exception e) {}
             
             switch (tblCita.getValueAt(fila, 2).toString()) {
                 case "Disponible":
-                    lblConfirmar.setVisible(true);
+                    lblConfirmar.setVisible(false);
                     lblGuardar.setVisible(true);
                     lblFinalizar.setVisible(false);
                     lblDurante.setVisible(false);
                     lblBloquear.setVisible(true);
                     lblEliminar.setVisible(false);
-                    lblModificar.setVisible(true);
+                    lblModificar.setVisible(false);
                     lblDisponible.setVisible(false);
+                    
                     break;
                 case "Confirmar":
                     lblConfirmar.setVisible(true);
@@ -1522,10 +1535,10 @@ private void DisponibleCita() {
                     break;
                 case "Finalizada":
                     lblConfirmar.setVisible(false);
-                    lblGuardar.setVisible(true);
+                    lblGuardar.setVisible(false);
                     lblFinalizar.setVisible(true);
                     lblDurante.setVisible(false);
-                    lblBloquear.setVisible(true);
+                    lblBloquear.setVisible(false);
                     lblEliminar.setVisible(true);
                     lblModificar.setVisible(true);
                     lblDisponible.setVisible(false);

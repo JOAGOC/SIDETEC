@@ -23,6 +23,8 @@ import javax.swing.table.JTableHeader;
 import Componentes.DTable;
 import Componentes.JImageBox;
 import java.sql.CallableStatement;
+import java.sql.Time;
+import java.util.Date;
 
 
 public class VentanaPaciente extends javax.swing.JFrame {
@@ -1009,13 +1011,12 @@ void Buscar(String valor) {
     if (fila == -1) {
         JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UN REGISTRO", "Advertencia", JOptionPane.WARNING_MESSAGE);
     } else {
-        int opc = JOptionPane.showConfirmDialog(this, "¿ESTA SEGURO QUE DESEA ELIMINAR ESTE PACIENTE (SE ELIMINARAN TODAS SUS CITAS)?", "Pregunta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int opc = JOptionPane.showConfirmDialog(this, "¿ESTA SEGURO QUE DESEA ELIMINAR ESTE PACIENTE (SE ELIMINARAN TODAS SUS CITAS Y EXPEDIENTE CLÍNICO)?", "Pregunta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (opc == JOptionPane.YES_OPTION) {
             try {
                 Connection con = null;
                 Conexión conect = new Conexión();
                 con = conect.getConnection();
-                Statement st = con.createStatement();
                 String idPaciente = txtID.getText();
 
                 // Primero, desbloquear todas las citas asociadas a este paciente
@@ -1048,6 +1049,12 @@ void Buscar(String valor) {
                 PreparedStatement pstUpdateCitas = con.prepareStatement(sqlUpdateCitas);
                 pstUpdateCitas.setInt(1, Integer.parseInt(idPaciente));
                 pstUpdateCitas.executeUpdate();
+
+                // Ahora, eliminamos el expediente clínico del paciente
+                String sqlDeleteExpediente = "DELETE FROM expediente_clinico WHERE id_paciente = ?";
+                PreparedStatement pstDeleteExpediente = con.prepareStatement(sqlDeleteExpediente);
+                pstDeleteExpediente.setInt(1, Integer.parseInt(idPaciente));
+                pstDeleteExpediente.executeUpdate();
 
                 // Finalmente, eliminamos al paciente
                 String sqlDeletePaciente = "DELETE FROM pacientes WHERE id = ?";

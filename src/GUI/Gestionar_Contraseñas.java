@@ -15,17 +15,23 @@ import static javax.swing.JOptionPane.showMessageDialog;
 import org.mindrot.jbcrypt.BCrypt;
 
 import ClasesSQL.Usuario;
+import Componentes.DTable;
 import Componentes.JImageBox;
+import java.awt.Color;
+import java.awt.Font;
 
 import static javax.swing.JOptionPane.showConfirmDialog;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 public class Gestionar_Contraseñas extends javax.swing.JFrame {
  DefaultTableModel tabla;
     Usuario usuario;
-
+JTableHeader th;
     public Gestionar_Contraseñas() {
         initComponents();
+        
+        
         usuario = new Usuario();
         llenarTabla();
         tablaUsuarios.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -86,8 +92,21 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
             }
         });
         a.actionPerformed(null);
+        tablaUsuarios.getColumnModel().getColumn(0).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tablaUsuarios.getColumnModel().getColumn(1).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tablaUsuarios.getColumnModel().getColumn(2).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
     }
-
+private void colorTabla() {
+    
+        tablaUsuarios.getColumnModel().getColumn(0).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tablaUsuarios.getColumnModel().getColumn(1).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tablaUsuarios.getColumnModel().getColumn(2).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        
+        th = tablaUsuarios.getTableHeader();
+        Font fuente = new Font("Arial", Font.BOLD, 16);
+        th.setFont(fuente);
+       
+    }
     private void llenarTabla() {
         tablaUsuarios.setModel(tabla = Usuario.Consultar());
         TableColumn col = tablaUsuarios.getColumnModel().getColumn(0);
@@ -248,14 +267,23 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        tablaUsuarios.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Usuario", "Contraseña", "Rol"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(tablaUsuarios);
 
@@ -413,15 +441,18 @@ public class Gestionar_Contraseñas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        this.eliminar();    
+        this.eliminar(); 
+        colorTabla();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         this.registrar();
+        colorTabla();
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         this.actualizar();
+        colorTabla();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     public static void main(String args[]) {

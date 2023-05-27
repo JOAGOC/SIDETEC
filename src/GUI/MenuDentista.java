@@ -52,16 +52,7 @@ public class MenuDentista extends javax.swing.JFrame {
         tblCita.getColumnModel().getColumn(6).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
             }
 
-   /* private void Imagen(JLabel lbl,String ruta){
-        this.imagen=new ImageIcon(ruta);
-        this.icono=new ImageIcon(
-                this.imagen.getImage().getScaledInstance
-                       (lbl.getWidth(),
-                        lbl.getHeight(),
-                        Image.SCALE_SMOOTH));
-        lbl.setIcon(this.icono);
-        repaint();
-      }*/
+
     public void cargarDatos() {
          try {
             Connection con1 = null;
