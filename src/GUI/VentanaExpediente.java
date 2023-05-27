@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -310,7 +309,7 @@ public class VentanaExpediente extends javax.swing.JFrame {
                     TagInputControl.limpiarCadena(txtObservaciones.getText()),
                     TagInputControl.limpiarCadena(txtTratamiento.getText()),
                     ExpedienteClínico.Estado.Activo,
-                    paciente.getId()).insertar());
+                    paciente).insertar());
             if (retorno.equals("Se registró correctamente"))
                 this.dispose();
         } catch (Exception e) {
@@ -318,10 +317,6 @@ public class VentanaExpediente extends javax.swing.JFrame {
         }
         return;
     }// GEN-LAST:event_btnAgregar1MouseClicked
-
-    private boolean validarCampos() {
-        return tagsMotivo.getTags().isEmpty() || tagsEnfermedad.getTags().isEmpty();
-    }
 
     public static void main(String args[]) {
 

@@ -5,10 +5,8 @@ import com.toedter.calendar.JDateChooser;
 
 import Componentes.ColorRenderer;
 import Componentes.DTable;
-import Componentes.JImageBox;
 import desplazable.Desface;
 import java.awt.Color;
-import java.awt.Font;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,17 +15,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 public class MenuDentista extends javax.swing.JFrame {
     ColorRenderer colorRenderer = new ColorRenderer();
-    private ImageIcon imagen;
-    private ImageIcon icono;
     Desface desplace;
     JTableHeader th;
     public MenuDentista() {
@@ -52,22 +46,12 @@ public class MenuDentista extends javax.swing.JFrame {
         tblCita.getColumnModel().getColumn(6).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
             }
 
-   /* private void Imagen(JLabel lbl,String ruta){
-        this.imagen=new ImageIcon(ruta);
-        this.icono=new ImageIcon(
-                this.imagen.getImage().getScaledInstance
-                       (lbl.getWidth(),
-                        lbl.getHeight(),
-                        Image.SCALE_SMOOTH));
-        lbl.setIcon(this.icono);
-        repaint();
-      }*/
+
     public void cargarDatos() {
          try {
             Connection con1 = null;
             DefaultTableModel m = (DefaultTableModel) tblCita.getModel();
-            Conexión conect1 = new Conexión();
-            con1 = conect1.getConnection();
+            con1 = Conexión.getConnection();
             String dts[] = new String[7];
             String sql = "SELECT gestion_cita.fecha, gestion_cita.horario, gestion_cita.estatus, " +
              "CONCAT(pacientes.nombre, ' ', pacientes.apellido) AS 'Nombre Completo', " +
@@ -98,8 +82,7 @@ public class MenuDentista extends javax.swing.JFrame {
          try {
             Connection con1 = null;
             DefaultTableModel m = (DefaultTableModel) tblNoCitas1.getModel();
-            Conexión conect1 = new Conexión();
-            con1 = conect1.getConnection();
+            con1 = Conexión.getConnection();
             String dts[] = new String[1];
             String sql = "select count(estatus) as 'Citas' from gestion_cita where fecha=current_date() and estatus='Confirmada'";
 
@@ -118,8 +101,7 @@ public class MenuDentista extends javax.swing.JFrame {
          try {
             Connection con1 = null;
             DefaultTableModel m = (DefaultTableModel) tblNoCitas.getModel();
-            Conexión conect1 = new Conexión();
-            con1 = conect1.getConnection();
+            con1 = Conexión.getConnection();
             String dts[] = new String[1];
             String sql = "select count(estatus) as 'Citas' from gestion_cita where fecha=current_date()+1 and estatus='Confirmada'";
 
@@ -146,8 +128,7 @@ public class MenuDentista extends javax.swing.JFrame {
         DefaultTableModel m = (DefaultTableModel) tblCita.getModel();
         m.setRowCount(0); // Limpiar todas las filas existentes de la tabla antes de cargar los nuevos datos
 
-        Conexión conect1 = new Conexión();
-        con1 = conect1.getConnection();
+        con1 = Conexión.getConnection();
 
         String dts[] = new String[7];
         String sql = "SELECT gestion_cita.fecha, gestion_cita.horario, gestion_cita.estatus, " +
@@ -179,28 +160,12 @@ public class MenuDentista extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "NO SE PUEDEN VISUALIZAR LOS DATOS DE LA TABLA " + e, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
-    private void colorTabla() {
-        tblCita.getColumnModel().getColumn(0).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
-        tblCita.getColumnModel().getColumn(1).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
-        tblCita.getColumnModel().getColumn(2).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
-        tblCita.getColumnModel().getColumn(3).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
-        tblCita.getColumnModel().getColumn(4).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
-        tblCita.getColumnModel().getColumn(5).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
-        tblCita.getColumnModel().getColumn(6).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
-        tblCita.getColumnModel().getColumn(7).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
-        th = tblCita.getTableHeader();
-        Font fuente = new Font("Arial", Font.BOLD, 16);
-        th.setFont(fuente);
-        tblCita.getColumnModel().getColumn(5).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
-    }
-   private void Buscar1(String valor) throws SQLException {
+    private void Buscar1(String valor) throws SQLException {
     try {
         Connection con1 = null;
         DefaultTableModel m = (DefaultTableModel) tblCita.getModel();
-        m.setRowCount(0); 
-
-        Conexión conect1 = new Conexión();
-        con1 = conect1.getConnection();
+        m.setRowCount(0);
+        con1 = Conexión.getConnection();
 
         String dts[] = new String[7];
         String sql = "SELECT gestion_cita.fecha, gestion_cita.horario, gestion_cita.estatus, " +
@@ -651,31 +616,9 @@ public class MenuDentista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        if(MenuPleglable.getX()==0)
-        desplace.desplazarIzquierda(this.MenuPleglable,MenuPleglable.getX(),-180, 10,10 );
-        else if(MenuPleglable.getX()== -180)
-        desplace.desplazarDerecha(this.MenuPleglable,MenuPleglable.getX(),0, 10,10);
-    }//GEN-LAST:event_jLabel2MouseClicked
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JDateChooser dateChooser = new JDateChooser();
-        if (isDateChooserNotEmpty(fecha) && txtBuscar.getText().contentEquals("")) {
-            cargarDatos2();
-        }else if(!txtBuscar.equals("")) {
-            try {
-                Buscar1(txtBuscar.getText());
-            } catch (SQLException ex) {
-              showMessageDialog(this,ex);
-            }
-        }
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void tblCitaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCitaMouseClicked
         try
         {
-            int fila = tblCita.getSelectedRow();
 
         } catch (Exception ex)
         {
@@ -778,10 +721,9 @@ public class MenuDentista extends javax.swing.JFrame {
     }//GEN-LAST:event_lblBackMouseClicked
 
     private void jImageBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jImageBox1MouseClicked
-        JDateChooser dateChooser = new JDateChooser();
         if (isDateChooserNotEmpty(fecha) && txtBuscar.getText().contentEquals("")) {
             cargarDatos2();
-        }else if(!txtBuscar.equals("")) {
+        }else if(!txtBuscar.getText().equals("")) {
             try {
             Buscar1(txtBuscar.getText());
         } catch (SQLException ex) {
@@ -856,8 +798,7 @@ public void limpiar(){
             }
         });
     }
-private DefaultTableModel m;
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+// Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MenuPleglable;
     private com.toedter.calendar.JDateChooser fecha;
     private Componentes.JImageBox jImageBox1;

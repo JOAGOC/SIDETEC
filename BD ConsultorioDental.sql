@@ -25,19 +25,16 @@ CREATE TABLE expediente_clinico (
     FOREIGN KEY (id_paciente) REFERENCES pacientes(id)
 );
 
-
-
 CREATE TABLE IF NOT EXISTS Usuarios(
 id_usuario int(2) not null primary key auto_increment,
 usuario varchar(20) not null,
 contraseña varchar(32) not null,
-rol varchar(20) not null);
+rol varchar(20) not null,
+cambiarContra bit(1) not null);
 Alter table Usuarios Add constraint UQ_Usuario Unique (usuario);
 
-SELECT*FROM PACIENTES;
-SELECT *FROM EXPEDIENTE_CLINICO;
-insert into Usuarios values (2,'Secretaria','Secre012','Secretaria');
-insert into Usuarios values (1,'Dentista','Dentis123','Dentista');
+Insert into Usuarios values (2,'Secretaria','Secre012','Secretaria',0);
+Insert into Usuarios values (1,'Dentista','Dentis123','Dentista',0);
 select usuario, contraseña from usuarios;
 select*from usuarios;
 delete from usuarios where id_usuario=2;
@@ -267,7 +264,27 @@ BEGIN
     CLOSE cur;
 END; //
 DELIMITER ;
-
+INSERT INTO pacientes (nombre, apellido, edad, genero, telefono, direccion) VALUES
+('Juan', 'Pérez', 35, 'Masculino', '5551234567', 'Calle 1, Ciudad'),
+('María', 'González', 42, 'Femenino', '5557654321', 'Avenida 2, Ciudad'),
+('Carlos', 'Mendoza', 27, 'Masculino', '5551237654', 'Bulevar 3, Ciudad'),
+('Ana', 'Ramirez', 39, 'Femenino', '5557651234', 'Calle 4, Ciudad'),
+('Luis', 'García', 31, 'Masculino', '5551239876', 'Avenida 5, Ciudad'),
+('Laura', 'Hernandez', 46, 'Femenino', '5559871234', 'Bulevar 6, Ciudad'),
+('José', 'Martínez', 29, 'Masculino', '5551236543', 'Calle 7, Ciudad'),
+('Patricia', 'Lopez', 41, 'Femenino', '5556541234', 'Avenida 8, Ciudad'),
+('Daniel', 'Gutierrez', 33, 'Masculino', '5551237896', 'Bulevar 9, Ciudad'),
+('Sofia', 'Aguilar', 37, 'Femenino', '5557891234', 'Calle 10, Ciudad'),
+('Miguel', 'Morales', 25, 'Masculino', '5551234568', 'Avenida 11, Ciudad'),
+('Isabel', 'Ortega', 40, 'Femenino', '5554561234', 'Bulevar 12, Ciudad'),
+('Alejandro', 'Guerrero', 28, 'Masculino', '5551234569', 'Calle 13, Ciudad'),
+('Carmen', 'Peña', 45, 'Femenino', '5553211234', 'Avenida 14, Ciudad'),
+('Manuel', 'Reyes', 32, 'Masculino', '5551234570', 'Bulevar 15, Ciudad'),
+('Lourdes', 'Fuentes', 38, 'Femenino', '5551233214', 'Calle 16, Ciudad'),
+('David', 'Vargas', 30, 'Masculino', '5551234571', 'Avenida 17, Ciudad'),
+('Beatriz', 'Cabrera', 43, 'Femenino', '5551321234', 'Bulevar 18, Ciudad'),
+('Jorge', 'Dominguez', 26, 'Masculino', '5551234572', 'Calle 19, Ciudad'),
+('Rosa', 'Barrera', 44, 'Femenino', '5552131234', 'Avenida 20, Ciudad');
 
 show procedure status;
 -- |Motivos:

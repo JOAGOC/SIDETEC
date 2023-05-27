@@ -1,13 +1,16 @@
 package GUI;
 
 import ClasesSQL.Usuario;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
-
 import javax.swing.JFrame;
 import static javax.swing.JOptionPane.showConfirmDialog;
 import static javax.swing.JOptionPane.showMessageDialog;
+import javax.swing.JTextField;
+@SuppressWarnings("deprecation")
 
 public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
 
@@ -20,7 +23,24 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
     public VentanaInicio_SesionDentista() {
         initComponents();
         setLocationRelativeTo(null);
-        lblHora.setText("Fecha: "+fechacomp);   
+        //lblHora.setText("Fecha: "+fechacomp);   
+        // Inicia el hilo de la hora
+        Thread dateTimeThread = new Thread(() -> {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            while (true) {
+                
+                LocalDateTime now = LocalDateTime.now();
+                String formatDateTime = now.format(formatter);
+                lblHora.setText("Fecha y hora: "+formatDateTime);
+                             try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        dateTimeThread.start();
     }
   
 
@@ -65,8 +85,8 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
         jImageBox1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logoD.png"))); // NOI18N
         jPanel2.add(jImageBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, -40, 370, 230));
 
-        lblHora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jPanel2.add(lblHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 520, 160, 30));
+        lblHora.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jPanel2.add(lblHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 500, 310, 30));
 
         jPanel3.setOpaque(false);
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -177,7 +197,18 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+private boolean validaCampo(JTextField t){
+        try{   estaVacio(t);
+        }catch(Exception e){
+            showMessageDialog(this,e.getMessage());t.requestFocus(); return true;
+        }
+        return false;
+    }
+    
+    private void estaVacio(JTextField t)throws Exception{
+        String cad=t.getText().trim();
+        if(cad.equals("")) throw new Exception("Campo vacio");
+    }
     private void siguienteVentana() {
         JFrame next = usr.getRol().equals("Dentista") ? new MenuDentista() : new MenuSecretaria2();
         next.setVisible(true);
@@ -212,13 +243,19 @@ public class VentanaInicio_SesionDentista extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBoxP2ActionPerformed
 
     private void btnInicioP1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioP1ActionPerformed
+       if(validaCampo(txtUsuarioP1)){    
+          return;
+        }
+       if(validaCampo(txtPasswordP1)){    
+          return;
+        }
         usr = Usuario.buscar(txtUsuarioP1.getText(), txtPasswordP1.getText());
         if (usr == null) {
             showMessageDialog(this, "Usuario o contraseña incorrectos");
             return;
         }
         if (usr.cambiarContra) {
-            int option = showConfirmDialog(this, "Se detecto que su contraseña se actualizo, ¿Desea cambiarla?", "Cambia tu contraseña", JOptionPane.YES_NO_CANCEL_OPTION);
+            int option = showConfirmDialog(this, "Se detectó que su contraseña se actualizo, ¿Desea cambiarla?", "Cambia tu contraseña", JOptionPane.YES_NO_CANCEL_OPTION);
             if (option == JOptionPane.YES_OPTION) {
                 jPanel3.setVisible(false);
                 jPanel4.setVisible(true);

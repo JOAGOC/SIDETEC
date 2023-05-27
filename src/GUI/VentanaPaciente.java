@@ -1,6 +1,6 @@
 package GUI;
 
-
+import javax.swing.table.DefaultTableModel;
 import Conexión.Conexión;
 import desplazable.Desface;
 import java.awt.Color;
@@ -12,167 +12,168 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-
 import Componentes.DTable;
-import Componentes.JImageBox;
 import java.sql.CallableStatement;
 
-
+@SuppressWarnings("rawtypes")
 public class VentanaPaciente extends javax.swing.JFrame {
-    private ImageIcon imagen;
-    private ImageIcon icono; 
     Desface desplace;
     JTableHeader th;
-     
+
     public VentanaPaciente() {
         initComponents();
         desplace = new Desface();
         setLocationRelativeTo(null);
-        m=(DefaultTableModel) tblPaciente.getModel();
         cargarDatos();
         txtID.setEditable(false);
         txtID.setEnabled(false);
-        tblPaciente.getColumnModel().getColumn(0).setHeaderRenderer(new DTable(new Color(230,192,233),Color.BLACK));
-        tblPaciente.getColumnModel().getColumn(1).setHeaderRenderer(new DTable(new Color(230,192,233),Color.BLACK));
-        tblPaciente.getColumnModel().getColumn(2).setHeaderRenderer(new DTable(new Color(230,192,233),Color.BLACK));
-        tblPaciente.getColumnModel().getColumn(3).setHeaderRenderer(new DTable(new Color(230,192,233),Color.BLACK));
-        tblPaciente.getColumnModel().getColumn(4).setHeaderRenderer(new DTable(new Color(230,192,233),Color.BLACK));
-        tblPaciente.getColumnModel().getColumn(5).setHeaderRenderer(new DTable(new Color(230,192,233),Color.BLACK));
-        tblPaciente.getColumnModel().getColumn(6).setHeaderRenderer(new DTable(new Color(230,192,233),Color.BLACK));
-        th=tblPaciente.getTableHeader();
-        Font fuente=new Font("Arial",Font.BOLD,16);  
+        tblPaciente.getColumnModel().getColumn(0).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblPaciente.getColumnModel().getColumn(1).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblPaciente.getColumnModel().getColumn(2).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblPaciente.getColumnModel().getColumn(3).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblPaciente.getColumnModel().getColumn(4).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblPaciente.getColumnModel().getColumn(5).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblPaciente.getColumnModel().getColumn(6).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        th = tblPaciente.getTableHeader();
+        Font fuente = new Font("Arial", Font.BOLD, 16);
         th.setFont(fuente);
-        /*this.Imagen(this.lblAgregar,"Imagenes\\ag.png");
-        this.Imagen(this.lblEliminar,"Imagenes\\eli.png");
-        this.Imagen(this.lblBuscar,"Imagenes\\bu.png");
-        this.Imagen(this.lblLimpiar,"Imagenes\\li.png");
-        this.Imagen(this.lblModificar,"Imagenes\\modi.png");*/
-        
+        /*
+         * this.Imagen(this.lblAgregar,"Imagenes\\ag.png");
+         * this.Imagen(this.lblEliminar,"Imagenes\\eli.png");
+         * this.Imagen(this.lblBuscar,"Imagenes\\bu.png");
+         * this.Imagen(this.lblLimpiar,"Imagenes\\li.png");
+         * this.Imagen(this.lblModificar,"Imagenes\\modi.png");
+         */
+
     }
-     /*private void Imagen(JLabel lbl,String ruta){
-        this.imagen=new ImageIcon(ruta);
-        this.icono=new ImageIcon(
-                this.imagen.getImage().getScaledInstance
-                       (lbl.getWidth(),
-                        lbl.getHeight(),
-                        Image.SCALE_SMOOTH));
-        lbl.setIcon(this.icono);
-        repaint();
-      }*/
-    
-    
-private boolean validaCampo(JTextField t){
-        try{   estaVacio(t);
-        }catch(Exception e){
-            showMessageDialog(this,e.getMessage());t.requestFocus(); return true;
+    /*
+     * private void Imagen(JLabel lbl,String ruta){
+     * this.imagen=new ImageIcon(ruta);
+     * this.icono=new ImageIcon(
+     * this.imagen.getImage().getScaledInstance
+     * (lbl.getWidth(),
+     * lbl.getHeight(),
+     * Image.SCALE_SMOOTH));
+     * lbl.setIcon(this.icono);
+     * repaint();
+     * }
+     */
+
+    private boolean validaCampo(JTextField t) {
+        try {
+            estaVacio(t);
+        } catch (Exception e) {
+            showMessageDialog(this, e.getMessage());
+            t.requestFocus();
+            return true;
         }
         return false;
     }
-    
-    private void estaVacio(JTextField t)throws Exception{
-        String cad=t.getText().trim();
-        if(cad.equals("")) throw new Exception("Campo vacio");
+
+    private void estaVacio(JTextField t) throws Exception {
+        String cad = t.getText().trim();
+        if (cad.equals(""))
+            throw new Exception("Campo vacio");
     }
-    private void comboVacio(JComboBox c ) throws Exception{
-        if(c.getSelectedIndex()<1)throw new Exception("Combo Vacio");
+
+    private void comboVacio(JComboBox c) throws Exception {
+        if (c.getSelectedIndex() < 1)
+            throw new Exception("Combo Vacio");
     }
-    
-     private boolean validaCombo(JComboBox c){
-          try{
-           comboVacio(c);
-       }catch(Exception e){
-           showMessageDialog(this,e.getMessage()); c.requestFocus();return true;
-       }
+
+    private boolean validaCombo(JComboBox c) {
+        try {
+            comboVacio(c);
+        } catch (Exception e) {
+            showMessageDialog(this, e.getMessage());
+            c.requestFocus();
+            return true;
+        }
         return false;
     }
-     private void colortabla(){
-      tblPaciente.getColumnModel().getColumn(0).setHeaderRenderer(new DTable(new Color(230,192,233),Color.BLACK));
-        tblPaciente.getColumnModel().getColumn(1).setHeaderRenderer(new DTable(new Color(230,192,233),Color.BLACK));
-        tblPaciente.getColumnModel().getColumn(2).setHeaderRenderer(new DTable(new Color(230,192,233),Color.BLACK));
-        tblPaciente.getColumnModel().getColumn(3).setHeaderRenderer(new DTable(new Color(230,192,233),Color.BLACK));
-        tblPaciente.getColumnModel().getColumn(4).setHeaderRenderer(new DTable(new Color(230,192,233),Color.BLACK));
-        tblPaciente.getColumnModel().getColumn(5).setHeaderRenderer(new DTable(new Color(230,192,233),Color.BLACK));
-        tblPaciente.getColumnModel().getColumn(6).setHeaderRenderer(new DTable(new Color(230,192,233),Color.BLACK));
-        th=tblPaciente.getTableHeader();
-        Font fuente=new Font("Arial",Font.BOLD,16);  
+
+    private void colortabla() {
+        tblPaciente.getColumnModel().getColumn(0).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblPaciente.getColumnModel().getColumn(1).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblPaciente.getColumnModel().getColumn(2).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblPaciente.getColumnModel().getColumn(3).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblPaciente.getColumnModel().getColumn(4).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblPaciente.getColumnModel().getColumn(5).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        tblPaciente.getColumnModel().getColumn(6).setHeaderRenderer(new DTable(new Color(230, 192, 233), Color.BLACK));
+        th = tblPaciente.getTableHeader();
+        Font fuente = new Font("Arial", Font.BOLD, 16);
         th.setFont(fuente);
-     
-     
-     }//color tabla
-    private void agregar(){
-        try
-            {
-                Connection con = null;
-                Conexión conect = new Conexión();
-                con = conect.getConnection();
-                Statement st = con.createStatement();
-                String sql = "insert into pacientes (nombre,apellido,edad,genero, telefono,direccion) values (?,?,?,?,?,?)";
-                PreparedStatement pst = con.prepareStatement(sql);
-              
-                pst.setString(1, txtNombre.getText());
-                pst.setString(2, txtApellido.getText());
-                pst.setString(3, txtEdad.getText());
-                pst.setString(4, cmbGenero.getSelectedItem().toString());
-                pst.setString(5, txtTelefono.getText());
-                pst.setString(6, txtDireccion.getText());
-                
-                
-                int n = pst.executeUpdate();
-                if (n > 0)
-                {
-                    JOptionPane.showMessageDialog(this, "DATOS GUARDADOS CORRECTAMENTE");
-                    limpiar();
-                    vaciarTabla();
-                    colortabla();
-                    cargarDatos();
-                    
-                    
-                }
-            } catch (SQLException | HeadlessException e)
-            {
-                JOptionPane.showMessageDialog(this, "LOS DATOS NO HAN SIDO GUARDADOS CORRECTAMENTE"+e, "Error", JOptionPane.ERROR_MESSAGE);
+
+    }// color tabla
+
+    private void agregar() {
+        try {
+            Connection con = null;
+
+            con = Conexión.getConnection();
+            String sql = "insert into pacientes (nombre,apellido,edad,genero, telefono,direccion) values (?,?,?,?,?,?)";
+            PreparedStatement pst = con.prepareStatement(sql);
+
+            pst.setString(1, txtNombre.getText());
+            pst.setString(2, txtApellido.getText());
+            pst.setString(3, txtEdad.getText());
+            pst.setString(4, cmbGenero.getSelectedItem().toString());
+            pst.setString(5, txtTelefono.getText());
+            pst.setString(6, txtDireccion.getText());
+
+            int n = pst.executeUpdate();
+            if (n > 0) {
+                JOptionPane.showMessageDialog(this, "DATOS GUARDADOS CORRECTAMENTE");
+                limpiar();
+                vaciarTabla();
+                colortabla();
+                cargarDatos();
+
             }
-        
-         
-    }//agregar
-public void limpiar(){
-        
-       this.txtID.setText("");
-       this.txtNombre.setText("");
-       this.txtApellido.setText("");
-       this.txtEdad.setText("");
-       this.txtDireccion.setText("");
-       this.txtTelefono.setText("");
-       this.cmbGenero.setSelectedItem("Seleccionar");
-       txtID.requestFocus();
-    }//limpiar
-    public void vaciarTabla(){
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(this, "LOS DATOS NO HAN SIDO GUARDADOS CORRECTAMENTE" + e, "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+    }// agregar
+
+    public void limpiar() {
+
+        this.txtID.setText("");
+        this.txtNombre.setText("");
+        this.txtApellido.setText("");
+        this.txtEdad.setText("");
+        this.txtDireccion.setText("");
+        this.txtTelefono.setText("");
+        this.cmbGenero.setSelectedItem("Seleccionar");
+        txtID.requestFocus();
+    }// limpiar
+
+    public void vaciarTabla() {
         DefaultTableModel m = (DefaultTableModel) tblPaciente.getModel();
-        String titulos[] = {"ID","Nombre","Apellidos","Edad","Genero","Telefono","Direccion"};
-        m = new DefaultTableModel(null,titulos);
+        String titulos[] = { "ID", "Nombre", "Apellidos", "Edad", "Genero", "Telefono", "Direccion" };
+        m = new DefaultTableModel(null, titulos);
         tblPaciente.setModel(m);
-    }//vaciarTabla
-    
+    }// vaciarTabla
+
     public void cargarDatos() {
-         try {
-            
+        try {
+
             Connection con1 = null;
             DefaultTableModel m = (DefaultTableModel) tblPaciente.getModel();
             m.setRowCount(0);
-            Conexión conect1 = new Conexión();
-            con1 = conect1.getConnection();
+
+            con1 = Conexión.getConnection();
             String dts[] = new String[7];
             String sql = "select * from pacientes";
             Statement st = con1.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
+            while (rs.next()) {
                 dts[0] = rs.getString("id");
                 dts[1] = rs.getString("nombre");
                 dts[2] = rs.getString("apellido");
@@ -185,11 +186,14 @@ public void limpiar(){
             tblPaciente.setModel(m);
             colortabla();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "NO SE PUEDEN VISUALIZAR LOS DATOS DE LA TABLA "+ e, "Error", JOptionPane.ERROR_MESSAGE);
-        
-    }}//cargarDatos
+            JOptionPane.showMessageDialog(null, "NO SE PUEDEN VISUALIZAR LOS DATOS DE LA TABLA " + e, "Error",
+                    JOptionPane.ERROR_MESSAGE);
 
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+        }
+    }// cargarDatos
+
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         MenuPleglable = new javax.swing.JPanel();
@@ -259,9 +263,11 @@ public void limpiar(){
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblBackMouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblBackMouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 lblBackMouseExited(evt);
             }
@@ -282,9 +288,11 @@ public void limpiar(){
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblPacienteMouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblPacienteMouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 lblPacienteMouseExited(evt);
             }
@@ -305,6 +313,7 @@ public void limpiar(){
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblCitasMouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 lblCitasMouseExited(evt);
             }
@@ -325,9 +334,11 @@ public void limpiar(){
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblExpedienteMouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblExpedienteMouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 lblExpedienteMouseExited(evt);
             }
@@ -347,6 +358,7 @@ public void limpiar(){
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel9MouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jLabel9MouseExited(evt);
             }
@@ -380,9 +392,11 @@ public void limpiar(){
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblPassMouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblPassMouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 lblPassMouseExited(evt);
             }
@@ -435,13 +449,12 @@ public void limpiar(){
 
         tblPaciente.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tblPaciente.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                new Object[][] {
 
-            },
-            new String [] {
-                "ID", "Nombre", "Apellidos", "Edad", "Genéro", "Teléfono", "Dirección"
-            }
-        ));
+                },
+                new String[] {
+                        "ID", "Nombre", "Apellidos", "Edad", "Genéro", "Teléfono", "Dirección"
+                }));
         tblPaciente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tblPaciente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -511,7 +524,8 @@ public void limpiar(){
         jPanel1.add(lblGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 140, -1, -1));
 
         cmbGenero.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        cmbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Masculino", "Femenino" }));
+        cmbGenero.setModel(
+                new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Masculino", "Femenino" }));
         cmbGenero.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.add(cmbGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 140, 240, 30));
 
@@ -561,9 +575,11 @@ public void limpiar(){
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblBack1MouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblBack1MouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 lblBack1MouseExited(evt);
             }
@@ -574,7 +590,8 @@ public void limpiar(){
         lblPaciente1.setBackground(new java.awt.Color(0, 0, 0));
         lblPaciente1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblPaciente1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPaciente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-añadir-usuario-masculino-52.png"))); // NOI18N
+        lblPaciente1.setIcon(
+                new javax.swing.ImageIcon(getClass().getResource("/img/icons8-añadir-usuario-masculino-52.png"))); // NOI18N
         lblPaciente1.setText("Registro de Paciente ");
         lblPaciente1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         lblPaciente1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -584,9 +601,11 @@ public void limpiar(){
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblPaciente1MouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblPaciente1MouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 lblPaciente1MouseExited(evt);
             }
@@ -597,7 +616,8 @@ public void limpiar(){
         lblCitas1.setBackground(new java.awt.Color(0, 0, 0));
         lblCitas1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblCitas1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblCitas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-planificación-de-tareas-52.png"))); // NOI18N
+        lblCitas1.setIcon(
+                new javax.swing.ImageIcon(getClass().getResource("/img/icons8-planificación-de-tareas-52.png"))); // NOI18N
         lblCitas1.setText("Gestion de Citas      ");
         lblCitas1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 50));
         lblCitas1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -607,9 +627,11 @@ public void limpiar(){
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblCitas1MouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblCitas1MouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 lblCitas1MouseExited(evt);
             }
@@ -630,9 +652,11 @@ public void limpiar(){
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblExpediente1MouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblExpediente1MouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 lblExpediente1MouseExited(evt);
             }
@@ -652,9 +676,11 @@ public void limpiar(){
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel7MouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel7MouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jLabel7MouseExited(evt);
             }
@@ -688,9 +714,11 @@ public void limpiar(){
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblPass1MouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblPass1MouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 lblPass1MouseExited(evt);
             }
@@ -717,13 +745,11 @@ public void limpiar(){
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 920, Short.MAX_VALUE)
-        );
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 920, Short.MAX_VALUE));
         jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
-        );
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 40, Short.MAX_VALUE));
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 710, 920, 40));
 
@@ -736,19 +762,17 @@ public void limpiar(){
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
         panel1Layout.setHorizontalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
-                .addContainerGap(312, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(340, 340, 340))
-        );
+                panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
+                                .addContainerGap(312, Short.MAX_VALUE)
+                                .addComponent(jLabel1)
+                                .addGap(340, 340, 340)));
         panel1Layout.setVerticalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel1)
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
+                panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panel1Layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(jLabel1)
+                                .addContainerGap(20, Short.MAX_VALUE)));
 
         jPanel1.add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 910, 70));
 
@@ -763,366 +787,371 @@ public void limpiar(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1174,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 743, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 743,
+                                javax.swing.GroupLayout.PREFERRED_SIZE));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-void llenarCamposTexto(String[] datos) {
-    txtID.setText(datos[0]);
-    txtNombre.setText(datos[1]);
-    txtApellido.setText(datos[2]);
-    txtEdad.setText(datos[3]);
-    cmbGenero.setSelectedItem(datos[4]);
-    txtTelefono.setText(datos[5]);
-    txtDireccion.setText(datos[6]);
-}
 
-void Buscar(String valor) {
-    Connection con = null;
-    Conexión conect = new Conexión();
-    con = conect.getConnection();
-    DefaultTableModel modelo = new DefaultTableModel();
-    
-    modelo.addColumn("ID");
-    modelo.addColumn("Nombre");
-    modelo.addColumn("Apellido");
-    modelo.addColumn("Edad");
-    modelo.addColumn("Genéro");
-    modelo.addColumn("Teléfono");
-    modelo.addColumn("Dirección");
-    
-    tblPaciente.setModel(modelo);
-    String sql = "";
-    if (valor.equals("")) {
-        sql = "SELECT * FROM pacientes";
-    } else {
-        sql = "SELECT * FROM pacientes WHERE id LIKE '%" 
-                + valor + "%' OR nombre LIKE '%" 
-                + valor + "%' OR apellido LIKE '%" 
-                + valor + "%' OR telefono LIKE '%" + valor + "%'";
+    void llenarCamposTexto(String[] datos) {
+        txtID.setText(datos[0]);
+        txtNombre.setText(datos[1]);
+        txtApellido.setText(datos[2]);
+        txtEdad.setText(datos[3]);
+        cmbGenero.setSelectedItem(datos[4]);
+        txtTelefono.setText(datos[5]);
+        txtDireccion.setText(datos[6]);
     }
-    String[] Datos = new String[7];
-    try {
-        Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery(sql);
-        if (!rs.next()) {
-            showMessageDialog(null, "Paciente no encontrado");
-        } else {
-            do {
-                Datos[0] = rs.getString(1);
-                Datos[1] = rs.getString(2);
-                Datos[2] = rs.getString(3);
-                Datos[3] = rs.getString(4);
-                Datos[4] = rs.getString(5);
-                Datos[5] = rs.getString(6);
-                Datos[6] = rs.getString(7);                
-                modelo.addRow(Datos);
-            } while (rs.next());
-        }
-        
+
+    void Buscar(String valor) {
+        Connection con = null;
+
+        con = Conexión.getConnection();
+        DefaultTableModel modelo = new DefaultTableModel();
+
+        modelo.addColumn("ID");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Apellido");
+        modelo.addColumn("Edad");
+        modelo.addColumn("Genéro");
+        modelo.addColumn("Teléfono");
+        modelo.addColumn("Dirección");
+
         tblPaciente.setModel(modelo);
-        colortabla();
-        
-    } catch(SQLException ex) {
-        showMessageDialog(null, "Error en la conexión a la base de datos");
-    }
-}//busca
+        String sql = "";
+        if (valor.equals("")) {
+            sql = "SELECT * FROM pacientes";
+        } else {
+            sql = "SELECT * FROM pacientes WHERE id LIKE '%"
+                    + valor + "%' OR nombre LIKE '%"
+                    + valor + "%' OR apellido LIKE '%"
+                    + valor + "%' OR telefono LIKE '%" + valor + "%'";
+        }
+        String[] Datos = new String[7];
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            if (!rs.next()) {
+                showMessageDialog(null, "Paciente no encontrado");
+            } else {
+                do {
+                    Datos[0] = rs.getString(1);
+                    Datos[1] = rs.getString(2);
+                    Datos[2] = rs.getString(3);
+                    Datos[3] = rs.getString(4);
+                    Datos[4] = rs.getString(5);
+                    Datos[5] = rs.getString(6);
+                    Datos[6] = rs.getString(7);
+                    modelo.addRow(Datos);
+                } while (rs.next());
+            }
 
-        
- 
+            tblPaciente.setModel(modelo);
+            colortabla();
 
-   
-    private void lblPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseExited
+        } catch (SQLException ex) {
+            showMessageDialog(null, "Error en la conexión a la base de datos");
+        }
+    }// busca
+
+    private void lblPassMouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblPassMouseExited
         lblPass.setForeground(Color.BLACK);
-    }//GEN-LAST:event_lblPassMouseExited
+    }// GEN-LAST:event_lblPassMouseExited
 
-    private void lblPassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseEntered
+    private void lblPassMouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblPassMouseEntered
         lblPass.setForeground(Color.WHITE);
-    }//GEN-LAST:event_lblPassMouseEntered
+    }// GEN-LAST:event_lblPassMouseEntered
 
-    private void lblPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseClicked
-        Gestionar_Contraseñas pass=new Gestionar_Contraseñas();
+    private void lblPassMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblPassMouseClicked
+        Gestionar_Contraseñas pass = new Gestionar_Contraseñas();
         pass.setVisible(true);
         pass.setLocationRelativeTo(null);
         this.dispose();
-    }//GEN-LAST:event_lblPassMouseClicked
+    }// GEN-LAST:event_lblPassMouseClicked
 
-    private void lblMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenuMouseClicked
-        if(MenuPleglable.getX()==0)
-        desplace.desplazarIzquierda(this.MenuPleglable,MenuPleglable.getX(),-180, 10,10 );
-        else if(MenuPleglable.getX()== -180)
-        desplace.desplazarDerecha(this.MenuPleglable,MenuPleglable.getX(),0, 10,10);
-    }//GEN-LAST:event_lblMenuMouseClicked
+    private void lblMenuMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblMenuMouseClicked
+        if (MenuPleglable.getX() == 0)
+            desplace.desplazarIzquierda(this.MenuPleglable, MenuPleglable.getX(), -180, 10, 10);
+        else if (MenuPleglable.getX() == -180)
+            desplace.desplazarDerecha(this.MenuPleglable, MenuPleglable.getX(), 0, 10, 10);
+    }// GEN-LAST:event_lblMenuMouseClicked
 
-    private void jLabel9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseExited
-        //lblExpediente.setForeground(Color.BLACK);
-    }//GEN-LAST:event_jLabel9MouseExited
+    private void jLabel9MouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel9MouseExited
+        // lblExpediente.setForeground(Color.BLACK);
+    }// GEN-LAST:event_jLabel9MouseExited
 
-    private void jLabel9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseEntered
-        //lblExpediente.setForeground(Color.BLUE);
-    }//GEN-LAST:event_jLabel9MouseEntered
+    private void jLabel9MouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel9MouseEntered
+        // lblExpediente.setForeground(Color.BLUE);
+    }// GEN-LAST:event_jLabel9MouseEntered
 
-    private void lblExpedienteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpedienteMouseExited
+    private void lblExpedienteMouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblExpedienteMouseExited
         lblExpediente.setForeground(Color.BLACK);
-    }//GEN-LAST:event_lblExpedienteMouseExited
+    }// GEN-LAST:event_lblExpedienteMouseExited
 
-    private void lblExpedienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpedienteMouseEntered
+    private void lblExpedienteMouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblExpedienteMouseEntered
         lblExpediente.setForeground(Color.WHITE);
-    }//GEN-LAST:event_lblExpedienteMouseEntered
+    }// GEN-LAST:event_lblExpedienteMouseEntered
 
-    private void lblExpedienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpedienteMouseClicked
-        VentanaExpediente exp=new VentanaExpediente();
+    private void lblExpedienteMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblExpedienteMouseClicked
+        VentanaExpediente exp = new VentanaExpediente();
         exp.setVisible(true);
         exp.setLocationRelativeTo(null);
         this.dispose();
-    }//GEN-LAST:event_lblExpedienteMouseClicked
+    }// GEN-LAST:event_lblExpedienteMouseClicked
 
-    private void lblCitasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCitasMouseExited
+    private void lblCitasMouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblCitasMouseExited
         lblCitas.setForeground(Color.BLACK);
-    }//GEN-LAST:event_lblCitasMouseExited
+    }// GEN-LAST:event_lblCitasMouseExited
 
-    private void lblCitasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCitasMouseEntered
+    private void lblCitasMouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblCitasMouseEntered
         lblCitas.setForeground(Color.WHITE);
-    }//GEN-LAST:event_lblCitasMouseEntered
+    }// GEN-LAST:event_lblCitasMouseEntered
 
-    private void lblPacienteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPacienteMouseExited
+    private void lblPacienteMouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblPacienteMouseExited
         lblPaciente.setForeground(Color.BLACK);
-    }//GEN-LAST:event_lblPacienteMouseExited
+    }// GEN-LAST:event_lblPacienteMouseExited
 
-    private void lblPacienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPacienteMouseEntered
+    private void lblPacienteMouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblPacienteMouseEntered
         lblPaciente.setForeground(Color.WHITE);
-    }//GEN-LAST:event_lblPacienteMouseEntered
+    }// GEN-LAST:event_lblPacienteMouseEntered
 
-    private void lblPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPacienteMouseClicked
-        VentanaPaciente next=new VentanaPaciente();
+    private void lblPacienteMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblPacienteMouseClicked
+        VentanaPaciente next = new VentanaPaciente();
         next.setVisible(true);
         next.setLocationRelativeTo(null);
         this.dispose();
-    }//GEN-LAST:event_lblPacienteMouseClicked
+    }// GEN-LAST:event_lblPacienteMouseClicked
 
-    private void lblBackMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseExited
+    private void lblBackMouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblBackMouseExited
         lblBack.setForeground(Color.BLACK);
-    }//GEN-LAST:event_lblBackMouseExited
+    }// GEN-LAST:event_lblBackMouseExited
 
-    private void lblBackMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseEntered
+    private void lblBackMouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblBackMouseEntered
         lblBack.setForeground(Color.WHITE);
-    }//GEN-LAST:event_lblBackMouseEntered
+    }// GEN-LAST:event_lblBackMouseEntered
 
-    private void lblBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseClicked
+    private void lblBackMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblBackMouseClicked
 
         VentanaInicio_SesionDentista login = new VentanaInicio_SesionDentista();
         login.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_lblBackMouseClicked
+    }// GEN-LAST:event_lblBackMouseClicked
 
-    private void lblBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBuscarMouseClicked
+    private void lblBuscarMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblBuscarMouseClicked
         Buscar(txtBuscar.getText());
-    }//GEN-LAST:event_lblBuscarMouseClicked
+    }// GEN-LAST:event_lblBuscarMouseClicked
 
-    private void lblModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblModificarMouseClicked
-       if(validaCampo(txtNombre)){
+    private void lblModificarMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblModificarMouseClicked
+        if (validaCampo(txtNombre)) {
             lblNombre.setForeground(Color.RED);
             return;
-        }else lblNombre.setForeground(Color.BLACK);
+        } else
+            lblNombre.setForeground(Color.BLACK);
 
-        if(validaCampo(txtApellido)){
+        if (validaCampo(txtApellido)) {
             lblApellido.setForeground(Color.RED);
             return;
-        }
-        else lblApellido.setForeground(Color.BLACK);
-        
-        if(validaCampo(txtTelefono)){
+        } else
+            lblApellido.setForeground(Color.BLACK);
+
+        if (validaCampo(txtTelefono)) {
             lblTelefono.setForeground(Color.RED);
             return;
-        }
-        else lblTelefono.setForeground(Color.BLACK);
-        
-        if(validaCombo(cmbGenero)){
+        } else
+            lblTelefono.setForeground(Color.BLACK);
+
+        if (validaCombo(cmbGenero)) {
             lblGenero.setForeground(Color.RED);
             return;
-        }else lblGenero.setForeground(Color.BLACK);
-        
-        if(validaCampo(txtEdad)){
+        } else
+            lblGenero.setForeground(Color.BLACK);
+
+        if (validaCampo(txtEdad)) {
             lblEdad.setForeground(Color.RED);
             return;
-        }
-        else lblDireccion.setForeground(Color.BLACK);
-        
-        if(validaCampo(txtDireccion)){
+        } else
+            lblDireccion.setForeground(Color.BLACK);
+
+        if (validaCampo(txtDireccion)) {
             lblDireccion.setForeground(Color.RED);
             return;
-        }
-        else lblDireccion.setForeground(Color.BLACK);
-        
+        } else
+            lblDireccion.setForeground(Color.BLACK);
+
         int fila = tblPaciente.getSelectedRow();
-        if (fila == -1)
-        {
-            JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UN REGISTRO", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
-        else
-        try
-        {
-            Connection con = null;
-            Conexión conect = null;
-            con = conect.getConnection();
-            Statement st = con.createStatement();
-            String sql = "update pacientes set nombre = ?, apellido = ?, edad=?, genero=?, telefono = ?, direccion = ? where id = ?";
-            String dao=(String)tblPaciente.getValueAt(fila,0);
-            PreparedStatement pst = con.prepareCall(sql);
-            pst.setString(1, txtNombre.getText());
-            pst.setString(2, txtApellido.getText());
-            pst.setString(3, txtEdad.getText());
-            pst.setString(4, cmbGenero.getSelectedItem().toString());
-            pst.setString(5, txtTelefono.getText());
-            pst.setString(6, txtDireccion.getText());
-            pst.setString(7,dao);
-            int n = pst.executeUpdate();
-            if (n > 0)
-            {
-                JOptionPane.showMessageDialog(this, "DATOS ACTUALIZADOS CORRECTAMENTE");
-                limpiar();
-                vaciarTabla();
-                colortabla();
-                cargarDatos();
-
-            }
-        } catch (SQLException | HeadlessException e)
-        {
-            JOptionPane.showMessageDialog(this, "LOS DATOS NO HAN SIDO ACTUALIZADOS CORRECTAMENTE"+e, "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_lblModificarMouseClicked
-
-    private void lblLimpiarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLimpiarMouseClicked
-        limpiar();
-    }//GEN-LAST:event_lblLimpiarMouseClicked
-
-    private void lblEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEliminarMouseClicked
-        int fila = tblPaciente.getSelectedRow();
-    if (fila == -1) {
-        JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UN REGISTRO", "Advertencia", JOptionPane.WARNING_MESSAGE);
-    } else {
-        int opc = JOptionPane.showConfirmDialog(this, "¿ESTA SEGURO QUE DESEA ELIMINAR ESTE PACIENTE (SE ELIMINARAN TODAS SUS CITAS)?", "Pregunta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (opc == JOptionPane.YES_OPTION) {
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UN REGISTRO", "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+        } else
             try {
                 Connection con = null;
-                Conexión conect = new Conexión();
-                con = conect.getConnection();
-                Statement st = con.createStatement();
-                String idPaciente = txtID.getText();
-
-                // Primero, desbloquear todas las citas asociadas a este paciente
-                String sqlCitas = "SELECT fecha, horario, duracion FROM gestion_cita WHERE idPaciente = ?";
-                PreparedStatement pstCitas = con.prepareStatement(sqlCitas);
-                pstCitas.setInt(1, Integer.parseInt(idPaciente));
-                ResultSet rsCitas = pstCitas.executeQuery();
-                while (rsCitas.next()) {
-                    String fechaCita = rsCitas.getString("fecha");
-                    String horaCita = rsCitas.getString("horario");
-                    String duracionStr = rsCitas.getString("duracion");
-                    
-                    // Convertir la duración a minutos
-                    String[] partes = duracionStr.split(":");
-                    int horas = Integer.parseInt(partes[0]);
-                    int minutos = Integer.parseInt(partes[1]);
-                    int duracionMinutos = horas * 60 + minutos;
-
-                    // Desbloquear las citas en función de la fecha, la hora y la duración
-                    String desbloquearCitasSQL = "{CALL desbloquearCitas(?, ?, ?)}";
-                    CallableStatement desbloquearCitasStmt = con.prepareCall(desbloquearCitasSQL);
-                    desbloquearCitasStmt.setString(1, fechaCita);
-                    desbloquearCitasStmt.setString(2, horaCita);
-                    desbloquearCitasStmt.setInt(3, duracionMinutos);
-                    desbloquearCitasStmt.execute();
-                }
-
-                // Ahora que todas las citas del paciente se han desbloqueado, las actualizamos a 'Disponible'
-                String sqlUpdateCitas = "UPDATE gestion_cita SET idPaciente = NULL, estatus = 'Disponible', detalleCita = '', duracion = NULL WHERE idPaciente = ?";
-                PreparedStatement pstUpdateCitas = con.prepareStatement(sqlUpdateCitas);
-                pstUpdateCitas.setInt(1, Integer.parseInt(idPaciente));
-                pstUpdateCitas.executeUpdate();
-
-                // Finalmente, eliminamos al paciente
-                String sqlDeletePaciente = "DELETE FROM pacientes WHERE id = ?";
-                PreparedStatement pstDeletePaciente = con.prepareStatement(sqlDeletePaciente);
-                pstDeletePaciente.setInt(1, Integer.parseInt(idPaciente));
-                int n = pstDeletePaciente.executeUpdate();
-
+                con = Conexión.getConnection();
+                String sql = "update pacientes set nombre = ?, apellido = ?, edad=?, genero=?, telefono = ?, direccion = ? where id = ?";
+                String dao = (String) tblPaciente.getValueAt(fila, 0);
+                PreparedStatement pst = con.prepareCall(sql);
+                pst.setString(1, txtNombre.getText());
+                pst.setString(2, txtApellido.getText());
+                pst.setString(3, txtEdad.getText());
+                pst.setString(4, cmbGenero.getSelectedItem().toString());
+                pst.setString(5, txtTelefono.getText());
+                pst.setString(6, txtDireccion.getText());
+                pst.setString(7, dao);
+                int n = pst.executeUpdate();
                 if (n > 0) {
-                    JOptionPane.showMessageDialog(this, "DATOS ELIMINADOS CORRECTAMENTE");
+                    JOptionPane.showMessageDialog(this, "DATOS ACTUALIZADOS CORRECTAMENTE");
                     limpiar();
                     vaciarTabla();
                     colortabla();
                     cargarDatos();
-                }
 
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "DATOS NO ELIMINADOS CORRECTAMENTE" + ex.getMessage());
+                }
+            } catch (SQLException | HeadlessException e) {
+                JOptionPane.showMessageDialog(this, "LOS DATOS NO HAN SIDO ACTUALIZADOS CORRECTAMENTE" + e, "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+    }// GEN-LAST:event_lblModificarMouseClicked
+
+    private void lblLimpiarMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblLimpiarMouseClicked
+        limpiar();
+    }// GEN-LAST:event_lblLimpiarMouseClicked
+
+    private void lblEliminarMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblEliminarMouseClicked
+        int fila = tblPaciente.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UN REGISTRO", "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            int opc = JOptionPane.showConfirmDialog(this,
+                    "¿ESTA SEGURO QUE DESEA ELIMINAR ESTE PACIENTE (SE ELIMINARAN TODAS SUS CITAS Y EXPEDIENTE CLÍNICO)?",
+                    "Pregunta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (opc == JOptionPane.YES_OPTION) {
+                try {
+                    Connection con = null;
+
+                    con = Conexión.getConnection();
+                    String idPaciente = txtID.getText();
+
+                    // Primero, desbloquear todas las citas asociadas a este paciente
+                    String sqlCitas = "SELECT fecha, horario, duracion FROM gestion_cita WHERE idPaciente = ?";
+                    PreparedStatement pstCitas = con.prepareStatement(sqlCitas);
+                    pstCitas.setInt(1, Integer.parseInt(idPaciente));
+                    ResultSet rsCitas = pstCitas.executeQuery();
+                    while (rsCitas.next()) {
+                        String fechaCita = rsCitas.getString("fecha");
+                        String horaCita = rsCitas.getString("horario");
+                        String duracionStr = rsCitas.getString("duracion");
+
+                        // Convertir la duración a minutos
+                        String[] partes = duracionStr.split(":");
+                        int horas = Integer.parseInt(partes[0]);
+                        int minutos = Integer.parseInt(partes[1]);
+                        int duracionMinutos = horas * 60 + minutos;
+
+                        // Desbloquear las citas en función de la fecha, la hora y la duración
+                        String desbloquearCitasSQL = "{CALL desbloquearCitas(?, ?, ?)}";
+                        CallableStatement desbloquearCitasStmt = con.prepareCall(desbloquearCitasSQL);
+                        desbloquearCitasStmt.setString(1, fechaCita);
+                        desbloquearCitasStmt.setString(2, horaCita);
+                        desbloquearCitasStmt.setInt(3, duracionMinutos);
+                        desbloquearCitasStmt.execute();
+                    }
+
+                    // Ahora que todas las citas del paciente se han desbloqueado, las actualizamos
+                    // a 'Disponible'
+                    String sqlUpdateCitas = "UPDATE gestion_cita SET idPaciente = NULL, estatus = 'Disponible', detalleCita = '', duracion = NULL WHERE idPaciente = ?";
+                    PreparedStatement pstUpdateCitas = con.prepareStatement(sqlUpdateCitas);
+                    pstUpdateCitas.setInt(1, Integer.parseInt(idPaciente));
+                    pstUpdateCitas.executeUpdate();
+
+                    // Ahora, eliminamos el expediente clínico del paciente
+                    String sqlDeleteExpediente = "DELETE FROM expediente_clinico WHERE id_paciente = ?";
+                    PreparedStatement pstDeleteExpediente = con.prepareStatement(sqlDeleteExpediente);
+                    pstDeleteExpediente.setInt(1, Integer.parseInt(idPaciente));
+                    pstDeleteExpediente.executeUpdate();
+
+                    // Finalmente, eliminamos al paciente
+                    String sqlDeletePaciente = "DELETE FROM pacientes WHERE id = ?";
+                    PreparedStatement pstDeletePaciente = con.prepareStatement(sqlDeletePaciente);
+                    pstDeletePaciente.setInt(1, Integer.parseInt(idPaciente));
+                    int n = pstDeletePaciente.executeUpdate();
+
+                    if (n > 0) {
+                        JOptionPane.showMessageDialog(this, "DATOS ELIMINADOS CORRECTAMENTE");
+                        limpiar();
+                        vaciarTabla();
+                        colortabla();
+                        cargarDatos();
+                    }
+
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(this, "DATOS NO ELIMINADOS CORRECTAMENTE" + ex.getMessage());
+                }
             }
         }
-    }
-    }//GEN-LAST:event_lblEliminarMouseClicked
+    }// GEN-LAST:event_lblEliminarMouseClicked
 
-    private void lblAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAgregarMouseClicked
-          if(validaCampo(txtNombre)){
+    private void lblAgregarMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblAgregarMouseClicked
+        if (validaCampo(txtNombre)) {
             lblNombre.setForeground(Color.RED);
             return;
-        }else lblNombre.setForeground(Color.BLACK);
+        } else
+            lblNombre.setForeground(Color.BLACK);
 
-        if(validaCampo(txtApellido)){
+        if (validaCampo(txtApellido)) {
             lblApellido.setForeground(Color.RED);
             return;
-        }
-        else lblApellido.setForeground(Color.BLACK);
-        
-        if(validaCampo(txtTelefono)){
+        } else
+            lblApellido.setForeground(Color.BLACK);
+
+        if (validaCampo(txtTelefono)) {
             lblTelefono.setForeground(Color.RED);
             return;
-        }
-        else lblTelefono.setForeground(Color.BLACK);
-        
-        if(validaCombo(cmbGenero)){
+        } else
+            lblTelefono.setForeground(Color.BLACK);
+
+        if (validaCombo(cmbGenero)) {
             lblGenero.setForeground(Color.RED);
             return;
-        }else lblGenero.setForeground(Color.BLACK);
-        
-        if(validaCampo(txtEdad)){
+        } else
+            lblGenero.setForeground(Color.BLACK);
+
+        if (validaCampo(txtEdad)) {
             lblEdad.setForeground(Color.RED);
             return;
-        }
-        else lblDireccion.setForeground(Color.BLACK);
-        
-        if(validaCampo(txtDireccion)){
+        } else
+            lblDireccion.setForeground(Color.BLACK);
+
+        if (validaCampo(txtDireccion)) {
             lblDireccion.setForeground(Color.RED);
             return;
-        }
-        else lblDireccion.setForeground(Color.BLACK);
+        } else
+            lblDireccion.setForeground(Color.BLACK);
         agregar();
-    }//GEN-LAST:event_lblAgregarMouseClicked
+    }// GEN-LAST:event_lblAgregarMouseClicked
 
-    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        Buscar(txtBuscar.getText());        
-        
-        /*if(txtBuscar.getText().equals("")){
-            cargarDatos();
-        }
-        */
-    }//GEN-LAST:event_txtBuscarKeyReleased
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_txtBuscarKeyReleased
+        Buscar(txtBuscar.getText());
 
-    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtBuscarActionPerformed
+        /*
+         * if(txtBuscar.getText().equals("")){
+         * cargarDatos();
+         * }
+         */
+    }// GEN-LAST:event_txtBuscarKeyReleased
 
-    private void tblPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPacienteMouseClicked
-        try
-        {
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtBuscarActionPerformed
+
+    }// GEN-LAST:event_txtBuscarActionPerformed
+
+    private void tblPacienteMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_tblPacienteMouseClicked
+        try {
             int fila = tblPaciente.getSelectedRow();
             txtID.setText(tblPaciente.getValueAt(fila, 0).toString());
             txtNombre.setText(tblPaciente.getValueAt(fila, 1).toString());
@@ -1132,159 +1161,161 @@ void Buscar(String valor) {
             txtTelefono.setText(tblPaciente.getValueAt(fila, 5).toString());
             txtDireccion.setText(tblPaciente.getValueAt(fila, 6).toString());
 
-            //btnAgregar.setVisible(false);
-        } catch (Exception ex)
-        {
+            // btnAgregar.setVisible(false);
+        } catch (Exception ex) {
             System.out.println("ERROR AL SELECCIONAR UNA FILA: " + ex.getMessage());
         }
-    }//GEN-LAST:event_tblPacienteMouseClicked
+    }// GEN-LAST:event_tblPacienteMouseClicked
 
-    private void lblPass1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPass1MouseExited
+    private void lblPass1MouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblPass1MouseExited
         lblPass1.setForeground(Color.BLACK);
-    }//GEN-LAST:event_lblPass1MouseExited
+    }// GEN-LAST:event_lblPass1MouseExited
 
-    private void lblPass1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPass1MouseEntered
+    private void lblPass1MouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblPass1MouseEntered
         lblPass1.setForeground(Color.GRAY);
-    }//GEN-LAST:event_lblPass1MouseEntered
+    }// GEN-LAST:event_lblPass1MouseEntered
 
-    private void lblPass1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPass1MouseClicked
-        Gestionar_Contraseñas pass=new Gestionar_Contraseñas();
+    private void lblPass1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblPass1MouseClicked
+        Gestionar_Contraseñas pass = new Gestionar_Contraseñas();
         pass.setVisible(true);
         pass.setLocationRelativeTo(null);
         this.dispose();
-    }//GEN-LAST:event_lblPass1MouseClicked
+    }// GEN-LAST:event_lblPass1MouseClicked
 
-    private void lblMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu1MouseClicked
-        if(MenuPleglable1.getX()==0)
-        desplace.desplazarIzquierda(this.MenuPleglable1,MenuPleglable1.getX(),-180, 10,10 );
-        else if(MenuPleglable1.getX()== -180)
-        desplace.desplazarDerecha(this.MenuPleglable1,MenuPleglable1.getX(),0, 10,10);
-    }//GEN-LAST:event_lblMenu1MouseClicked
+    private void lblMenu1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblMenu1MouseClicked
+        if (MenuPleglable1.getX() == 0)
+            desplace.desplazarIzquierda(this.MenuPleglable1, MenuPleglable1.getX(), -180, 10, 10);
+        else if (MenuPleglable1.getX() == -180)
+            desplace.desplazarDerecha(this.MenuPleglable1, MenuPleglable1.getX(), 0, 10, 10);
+    }// GEN-LAST:event_lblMenu1MouseClicked
 
-    private void jLabel7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseExited
-        //lblExpediente.setForeground(Color.BLACK);
-    }//GEN-LAST:event_jLabel7MouseExited
+    private void jLabel7MouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel7MouseExited
+        // lblExpediente.setForeground(Color.BLACK);
+    }// GEN-LAST:event_jLabel7MouseExited
 
-    private void jLabel7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseEntered
-        //lblExpediente.setForeground(Color.BLUE);
-    }//GEN-LAST:event_jLabel7MouseEntered
+    private void jLabel7MouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel7MouseEntered
+        // lblExpediente.setForeground(Color.BLUE);
+    }// GEN-LAST:event_jLabel7MouseEntered
 
-    private void lblExpediente1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpediente1MouseExited
+    private void lblExpediente1MouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblExpediente1MouseExited
         lblExpediente1.setForeground(Color.BLACK);
-    }//GEN-LAST:event_lblExpediente1MouseExited
+    }// GEN-LAST:event_lblExpediente1MouseExited
 
-    private void lblExpediente1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpediente1MouseEntered
+    private void lblExpediente1MouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblExpediente1MouseEntered
         lblExpediente1.setForeground(Color.GRAY);
-    }//GEN-LAST:event_lblExpediente1MouseEntered
+    }// GEN-LAST:event_lblExpediente1MouseEntered
 
-    private void lblExpediente1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpediente1MouseClicked
-        VentanaExpedienteMenu exp=new VentanaExpedienteMenu();
+    private void lblExpediente1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblExpediente1MouseClicked
+        VentanaExpedienteMenu exp = new VentanaExpedienteMenu();
         exp.setVisible(true);
         exp.setLocationRelativeTo(null);
         this.dispose();
-    }//GEN-LAST:event_lblExpediente1MouseClicked
+    }// GEN-LAST:event_lblExpediente1MouseClicked
 
-    private void lblCitas1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCitas1MouseExited
+    private void lblCitas1MouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblCitas1MouseExited
         lblCitas1.setForeground(Color.BLACK);
-    }//GEN-LAST:event_lblCitas1MouseExited
+    }// GEN-LAST:event_lblCitas1MouseExited
 
-    private void lblCitas1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCitas1MouseEntered
+    private void lblCitas1MouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblCitas1MouseEntered
         lblCitas1.setForeground(Color.GRAY);
-    }//GEN-LAST:event_lblCitas1MouseEntered
+    }// GEN-LAST:event_lblCitas1MouseEntered
 
-    private void lblPaciente1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPaciente1MouseExited
+    private void lblPaciente1MouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblPaciente1MouseExited
         lblPaciente1.setForeground(Color.GRAY);
-    }//GEN-LAST:event_lblPaciente1MouseExited
+    }// GEN-LAST:event_lblPaciente1MouseExited
 
-    private void lblPaciente1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPaciente1MouseEntered
+    private void lblPaciente1MouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblPaciente1MouseEntered
         lblPaciente1.setForeground(Color.BLACK);
-    }//GEN-LAST:event_lblPaciente1MouseEntered
+    }// GEN-LAST:event_lblPaciente1MouseEntered
 
-    private void lblPaciente1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPaciente1MouseClicked
-       
-    }//GEN-LAST:event_lblPaciente1MouseClicked
+    private void lblPaciente1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblPaciente1MouseClicked
 
-    private void lblBack1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBack1MouseExited
+    }// GEN-LAST:event_lblPaciente1MouseClicked
+
+    private void lblBack1MouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblBack1MouseExited
         lblBack1.setForeground(Color.BLACK);
-    }//GEN-LAST:event_lblBack1MouseExited
+    }// GEN-LAST:event_lblBack1MouseExited
 
-    private void lblBack1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBack1MouseEntered
+    private void lblBack1MouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblBack1MouseEntered
         lblBack1.setForeground(Color.GRAY);
-    }//GEN-LAST:event_lblBack1MouseEntered
+    }// GEN-LAST:event_lblBack1MouseEntered
 
-    private void lblBack1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBack1MouseClicked
+    private void lblBack1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblBack1MouseClicked
 
         MenuDentista login = new MenuDentista();
         login.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_lblBack1MouseClicked
+    }// GEN-LAST:event_lblBack1MouseClicked
 
-    private void lblCitas1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCitas1MouseClicked
-       VentanaCitas exp=new VentanaCitas();
+    private void lblCitas1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblCitas1MouseClicked
+        VentanaCitas exp = new VentanaCitas();
         exp.setVisible(true);
         exp.setLocationRelativeTo(null);
         this.dispose();
-    }//GEN-LAST:event_lblCitas1MouseClicked
+    }// GEN-LAST:event_lblCitas1MouseClicked
 
-    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-       char c=evt.getKeyChar();
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_txtNombreKeyTyped
+        char c = evt.getKeyChar();
         String valida = Character.toString(c);
         if (!valida.matches("[a-zA-Z_]+") && !valida.matches("\b") && !valida.matches(" ")) {
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(rootPane, "Ingrese solo letras");
         }
-    }//GEN-LAST:event_txtNombreKeyTyped
+    }// GEN-LAST:event_txtNombreKeyTyped
 
-    private void txtEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEdadKeyTyped
+    private void txtEdadKeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_txtEdadKeyTyped
         char car = evt.getKeyChar();
-    if(((car < '0') ||(car > '9')) &&(car != '\b')){
-        evt.consume();
-        JOptionPane.showMessageDialog(this, "Solo numeros");
-    }
-    if(txtEdad.getText().length()>=3){
-        evt.consume();
-        Toolkit.getDefaultToolkit().beep();
-        JOptionPane.showMessageDialog(this, "Edad No Valida");
-    }
-    }//GEN-LAST:event_txtEdadKeyTyped
+        if (((car < '0') || (car > '9')) && (car != '\b')) {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Solo numeros");
+        }
+        if (txtEdad.getText().length() >= 3) {
+            evt.consume();
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(this, "Edad No Valida");
+        }
+    }// GEN-LAST:event_txtEdadKeyTyped
 
-    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_txtTelefonoKeyTyped
         char car = evt.getKeyChar();
-    if(((car < '0') ||(car > '9')) &&(car != '\b')){
-        evt.consume();
-        JOptionPane.showMessageDialog(this, "Solo numeros");
-    }
-    if(txtTelefono.getText().length()>=10){
-        evt.consume();
-        Toolkit.getDefaultToolkit().beep();
-        JOptionPane.showMessageDialog(this, "Solo Ingresa 10 Digitos");
-    }
-    }//GEN-LAST:event_txtTelefonoKeyTyped
+        if (((car < '0') || (car > '9')) && (car != '\b')) {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Solo numeros");
+        }
+        if (txtTelefono.getText().length() >= 10) {
+            evt.consume();
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(this, "Solo Ingresa 10 Digitos");
+        }
+    }// GEN-LAST:event_txtTelefonoKeyTyped
 
-    private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
-       char c=evt.getKeyChar();
+    private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_txtApellidoKeyTyped
+        char c = evt.getKeyChar();
         String valida = Character.toString(c);
         if (!valida.matches("[a-zA-Z_]+") && !valida.matches("\b") && !valida.matches(" ")) {
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(rootPane, "Ingrese solo letras");
         }
-    }//GEN-LAST:event_txtApellidoKeyTyped
+    }// GEN-LAST:event_txtApellidoKeyTyped
 
-    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-        if(MenuPleglable.getX()==0)
-        desplace.desplazarIzquierda(this.MenuPleglable,MenuPleglable.getX(),-180, 10,10 );
-        else if(MenuPleglable.getX()== -180)
-        desplace.desplazarDerecha(this.MenuPleglable,MenuPleglable.getX(),0, 10,10);
-    }//GEN-LAST:event_jLabel7MouseClicked
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel7MouseClicked
+        if (MenuPleglable.getX() == 0)
+            desplace.desplazarIzquierda(this.MenuPleglable, MenuPleglable.getX(), -180, 10, 10);
+        else if (MenuPleglable.getX() == -180)
+            desplace.desplazarDerecha(this.MenuPleglable, MenuPleglable.getX(), 0, 10, 10);
+    }// GEN-LAST:event_jLabel7MouseClicked
 
-    
     public static void main(String args[]) {
-        
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+
+        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+        // (optional) ">
+        /*
+         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+         * look and feel.
+         * For details see
+         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -1294,15 +1325,19 @@ void Buscar(String valor) {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPaciente.class.getName()).log(java.util.logging.Level.SEVERE,
+                    null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPaciente.class.getName()).log(java.util.logging.Level.SEVERE,
+                    null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPaciente.class.getName()).log(java.util.logging.Level.SEVERE,
+                    null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPaciente.class.getName()).log(java.util.logging.Level.SEVERE,
+                    null, ex);
         }
-        //</editor-fold>
+        // </editor-fold>
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -1310,7 +1345,7 @@ void Buscar(String valor) {
             }
         });
     }
-private DefaultTableModel m;
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MenuPleglable;
     private javax.swing.JPanel MenuPleglable1;
